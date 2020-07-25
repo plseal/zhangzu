@@ -1,0 +1,1 @@
+xcopy /Y C:\GitHub\zhangzu\zhangzu\target\zhangzu-1.war C:\tomcat-7\webapps\
