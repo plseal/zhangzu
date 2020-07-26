@@ -34,14 +34,17 @@ public class DbController {
     }
 
     @RequestMapping(path = "/get_one_zhangzu", method = RequestMethod.GET)
-    public Map<String, Object> get_one_zhangzu(@RequestParam("flg") final String flg, @RequestParam("z_date") final String z_date,
-            @RequestParam("z_name") final String z_name) {
+    public Map<String, Object> get_one_zhangzu(
+        @RequestParam("flg") final String flg,
+        @RequestParam("z_date") final String z_date,
+        @RequestParam("z_name") final String z_name,
+        @RequestParam("z_amount") final String z_amount) {
 
         List<Map<String, Object>> list;
 
         list = jdbcTemplate.queryForList(
-                "SELECT * FROM t_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_name like CONCAT('%',?,'%') order by z_date desc ",
-                z_date, z_name);
+                "SELECT * FROM t_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_name like CONCAT('%',?,'%') and z_amount = ? order by z_date desc ",
+                z_date, z_name, z_amount);
         // Map<String, String> resultJson = Collections.singletonMap("result", "OK");
         logger.info("list.size():"+list.size());
         logger.info("list.get(0):"+list.get(0));
