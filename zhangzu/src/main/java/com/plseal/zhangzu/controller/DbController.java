@@ -68,16 +68,18 @@ public class DbController {
         @RequestParam("z_name") final String z_name,
         @RequestParam("z_amount") final String z_amount,
         @RequestParam("z_type") final String z_type,
-        @RequestParam("z_io_div") final String z_io_div) {
+        @RequestParam("z_io_div") final String z_io_div,
+        @RequestParam("z_remark") final String z_remark) {
         logger.info("flg:"+flg);
         logger.info("z_date:"+z_date);
         logger.info("z_name:"+z_name);
         logger.info("z_amount:"+z_amount);
         logger.info("z_type:"+z_type);
         logger.info("z_io_div:"+z_io_div);
+        logger.info("z_remark:"+z_remark);
         jdbcTemplate.update(
-                "INSERT INTO t_zhangzu VALUES(null,?,?,?,?,?,null,null) ",
-                z_date, z_name, z_amount, z_type, z_io_div);
+                "INSERT INTO t_zhangzu VALUES(null,?,?,?,?,?,?,null) ",
+                z_date, z_name, z_amount, z_type, z_io_div, z_remark);
         //Integer id = jdbcTemplate.queryForObject("SELECT lastval()", Integer.class);
 
         return 200;
