@@ -1,4 +1,5 @@
 h2db/
+.mvn/
 
 HELP.md
 target/
