@@ -11,5 +11,9 @@ spring.datasource.tomcat.minIdle=10
 spring.datasource.tomcat.initialSize=10
 spring.datasource.tomcat.defaultAutoCommit=false
 
-// コンソールを有効化
+# コンソールを有効化
 spring.h2.console.enabled=true
+
+# SQLファイルに日本語を使う場合
+spring.datasource.sql-script-encoding=UTF-8
+

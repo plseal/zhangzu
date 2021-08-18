@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.ui.Model;
 @RestController
 public class DbController {
     private static final Logger logger = LoggerFactory.getLogger(DbController.class);
@@ -33,6 +33,28 @@ public class DbController {
         return list.toString();
     }
 
+	@RequestMapping(path = "/index_for_analysis", method = RequestMethod.GET)
+	public String index_for_analysis(
+		@RequestParam("AC") final String AC,
+        @RequestParam("AC_TYPE") final String AC_TYPE,
+		Model model) throws Exception {
+        logger.info("AC:"+AC);
+        logger.info("AC_TYPE:"+AC_TYPE);
+        //List<String> list = Arrays.asList("aa", "bb", "cc");
+		List<Map<String, Object>> list;
+        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_io_div = '支出' and z_type = ? order by z_date desc ",
+		AC, AC_TYPE);
+
+
+        // Map<String, String> resultJson = Collections.singletonMap("result", "OK");
+        logger.info("list.size():"+list.size());
+        logger.info("list.get(0):"+list.get(0));
+
+		model.addAttribute("list", list);
+		model.addAttribute("msg", "Hello World zhangzu!!!");
+		
+		return "index";
+	}
     @RequestMapping(path = "/get_one_zhangzu", method = RequestMethod.GET)
     public Map<String, Object> get_one_zhangzu(
         @RequestParam("flg") final String flg,
