@@ -1,5 +1,5 @@
-cd C:\GitHub\zhangzu\zhangzu\src\main\resources\
+cd C:\GitHub\zhangzu\src\main\resources\
 del application.properties
 copy application.properties_prod application.properties
-cd C:\GitHub\zhangzu\zhangzu
-C:\maven\bin\mvn spring-boot:run
+cd C:\GitHub\zhangzu
+mvn spring-boot:run
