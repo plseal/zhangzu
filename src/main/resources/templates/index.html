@@ -32,7 +32,7 @@
 				<div class="col-sm-12">
 
 					<a onclick="location.href='/zhangzu/index'" >
-						<h2 class="text-center">宋帐本</h2>
+						<h2 class="text-center">宋帐本2021</h2>
 
 					</a>
 				</div>
@@ -42,18 +42,14 @@
 						<small>
 							<i class="icon-list-alt"></i>
 							流水账一览
-							
 						</small>
 					</h1>
 				</div>
 				<br/>
-				<!--
 		        <div class="col-sm-12">
 		          <button type="button" class="btn btn-lg btn-block btn-primary" onclick="location.href = '/zhangzu/insert';">添加新单据</button>
 		        </div>
-				
 				<br/>
-				-->
 		        <div class="col-sm-12">
 		          <button type="button" class="btn btn-lg btn-block btn-info" onclick="location.href = '/zhangzu/analysis_2021';">统计分析(2021年)</button>
 		        </div>
@@ -82,44 +78,43 @@
 		          <button type="button" class="btn btn-lg btn-block btn-warning" onclick="location.href = '/zhangzu/index2018';">2018年</button>
 		        </div>
 				<br/>
-							<!--PAGE CONTENT BEGINS-->
-								<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-								<thead>
-									<tr >
-										<!--
-										<th width="5%">ID</th>
-										-->
-										<th width="10%">日期</th>
-										<th width="15%">名称</th>
-										<th width="10%">金额</th>
-										<th width="10%">分类</th>
-										<th width="10%">收支</th>
-										<th width="20%">备注</th>
-										<th width="10%">售价</th>
-										<th width="10%">操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="element, elementStat : ${list}">
-										<td th:text="${element}"></td>
-										<td th:text="${elementStat.index}"></td>
-										<td th:text="${elementStat.count}"></td>
-										<td th:text="${elementStat.size}"></td>
-										<td th:text="${elementStat.current}"></td>
-										<td th:text="${elementStat.even}"></td>
-										<td th:text="${elementStat.odd}"></td>
-										<td th:text="${elementStat.first}"></td>
-										<td th:text="${elementStat.last}"></td>
-									</tr>
-								</tbody>
-							</table>
-		
-								
-
-
+				<!--PAGE CONTENT BEGINS-->
+				<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr >
+							<!--
+							<th width="5%">ID</th>
+							-->
+							<th width="10%">日期</th>
+							<th width="15%">名称</th>
+							<th width="10%">金额</th>
+							<th width="10%">分类</th>
+							<th width="10%">收支</th>
+							<th width="20%">备注</th>
+							<th width="10%">售价</th>
+							<th width="10%">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="element, elementStat : ${list}">
+							<td th:text="${element.z_date}"></td><!--日期-->
+							<td th:text="${element.z_name}"></td><!--名称-->
+							<td th:text="${element.z_amount}"></td><!--金额-->
+							<td th:text="${element.z_type}"></td><!--分类-->
+							<td th:text="${element.z_io_div}"></td><!--收支-->
+							<td th:text="${element.z_remark}"></td><!--备注-->
+							<td th:text="${element.z_m_amount}"></td><!--售价-->
+							<td>
+								<form action="/zhangzu/update" method="post">
+									<button class="btn btn-info btn-small" type="submit" name="id" th:value="${element.id}">编辑</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 		    
 		        <div class="col-sm-12">
-		          <button type="button" class="btn btn-lg btn-block btn-primary" onclick="location.href = '/zhangzu/to_zhangzu_insert.do';">添加新单据</button>
+				  <button type="button" class="btn btn-lg btn-block btn-primary" onclick="location.href = '/zhangzu/insert';">添加新单据</button>
 		        </div>
 
 							<!--PAGE CONTENT ENDS-->

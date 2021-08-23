@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +24,14 @@ import org.springframework.ui.Model;
 import java.util.Map;
 import com.plseal.zhangzu.entity.Zhangzu;
 import com.plseal.zhangzu.entity.ZhangzuAnalysis;
+import com.plseal.zhangzu.common.master;
 
 import java.util.Arrays;
-
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.math.BigInteger;
 
 /**
  * @Description 
@@ -55,26 +60,62 @@ public class ZhangzuController {
 		
 		return "index";
 	}
-	@RequestMapping(path = "/index_for_analysis", method = RequestMethod.GET)
-	public String index_for_analysis(
-		@RequestParam("AC") final String AC,
-        @RequestParam("AC_TYPE") final String AC_TYPE,
-		Model model) throws Exception {
-		//List<String> list = Arrays.asList("aa", "bb", "cc");
-		List<Map<String, Object>> list;
-        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_io_div = '支出' and z_type = ? order by z_date desc ",
-		AC, AC_TYPE);
 
-        // Map<String, String> resultJson = Collections.singletonMap("result", "OK");
+	@RequestMapping(path = "/insert", method = RequestMethod.GET)
+	public String insert(Model model) throws Exception {
+
+		List<Map<String, Object>> list;
+        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu  order by z_date desc limit 1");
+        logger.info("list.size():"+list.size());
+        logger.info("list.get(0):"+list.get(0).toString());
+		Zhangzu zhangzu = new Zhangzu();
+		Date today = new Date();
+		zhangzu.setZ_date(new SimpleDateFormat("yyyy/MM/dd").format(today));
+		model.addAttribute("zhangzu", zhangzu);
+
+		List<String> z_type_list = master.make_ztype_list();
+		
+		model.addAttribute("z_type_list", z_type_list);
+		
+		return "insert";
+	}
+
+	@PostMapping(path = "/insert_post")
+	public String insert_post(Model model,
+		@RequestParam("z_date") String z_date,
+		@RequestParam("z_name") String z_name,
+		@RequestParam("z_amount") BigInteger z_amount,
+		@RequestParam("z_type") String z_type,
+		@RequestParam("z_io_div") String z_io_div,
+		@RequestParam("z_remark") String z_remark,
+		@RequestParam("z_m_amount") BigInteger z_m_amount
+		) throws Exception {
+		logger.info("insert_post() z_date:" + z_date);
+		String sql = "INSERT INTO t_zhangzu VALUES(null,?,?,?,?,?,?,?)";
+		jdbcTemplate.update(sql,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount);
+		
+		List<Map<String, Object>> list;
+        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu WHERE z_date = ? order by z_date desc ",z_date);
+        
         logger.info("list.size():"+list.size());
         logger.info("list.get(0):"+list.get(0));
 
 		model.addAttribute("list", list);
-		model.addAttribute("msg", "Hello World zhangzu!!!");
-		
 		return "index";
 	}
-	
+
+	@PostMapping(path = "/update")
+	public String update(Model model, @RequestParam("id")Integer id) throws Exception {
+
+		List<Map<String, Object>> list;
+        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu WHERE id = ? order by z_date desc ", id);
+        logger.info("list.size():"+list.size());
+        logger.info("list.get(0):"+list.get(0));
+
+		model.addAttribute("list", list);
+		
+		return "update";
+	}
 
 	@RequestMapping("/analysis_2021")
 	public String analysis_2021(HttpServletRequest request) throws Exception {
