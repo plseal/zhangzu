@@ -96,17 +96,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="element, elementStat : ${list}">
-							<td th:text="${element.z_date}"></td><!--日期-->
-							<td th:text="${element.z_name}"></td><!--名称-->
-							<td th:text="${element.z_amount}"></td><!--金额-->
-							<td th:text="${element.z_type}"></td><!--分类-->
-							<td th:text="${element.z_io_div}"></td><!--收支-->
-							<td th:text="${element.z_remark}"></td><!--备注-->
-							<td th:text="${element.z_m_amount}"></td><!--售价-->
+						<tr th:each="zhangzu : ${list_zhangzu}">
+							<td th:text="${zhangzu.z_date}"></td><!--日期-->
+							<td th:text="${zhangzu.z_name}"></td><!--名称-->
+							<td th:text="${zhangzu.z_amount}"></td><!--金额-->
+							<td th:text="${zhangzu.z_type}"></td><!--分类-->
+							<td th:text="${zhangzu.z_io_div}"></td><!--收支-->
+							<td th:text="${zhangzu.z_remark}"></td><!--备注-->
+							<td th:text="${zhangzu.z_m_amount}"></td><!--售价-->
 							<td>
 								<form action="/zhangzu/update" method="post">
-									<button class="btn btn-info btn-small" type="submit" name="id" th:value="${element.id}">编辑</button>
+									<button class="btn btn-info btn-small" type="submit" name="id" th:value="${zhangzu.id}">编辑</button>
 								</form>
 							</td>
 						</tr>
@@ -117,17 +117,12 @@
 				  <button type="button" class="btn btn-lg btn-block btn-primary" onclick="location.href = '/zhangzu/insert';">添加新单据</button>
 		        </div>
 
-							<!--PAGE CONTENT ENDS-->
+				<!--PAGE CONTENT ENDS-->
 
-	</div><!--/.main-container-->
-
-
-	
+		</div><!--/.main-container-->
 
 	
 <script type="text/javascript">
-		
-
 
 			
 </script>
