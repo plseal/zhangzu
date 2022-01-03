@@ -42,7 +42,7 @@ public class ZhangzuController {
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public String index(Model model) throws Exception {
 
-		String sql = "SELECT * FROM t_zhangzu WHERE z_date like '2021%' order by z_date desc ";
+		String sql = "SELECT * FROM t_zhangzu WHERE z_date like '2022%' order by z_date desc ";
 
 		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);
@@ -54,10 +54,6 @@ public class ZhangzuController {
 	@RequestMapping(path = "/insert", method = RequestMethod.GET)
 	public String insert(Model model) throws Exception {
 
-		List<Map<String, Object>> list;
-        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu  order by z_date desc limit 1");
-        logger.info("list.size():"+list.size());
-        logger.info("list.get(0):"+list.get(0).toString());
 		Zhangzu zhangzu = new Zhangzu();
 		Date today = new Date();
 		zhangzu.setZ_date(new SimpleDateFormat("yyyy/MM/dd").format(today));
