@@ -26,7 +26,7 @@ public class MainTest extends BaseSeleniumTests {
     ValidateAdminUser validateAdminUser = new ValidateAdminUser();
     private String title;
     @Test
-    public void 正常系01_index表示() {
+    public void 正常系01_index() {
         //指定したURLに遷移する
         driver.get("http://127.0.0.1:8080/zhangzu/index");
 
@@ -38,7 +38,7 @@ public class MainTest extends BaseSeleniumTests {
         assertThat(title, is("宋账本"));
     }
     @Test
-    public void 正常系02_insert表示() throws Exception {
+    public void 正常系02_insert() throws Exception {
         //指定したURLに遷移する
         driver.get("http://127.0.0.1:8080/zhangzu/insert");
 
@@ -83,6 +83,82 @@ public class MainTest extends BaseSeleniumTests {
         testCommon.waitSomeSeconds(driver);
     }
 
+    @Test
+    public void 正常系03_update() throws Exception {
+        //指定したURLに遷移する
+        driver.get("http://127.0.0.1:8080/zhangzu/index");
+
+        // 最大5秒間、ページが完全に読み込まれるまで待つ
+        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+
+        logger.info("＃＃＃「编辑」ボタン　押下");
+        WebElement MODIFY_BUTTON = driver.findElement(By.name("id"));
+        assertNotNull(MODIFY_BUTTON);
+        MODIFY_BUTTON.click();
+        testCommon.waitSomeSeconds(driver);
+
+        // 検証
+        title = driver.getTitle();
+        assertThat(title, is("流水帐更新"));
+
+        WebElement z_name = this.driver.findElement(By.id("z_name"));
+        assertNotNull(z_name);
+        testCommon.setAttributeValue(driver,z_name,"テスト01");
+
+        WebElement z_amount = this.driver.findElement(By.id("z_amount"));
+        assertNotNull(z_amount);
+        testCommon.setAttributeValue(driver,z_amount,"10000");
+
+        WebElement z_type = this.driver.findElement(By.id("z_type"));
+        Select dropdown = new Select(z_type);
+        assertNotNull(z_type);
+        dropdown.selectByValue("交通费");
+
+        WebElement z_io_div = this.driver.findElement(By.id("z_io_div"));
+        assertNotNull(z_io_div);
+        dropdown = new Select(z_io_div);
+        assertNotNull(z_type);
+        dropdown.selectByValue("收入");
+
+        WebElement z_remark = this.driver.findElement(By.id("z_remark"));
+        assertNotNull(z_remark);
+        testCommon.setAttributeValue(driver,z_remark,"z_remark00");  
+
+        WebElement z_m_amount = this.driver.findElement(By.id("z_m_amount"));
+        assertNotNull(z_m_amount);
+        testCommon.setAttributeValue(driver,z_m_amount,"1000");  
+
+        logger.info("＃＃＃「更新」ボタン　押下");
+        WebElement OK_BUTTON = driver.findElement(By.name("update_delete_button"));
+        assertNotNull(OK_BUTTON);
+        OK_BUTTON.click();
+        testCommon.waitSomeSeconds(driver);
+    }
+
+    @Test
+    public void 正常系04_delete() throws Exception {
+        //指定したURLに遷移する
+        driver.get("http://127.0.0.1:8080/zhangzu/index");
+
+        // 最大5秒間、ページが完全に読み込まれるまで待つ
+        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+
+        logger.info("＃＃＃「编辑」ボタン　押下");
+        WebElement MODIFY_BUTTON = driver.findElement(By.name("id"));
+        assertNotNull(MODIFY_BUTTON);
+        MODIFY_BUTTON.click();
+        testCommon.waitSomeSeconds(driver);
+
+        // 検証
+        title = driver.getTitle();
+        assertThat(title, is("流水帐更新"));
+
+        logger.info("＃＃＃「删除」ボタン　押下");
+        WebElement DEL_BUTTON = driver.findElement(By.xpath("//*[@name='update_delete_button'][@value='DELETE']"));
+        assertNotNull(DEL_BUTTON);
+        DEL_BUTTON.click();
+        testCommon.waitSomeSeconds(driver);
+    }
 
 
     
