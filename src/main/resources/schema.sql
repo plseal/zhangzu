@@ -17,3 +17,42 @@ CREATE TABLE t_zhangzu (
     z_remark VARCHAR(255),
     z_m_amount BIGINT
 );
+
+CREATE VIEW v_zhangzu_zhichu_2022 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        t_zhangzu
+    WHERE
+        ((z_date LIKE '2022%')
+            AND (z_io_div = '支出'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+
+CREATE VIEW v_zhangzu_shouru_2022 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        t_zhangzu
+    WHERE
+        ((z_date LIKE '2022%')
+            AND (z_io_div = '收入'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+
+CREATE VIEW v_zhangzu_maihuo_2022 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        t_zhangzu
+    WHERE
+        ((z_date LIKE '2022%')
+            AND (z_io_div = '买货'))
+    GROUP BY SUBSTR(z_date, 1, 7);
