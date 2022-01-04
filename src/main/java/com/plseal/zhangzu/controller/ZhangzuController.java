@@ -150,10 +150,10 @@ public class ZhangzuController {
 		return "update";
 	}
 
-	@RequestMapping("/analysis_2021")
-	public String analysis_2021(HttpServletRequest request) throws Exception {
-		logger.info("["+this.getClass()+"][analysis_2021][start]");
-				
+	@RequestMapping("/analysis_2022")
+	public String analysis_2022(HttpServletRequest request) throws Exception {
+		logger.info("["+this.getClass()+"][analysis_2022][start]");
+		
 		ZhangzuAnalysis zz_analysis;
 		
 		long ac_min ;
@@ -164,7 +164,7 @@ public class ZhangzuController {
 		
 		zz_analysis = new ZhangzuAnalysis();
 		List<Map<String, Object>> list1_zz_analysis;
-        list1_zz_analysis = jdbcTemplate.queryForList(
+		String strSQL =
 		"SELECT 1," +
 		"ZHI.AC ac,"+
 		"'XXXX' ac_type,"+
@@ -172,56 +172,57 @@ public class ZhangzuController {
 		"ZHI.AMOUNT ac_min,"+
 		"SHOU.AMOUNT - ZHI.AMOUNT ac_result,"+
 		"MAI.AMOUNT ac_maihuo "+
-		"FROM v_zhangzu_zhichu_2021 ZHI " +
-		"left join v_zhangzu_shouru_2021 SHOU on  ZHI.AC = SHOU.AC " + 
-		"left join v_zhangzu_maihuo_2021 MAI on  ZHI.AC = MAI.AC " + 
-		"order by ac");
+		"FROM v_zhangzu_zhichu_2022 ZHI " +
+		"left join v_zhangzu_shouru_2022 SHOU on  ZHI.AC = SHOU.AC " + 
+		"left join v_zhangzu_maihuo_2022 MAI on  ZHI.AC = MAI.AC " + 
+		"order by ac";
+		logger.info("["+this.getClass()+"][analysis_2022][SQL]"+strSQL);
+        list1_zz_analysis = jdbcTemplate.queryForList(strSQL);
         // Map<String, String> resultJson = Collections.singletonMap("result", "OK");
         logger.info("list.size():"+list1_zz_analysis.size());
         logger.info("list.get(0):"+list1_zz_analysis.get(0));
-		/*
+
 		ac_min = 0;
 		ac_plus = 0;
 		ac_result = 0;
 		ac_maihuo = 0;
-		//	2021/01	XXXX	0	    -911732	0  zhichu
-		//	2021/01	XXXX	374334	0	    0
-		//	2021/01	XXXX	0	    -911732	0  maihuo
-		logger.info("["+this.getClass()+"][to_zhangzu_analysis_2021][list1_zz_analysis.size()]"+list1_zz_analysis.size());
+		//	2022/01	XXXX	0	    -911732	0  zhichu
+		//	2022/01	XXXX	374334	0	    0
+		//	2022/01	XXXX	0	    -911732	0  maihuo
+		logger.info("["+this.getClass()+"][to_zhangzu_analysis_2022][list1_zz_analysis.size()]"+list1_zz_analysis.size());
 		for(int i = 0 ; i < list1_zz_analysis.size() ; i++) {
 			if (i == 0 ) {
-				ac_min = list1_zz_analysis.get(i).getAc_min();
+				ac_min = Integer.valueOf(list1_zz_analysis.get(i).get("ac_min").toString());
 			} else if (i == 1){
-				ac_plus = list1_zz_analysis.get(i).getAc_plus();
+				ac_plus = Integer.valueOf(list1_zz_analysis.get(i).get("ac_plus").toString());
 			} else {
-				ac_maihuo = list1_zz_analysis.get(i).getAc_min();
+				ac_maihuo = Integer.valueOf(list1_zz_analysis.get(i).get("ac_maihuo").toString());
 			}
 		}
+		String str_ac = "";
 		ac_result = ac_plus + ac_min;
-		zz_analysis.setAc(zhangzu_ac);
+		zz_analysis.setAc(str_ac);
 		zz_analysis.setAc_min(ac_min);
 		zz_analysis.setAc_plus(ac_plus);
 		zz_analysis.setAc_result(ac_result);
 		zz_analysis.setAc_maihuo(ac_maihuo);
-		logger.info("["+this.getClass()+"][to_zhangzu_analysis_2021][ac_maihuo]"+ac_maihuo);
+		logger.info("["+this.getClass()+"][to_zhangzu_analysis_2022][ac_maihuo]"+ac_maihuo);
 		list_zz_analysis.add(zz_analysis);
 
 		request.setAttribute("list_zz_analysis", list_zz_analysis);
 
-		List<ZhangzuAnalysis> list_zz_type_analysis = new ArrayList<ZhangzuAnalysis>();
-		zz_analysis = new ZhangzuAnalysis();
-		list_zz_type_analysis = zhangzuService.get_analysis_by_type(zhangzu_ac);
+		// List<ZhangzuAnalysis> list_zz_type_analysis = new ArrayList<ZhangzuAnalysis>();
+		// zz_analysis = new ZhangzuAnalysis();
+		// list_zz_type_analysis = zhangzuService.get_analysis_by_type(zhangzu_ac);
 		
-		request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
+		// request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
 		
 		
-		
-		List<ZhangzuAnalysis> list_2021_zz_analysis = zhangzuService.get_analysis_2021();
-		request.setAttribute("list_2021_zz_analysis", list_2021_zz_analysis);
+		// request.setAttribute("list_zz_analysis", list_zz_analysis);
 		//ResponseUtil.write(response, result);
-		logger.info("["+this.getClass()+"][to_zhangzu_analysis_2021][end] to zhangzu_analysis_2021.jsp");
-		 */
-		return "analysis_2021";
+		logger.info("["+this.getClass()+"][analysis_2022][end] to analysis_2022.jsp");
+
+		return "analysis_2022";
 	}
 
 }
