@@ -35,7 +35,7 @@ public class MainTest extends BaseSeleniumTests {
 
         // 検証
         title = driver.getTitle();
-        assertThat(title, is("宋账本"));
+        assertThat(title, is("李账本"));
     }
     @Test
     public void 正常系02_insert() throws Exception {

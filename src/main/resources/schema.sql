@@ -5,9 +5,9 @@ CREATE TABLE DEPT (
     NAME VARCHAR(255) NOT NULL
 );
 
-DROP TABLE IF EXISTS t_zhangzu;
+DROP TABLE IF EXISTS li_zhangzu;
 
-CREATE TABLE t_zhangzu (
+CREATE TABLE li_zhangzu (
     id IDENTITY NOT NULL PRIMARY KEY,
     z_date VARCHAR(255),
     z_name VARCHAR(255),
@@ -25,7 +25,7 @@ CREATE VIEW v_zhangzu_zhichu_2022 AS
             7) AS `ac`,
         SUM(z_amount) AS `amount`
     FROM
-        t_zhangzu
+        li_zhangzu
     WHERE
         ((z_date LIKE '2022%')
             AND (z_io_div = '支出'))
@@ -38,7 +38,7 @@ CREATE VIEW v_zhangzu_shouru_2022 AS
             7) AS `ac`,
         SUM(z_amount) AS `amount`
     FROM
-        t_zhangzu
+        li_zhangzu
     WHERE
         ((z_date LIKE '2022%')
             AND (z_io_div = '收入'))
@@ -51,7 +51,7 @@ CREATE VIEW v_zhangzu_maihuo_2022 AS
             7) AS `ac`,
         SUM(z_amount) AS `amount`
     FROM
-        t_zhangzu
+        li_zhangzu
     WHERE
         ((z_date LIKE '2022%')
             AND (z_io_div = '买货'))
