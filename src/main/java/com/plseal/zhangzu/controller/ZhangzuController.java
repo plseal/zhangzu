@@ -42,7 +42,7 @@ public class ZhangzuController {
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public String index(Model model) throws Exception {
 
-		String sql = "SELECT * FROM t_zhangzu WHERE z_date like '2022%' order by z_date desc ";
+		String sql = "SELECT * FROM li_zhangzu WHERE z_date like '2022%' order by z_date desc ";
 
 		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);
@@ -77,13 +77,13 @@ public class ZhangzuController {
 		@RequestParam("z_m_amount") BigInteger z_m_amount
 		) throws Exception {
 		logger.info("insert_post() z_date:" + z_date);
-		String sql = "INSERT INTO t_zhangzu VALUES(null,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO li_zhangzu VALUES(null,?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount);
 
 		String z_date_month = z_date.substring(0,7);
 		logger.info("z_date_month:" + z_date_month);
 
-		String sql_index = "SELECT * FROM t_zhangzu WHERE z_date like '" + z_date_month + "%' order by z_date desc ";
+		String sql_index = "SELECT * FROM li_zhangzu WHERE z_date like '" + z_date_month + "%' order by z_date desc ";
         
 		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql_index, rowMapper);
@@ -107,15 +107,15 @@ public class ZhangzuController {
 		logger.info("update_delete_post() update_delete_button:" + update_delete_button);
 
 		if("UPDATE".equals(update_delete_button)) {
-			String sql_update = "update t_zhangzu set z_date = ?,z_name = ?,z_amount = ?,z_type = ?,z_io_div = ?,z_remark = ?,z_m_amount = ? where id = ?";
+			String sql_update = "update li_zhangzu set z_date = ?,z_name = ?,z_amount = ?,z_type = ?,z_io_div = ?,z_remark = ?,z_m_amount = ? where id = ?";
 			jdbcTemplate.update(sql_update,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount,id);
 		} else {
-			String sql_delete = "delete from t_zhangzu where id = ?";
+			String sql_delete = "delete from li_zhangzu where id = ?";
 			jdbcTemplate.update(sql_delete,id);
 		}
 		String z_date_month = z_date.substring(0,7);
 		logger.info("z_date_month:" + z_date_month);
-		String sql_index = "SELECT * FROM t_zhangzu WHERE z_date like '"+z_date_month+"%' order by z_date desc ";
+		String sql_index = "SELECT * FROM li_zhangzu WHERE z_date like '"+z_date_month+"%' order by z_date desc ";
         
 		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql_index, rowMapper);
@@ -129,7 +129,7 @@ public class ZhangzuController {
 	public String update(Model model, @RequestParam("id")Integer id) throws Exception {
 
 		List<Map<String, Object>> list;
-        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu WHERE id = ? order by z_date desc ", id);
+        list = jdbcTemplate.queryForList("SELECT * FROM li_zhangzu WHERE id = ? order by z_date desc ", id);
         logger.info("list.size():"+list.size());
         logger.info("list.get(0):"+list.get(0));
 		Zhangzu zhangzu = new Zhangzu();
