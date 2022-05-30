@@ -30,13 +30,19 @@
 		<div class="container">
 			
 			<div class="page-content">
-				
+				<div class="col-sm-12">
+
+					<a onclick="location.href='/zhangzu/index'" >
+						<h2 class="text-center">李帐本</h2>
+
+					</a>
+				</div>
+				<br/>
 				<div class="col-sm-12 ">
 					<h1>
 						<small>
 							<i class="icon-list-alt"></i>
 							统计分析
-							
 						</small>
 					</h1>
 				</div>
@@ -45,83 +51,67 @@
 				<br/>
 				<br/>
 				<br/>
-							<!--PAGE CONTENT BEGINS-->
-							
-							<div class="form-group">
-								<label class="col-sm-2 control-label">账单年月：</label>
-								<div class="col-sm-10">
-									<select class="form-control" id="zhangzu_ac" name="zhangzu_ac" >
-									  <option value="2022/01">2022/01</option>
+			
+				<!--
+				年月	支出	收入	余额	买货
+				2022/01	9608	0	9608	0
+				-->
+				<div class="form-group">
+					<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr >
+							<!--
+							<th width="5%">ID</th>
+							-->
+							<th width="20%">年月</th>
+							<th width="20%">支出</th>
+							<th width="20%">收入</th>
+							<th width="20%">余额</th>
+							<th width="20%">买货</th>
+						</tr>
+					</thead>
+					<tbody>
 
-									</select>
-								</div>
+					<tr th:each="zz_analysis : ${list_zz_analysis}">
+						<td th:text="${zz_analysis.ac}"></td><!--年月-->
+						<td th:text="${zz_analysis.ac_min}"></td><!--支出-->
+						<td th:text="${zz_analysis.ac_plus}"></td><!--收入-->
+						<td th:text="${zz_analysis.ac_result}"></td><!--余额-->
+						<td th:text="${zz_analysis.ac_maihuo}"></td><!--买货-->
+					</tr>
 
-							</div>
-							<div class="form-group">
-								<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-								<thead>
-									<tr >
-										<!--
-										<th width="5%">ID</th>
-										-->
-										<th width="20%">年月</th>
-										<th width="20%">支出</th>
-										<th width="20%">收入</th>
-										<th width="20%">余额</th>0
-										<th width="20%">买货</th>
->
-									</tr>
-								</thead>
-								<tbody>
+					</tbody>
+				</table>
+				</div>
+				<!--
 
-								<tr th:each="zz_analysis : ${list_zz_analysis}">
-									<td th:text="${zz_analysis.ac}"></td><!--年月-->
-									<td th:text="${zz_analysis.ac_min}"></td><!--支出-->
-									<td th:text="${zz_analysis.ac_plus}"></td><!--收入-->
-									<td th:text="${zz_analysis.ac_result}"></td><!--余额-->
-									<td th:text="${zz_analysis.ac_maihuo}"></td><!--买货-->
-								</tr>
-
-								</tbody>
-							</table>
-						</div>
+				年月	支出	分类
+				2022/01	-5000	餐饮饮食
+				2022/01	-3608	李服饰
+				2022/01	-1000	日常用品
+				-->
+				<div class="form-group">
+					<table id="group-by-type-table" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr >
+							<!--
+							<th width="5%">ID</th>
+							-->
+							<th width="33%">年月</th>
+							<th width="33%">支出</th>
+							<th width="33%">分类</th>										
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="zz_analysis : ${list_zz_type_analysis}">
+							<td th:text="${zz_analysis.ac}"></td><!--年月-->
+							<td th:text="${zz_analysis.ac_min}"></td><!--支出-->
+							<td th:text="${zz_analysis.ac_type}"></td><!--支出-->
+						</tr>
 						
-						
-						
-							<div class="form-group">
-								<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-								<thead>
-									<tr >
-										<!--
-										<th width="5%">ID</th>
-										-->
-										<th width="33%">年月</th>
-										<th width="33%">支出</th>
-										<th width="33%">分类</th>										
-									</tr>
-								</thead>
-								<tbody>
-								<c:forEach items="${list_zz_type_analysis}"  var="zz_analysis"  >
-								
-									<tr >
-
-									
-										<!--
-										<td><a target='_blank' href='${pageContext.request.contextPath}/blog/articles/${blog.id}.html'>${chr.id}</a></td>
-										-->
-										<!--
-										<td>${zhangzu.id}</td>
-										-->
-										<td>${zz_analysis.ac}</td>
-										<td><a href='https://www.plseal.com:8090/index_for_analysis?AC=${zz_analysis.ac}&IO=MIN&AC_TYPE=${zz_analysis.ac_type}'>${zz_analysis.ac_min}</td>
-										<td>${zz_analysis.ac_type}</td>
-										
-										
-									</tr>
-								</c:forEach>
-								</tbody>
-							</table>
-						</div>
+					</tbody>
+				</table>
+			</div>
 							<!--PAGE CONTENT ENDS-->
 
 	</div><!--/.main-container-->
@@ -129,7 +119,7 @@
 	
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
-<script type="text/javascript">
+<script th:inline="javascript">
 		
 // window.onload=function(){
 // 	<c:forEach items="${list_zz_analysis}"  var="zz_analysis"  >
@@ -149,29 +139,19 @@
 			
 </script>
     <script th:inline="javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
-	  const list_zz_analysis =/*[[${list_zz_analysis}]]*/
-	  list_zz_analysis.forEach(function (a) {
-		console.log(a.ac);
-		console.log(a.ac_min);
-	  });
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Month', '支出', '收入', '余额', '买货'],
-		// <c:forEach items="${list_2022_zz_analysis}"  var="zz_analysis"  varStatus="status">
+		google.charts.load('current', {'packages':['bar']});
+		google.charts.setOnLoadCallback(drawChart);
+		let array_header = ['Month', '支出', '收入', '余额', '买货'];
+		let list_for_chart = [array_header];
+		var row_cnt = 0;
+		var list_zz_analysis =/*[[${list_zz_analysis}]]*/
 		
-		// 		['${zz_analysis.ac}', ${zz_analysis.ac_min}, ${zz_analysis.ac_plus}, ${zz_analysis.ac_result},${zz_analysis.ac_maihuo}]<c:if test="${not (status.count eq listSize)}">,</c:if>
+		list_zz_analysis.forEach(function(zz_analysis){
+			list_for_chart.push([zz_analysis.ac, zz_analysis.ac_min, zz_analysis.ac_plus, zz_analysis.ac_result, zz_analysis.ac_maihuo]);
+		});
 
-		// </c:forEach>
-				//['2020/01', 139724, 396398, 256674,0],
-				//['2020/02', 299392, 145246, -154146,0],
-				//['2020/03', 560947, 549570, -11377,239393],
-				//['2020/04', 371730, 396398, 24668,79976]
-
-
-
-        ]);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(list_for_chart);
 
         var options = {
           chart: {
