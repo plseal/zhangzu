@@ -177,9 +177,9 @@ public class ZhangzuController {
 		"IFNULL(ZHI.AMOUNT,0) ac_min,"+
 		"IFNULL(SHOU.AMOUNT - ZHI.AMOUNT, 0) ac_result,"+
 		"IFNULL(MAI.AMOUNT,0) ac_maihuo "+
-		"FROM v_zhangzu_zhichu_2022 ZHI " +
-		"left join v_zhangzu_shouru_2022 SHOU on  ZHI.AC = SHOU.AC " + 
-		"left join v_zhangzu_maihuo_2022 MAI on  ZHI.AC = MAI.AC " + 
+		"FROM v_li_zhangzu_zhichu_2022 ZHI " +
+		"left join v_li_zhangzu_shouru_2022 SHOU on  ZHI.AC = SHOU.AC " + 
+		"left join v_li_zhangzu_maihuo_2022 MAI on  ZHI.AC = MAI.AC " + 
 		"order by ac";
 		logger.info("["+this.getClass()+"][analysis_2022][SQL1]"+strSQL1);
         list1_zz_analysis = jdbcTemplate.queryForList(strSQL1);
