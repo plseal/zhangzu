@@ -18,7 +18,7 @@ CREATE TABLE li_zhangzu (
     z_m_amount BIGINT
 );
 
-CREATE VIEW v_zhangzu_zhichu_2022 AS
+CREATE VIEW v_li_zhangzu_zhichu_2022 AS
     SELECT 
         SUBSTR(z_date,
             1,
@@ -31,7 +31,7 @@ CREATE VIEW v_zhangzu_zhichu_2022 AS
             AND (z_io_div = '支出'))
     GROUP BY SUBSTR(z_date, 1, 7);
 
-CREATE VIEW v_zhangzu_shouru_2022 AS
+CREATE VIEW v_li_zhangzu_shouru_2022 AS
     SELECT 
         SUBSTR(z_date,
             1,
@@ -44,7 +44,7 @@ CREATE VIEW v_zhangzu_shouru_2022 AS
             AND (z_io_div = '收入'))
     GROUP BY SUBSTR(z_date, 1, 7);
 
-CREATE VIEW v_zhangzu_maihuo_2022 AS
+CREATE VIEW v_li_zhangzu_maihuo_2022 AS
     SELECT 
         SUBSTR(z_date,
             1,
