@@ -151,9 +151,13 @@ public class ZhangzuController {
 	}
 
 	@RequestMapping("/analysis_2022")
-	public String analysis_2022(HttpServletRequest request) throws Exception {
+	public String analysis_2022(String zhangzu_ac, HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][analysis_2022][start]");
+		logger.info("["+this.getClass()+"][analysis_2022][zhangzu_ac]"+zhangzu_ac);
 		
+		if ("".equals(zhangzu_ac) || zhangzu_ac == null) {
+			zhangzu_ac = "2022/01";
+		}
 
 		// 年月	支出	收入	余额	买货
 		// 2022/01	9608	0	9608	0
@@ -214,7 +218,7 @@ public class ZhangzuController {
 		"SELECT " +
 		"left(z_date,7) ac,z_type ac_type,sum(z_amount)*-1 ac_min "+
 		"FROM li_zhangzu " +
-		"where left(z_date,7) = '2022/01'" + 
+		"where left(z_date,7) = '" + zhangzu_ac + "' "+ 
 		"and z_io_div = '支出'  " + 
 		"GROUP BY  left(z_date,7),z_type   " + 
 		"order by ac_min";
