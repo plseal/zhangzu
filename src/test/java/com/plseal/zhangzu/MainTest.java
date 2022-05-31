@@ -60,7 +60,7 @@ public class MainTest extends BaseSeleniumTests {
         WebElement z_type = this.driver.findElement(By.id("z_type"));
         Select dropdown = new Select(z_type);
         assertNotNull(z_type);
-        dropdown.selectByValue("餐饮饮食");
+        dropdown.selectByValue("甲油胶透色");
 
         WebElement z_io_div = this.driver.findElement(By.id("z_io_div"));
         assertNotNull(z_io_div);
@@ -103,7 +103,7 @@ public class MainTest extends BaseSeleniumTests {
 
         WebElement z_name = this.driver.findElement(By.id("z_name"));
         assertNotNull(z_name);
-        testCommon.setAttributeValue(driver,z_name,"テスト01");
+        testCommon.setAttributeValue(driver,z_name,"美甲收入");
 
         WebElement z_amount = this.driver.findElement(By.id("z_amount"));
         assertNotNull(z_amount);
@@ -112,7 +112,7 @@ public class MainTest extends BaseSeleniumTests {
         WebElement z_type = this.driver.findElement(By.id("z_type"));
         Select dropdown = new Select(z_type);
         assertNotNull(z_type);
-        dropdown.selectByValue("交通费");
+        dropdown.selectByValue("美甲收入");
 
         WebElement z_io_div = this.driver.findElement(By.id("z_io_div"));
         assertNotNull(z_io_div);
