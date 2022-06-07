@@ -42,7 +42,7 @@ public class DbController {
         logger.info("AC_TYPE:"+AC_TYPE);
         //List<String> list = Arrays.asList("aa", "bb", "cc");
 		List<Map<String, Object>> list;
-        list = jdbcTemplate.queryForList("SELECT * FROM li_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_io_div = '支出' and z_type = ? order by z_date desc ",
+        list = jdbcTemplate.queryForList("SELECT * FROM t_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_io_div = '支出' and z_type = ? order by z_date desc ",
 		AC, AC_TYPE);
 
 
@@ -65,7 +65,7 @@ public class DbController {
         List<Map<String, Object>> list;
 
         list = jdbcTemplate.queryForList(
-                "SELECT * FROM li_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_name like CONCAT('%',?,'%') and z_amount = ? order by z_date desc ",
+                "SELECT * FROM t_zhangzu WHERE z_date like CONCAT('%',?,'%') and z_name like CONCAT('%',?,'%') and z_amount = ? order by z_date desc ",
                 z_date, z_name, z_amount);
         // Map<String, String> resultJson = Collections.singletonMap("result", "OK");
         logger.info("list.size():"+list.size());
@@ -103,7 +103,7 @@ public class DbController {
         logger.info("z_io_div:"+z_io_div);
         logger.info("z_remark:"+z_remark);
         jdbcTemplate.update(
-                "INSERT INTO li_zhangzu VALUES(null,?,?,?,?,?,?,null) ",
+                "INSERT INTO t_zhangzu VALUES(null,?,?,?,?,?,?,null) ",
                 z_date, z_name, z_amount, z_type, z_io_div, z_remark);
         //Integer id = jdbcTemplate.queryForObject("SELECT lastval()", Integer.class);
 
