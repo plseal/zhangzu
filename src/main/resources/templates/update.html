@@ -24,7 +24,7 @@
 		<div class="container">
             <div class="col-sm-12">
                 <a onclick="location.href='/zhangzu/index'" >
-                    <h2 class="text-center">宋帐本2022</h2>
+                    <h2 class="text-center">李帐本2022</h2>
                 </a>
             </div>
             <br/>
@@ -116,13 +116,6 @@
 
 	
 <script type="text/javascript" th:inline="javascript">
-/*<![CDATA[*/
-window.onload=function(){
-
-	$("#z_type").val("/*[[ ${zhangzu.z_type} ]]*/");
-	$("#z_io_div").val("/*[[ ${zhangzu.z_io_div} ]]*/");
-
-}
 
 function do_post() {  
 	var form = document.forms[0];  
@@ -145,7 +138,7 @@ var year = new Date().getFullYear();
 var month = new Date().getMonth() + 1;
 var day = new Date().getDate();
 var today = year + "/" + month + "/" +day;
-//alert(today);
+// alert(today);
 $('.form_date').datetimepicker({
 	language:  'zh-CN',
 	weekStart: 1,
@@ -171,11 +164,8 @@ $('.form_date').on('changeDate', function(ev){
 	
 	document.getElementById("z_date").value = z_YYYYMMDDday;
 	
-	//alert(z_YYYYMMDDday);
-		
-	//}
 });	
-/*]]>*/
+
 </script>
 </form>
 </div>
