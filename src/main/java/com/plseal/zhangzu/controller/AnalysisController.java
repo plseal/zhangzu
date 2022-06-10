@@ -97,7 +97,7 @@ public class AnalysisController {
 		"where "+ 
 		"z_io_div = '支出'  " + 
 		"GROUP BY  left(z_date,4),z_type   " + 
-		"order by ac_min";
+		"order by ac, ac_min";
 
 		logger.info("["+this.getClass()+"][analysis_song][SQL2]"+strSQL2);
 		List<ZhangzuAnalysis> list_zz_type_analysis = new ArrayList<ZhangzuAnalysis>();
