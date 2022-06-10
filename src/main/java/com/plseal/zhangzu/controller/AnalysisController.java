@@ -90,13 +90,12 @@ public class AnalysisController {
 		// 年月	  支出 分类
 		// 2022 100  餐饮饮食
 		// 2022 100  诚诚
-        String zhangzu_year = "2022";
-		String strSQL2 =
+ 		String strSQL2 =
 		"SELECT " +
 		"left(z_date,4) ac,z_type ac_type,sum(z_amount)*-1 ac_min "+
 		"FROM t_zhangzu " +
-		"where left(z_date,4) = '" + zhangzu_year + "' "+ 
-		"and z_io_div = '支出'  " + 
+		"where "+ 
+		"z_io_div = '支出'  " + 
 		"GROUP BY  left(z_date,4),z_type   " + 
 		"order by ac_min";
 
