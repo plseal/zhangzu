@@ -2,7 +2,7 @@
 <html >
 	<head>
 		<meta charset="utf-8" />
-		<title>李账本</title>
+		<title>宋账本</title>
 		<!--index.html -->
 		<meta http-equiv="pragma" content="no-cache"/>   
 		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/>   
@@ -32,7 +32,7 @@
 				<div class="col-sm-12">
 
 					<a onclick="location.href='/zhangzu/index'" >
-						<h2 class="text-center">李帐本</h2>
+						<h2 class="text-center">宋帐本</h2>
 
 					</a>
 				</div>
@@ -44,14 +44,6 @@
 							流水账一览
 						</small>
 					</h1>
-				</div>
-				<br/>
-		        <div class="col-sm-12">
-		          <button type="button" class="btn btn-lg btn-block btn-danger" onclick="location.href = '/zhangzu/insert';">添加新单据</button>
-		        </div>
-				<br/>
-		        <div class="col-sm-12">
-					<button type="button" class="btn btn-lg btn-block btn-warning" id="analysis_2022" onclick="location.href = '/zhangzu/analysis_2022';">统计分析(2022年)</button>
 				</div>
 				<br/>
 		        <div class="col-sm-12">
@@ -80,7 +72,7 @@
 							<th width="10%">收支</th>
 							<th width="20%">备注</th>
 							<th width="10%">售价</th>
-							<th width="10%">操作</th>
+							<th width="10%"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -93,9 +85,6 @@
 							<td th:text="${zhangzu.z_remark}"></td><!--备注-->
 							<td th:text="${zhangzu.z_m_amount}"></td><!--售价-->
 							<td>
-								<form action="/zhangzu/update" method="post">
-									<button class="btn btn-info btn-small" type="submit" name="id" th:value="${zhangzu.id}">编辑</button>
-								</form>
 							</td>
 						</tr>
 					</tbody>

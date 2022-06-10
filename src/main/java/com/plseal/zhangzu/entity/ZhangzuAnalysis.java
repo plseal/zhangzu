@@ -11,6 +11,8 @@ public class ZhangzuAnalysis {
 	private long ac_min;
 	private long ac_result;
 	private long ac_maihuo;
+	private String year_type;
+	
 	public void setId(int id){
 		this.id=id;
 	}
@@ -52,5 +54,11 @@ public class ZhangzuAnalysis {
 	}
 	public long getAc_maihuo(){
 		return ac_maihuo;
+	}
+	public void setYear_type(String year_type){
+		this.year_type=year_type;
+	}
+	public String getYear_type(){
+		return year_type;
 	}
 }
