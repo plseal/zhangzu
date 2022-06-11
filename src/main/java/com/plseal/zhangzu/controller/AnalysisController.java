@@ -30,9 +30,6 @@ public class AnalysisController {
 	public String analysis_song(HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][analysis_song][start]");
 
-		ZhangzuAnalysis zz_analysis;
-		String str_ac_type = "";
-
 		// ****************
 		// for pie chart
 		// ****************
@@ -64,17 +61,16 @@ public class AnalysisController {
 		// for pulldown list
 		// ********************
 		// z_type一覧
-		List<ZhangzuAnalysis> list_ac_type = new ArrayList<ZhangzuAnalysis>();
+		List<ZhangzuAnalysis> list_ac_type = get_distinct_ac_type_by_year("2022");
 		request.setAttribute("list_ac_type", list_ac_type);
 		
-		logger.info("["+this.getClass()+"][analysis_song][end] to analysis_song.jsp");
-
 		// ********************
 		// for search button
 		// ********************
 		String selectedValue_year_type = "2022_餐饮饮食";
 		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
 		
+		logger.info("["+this.getClass()+"][analysis_song][end] to analysis_song.jsp");
 
 		return "analysis_song";
 	}
