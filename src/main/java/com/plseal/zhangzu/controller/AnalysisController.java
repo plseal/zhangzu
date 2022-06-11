@@ -158,7 +158,12 @@ public class AnalysisController {
         logger.info("["+this.getClass()+"][to_detail][year_type]" + year_type + " ");
         String[] array_year_type = year_type.split("_");
 
-		String sql = "SELECT z_date,z_name,z_amount,z_type,z_io_div,z_remark,0 as z_m_amount FROM t_zhangzu WHERE z_date like '"+ array_year_type[0] + "%' and z_type = '" + array_year_type[1] + "' order by z_date desc ";
+		String sql = "SELECT z_date,z_name,z_amount,z_type,z_io_div,z_remark,0 as z_m_amount " +
+		"FROM t_zhangzu " + 
+		"WHERE z_date like '"+ array_year_type[0] + "%' " + 
+		"and z_io_div = '支出' " + 
+		"and z_type = '" + array_year_type[1] + "' " + 
+		"order by z_date desc ";
 
 		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);
