@@ -8,7 +8,7 @@
 		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/>   
 		<meta http-equiv="expires" content="0"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
-		<link th:href="@{/bootstrap3.0.0/css/bootstrap.min.css}" rel="stylesheet"></link>
+		<link th:href="@{/bootstrap5.0.2/css/bootstrap.min.css}" rel="stylesheet"></link>
 		<link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet"></link>
 		<style> 
 		.css_red{color:#F00} 
@@ -18,7 +18,7 @@
 		
 		<script type="text/javascript" th:src="@{/js/jquery-easyui-1.3.3/jquery.min.js}"></script>
 		
-		<script type="text/javascript" th:src="@{/bootstrap3.0.0/js/bootstrap.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/bootstrap5.0.2/js/bootstrap.min.js}" ></script>
 		
 		
 		<script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.js}" charset="UTF-8"></script>
@@ -31,11 +31,9 @@
 			
 			<div class="page-content">
 				<div class="col-sm-12">
-
-					<a onclick="location.href='/zhangzu/index'" >
-						<h2 class="text-center">宋帐本统计分析</h2>
-
-					</a>
+					<h2 class="text-center">
+						<a href="/zhangzu/index" class="link-primary">宋帐本统计分析</a>
+					</h2>
 				</div>
 				<br/>
 				<div class="col-sm-12 ">
@@ -81,6 +79,30 @@
 						</tbody>
 					</table> -->
 				</div>
+				<div class="container">
+					<select id="select_list_ac_year" class="form-select" aria-label="Default select example">
+						<option
+							th:each="zz_analysis : ${list_ac_year}"
+							th:value="${zz_analysis.ac_year}"
+							th:text="${zz_analysis.ac_year}"
+							th:selected="${zz_analysis.ac_year == selectedValue_ac_year}">
+						</option>
+					</select>
+					<select id="select_list_ac_type" class="form-select" aria-label="Default select example">
+						<option
+							th:each="zz_analysis : ${list_ac_type}"
+							th:value="${zz_analysis.ac_type}"
+							th:text="${zz_analysis.ac_type}"
+							th:selected="${zz_analysis.ac_type == selectedValue_ac_type}">
+						</option>
+					</select>
+					<form action="/analysis/to_analysis_song" method="post">
+						<button class="btn btn-info btn-small" type="submit" id="selectedValue_year_type" name="selectedValue_year_type" th:value="${selectedValue_year_type}">查询</button>
+					</form>
+				</div>
+				<div class="alert alert-danger" role="alert" th:text="${alert_count_0}">
+					
+				</div>
 				<!--
 
 				年	支出	分类
@@ -124,7 +146,22 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
 <script th:inline="javascript">
-		
+	//jquery
+	// 下拉列表onchange 把新的值给button设定进去
+	$("#selectedValue_year_type").val($('#select_list_ac_year').find(":selected").val() + "_" + $('#select_list_ac_type').find(":selected").val());
+	$('#select_list_ac_year').on('change', function() {
+		$("#selectedValue_year_type").val($('#select_list_ac_year').find(":selected").val() + "_" + $('#select_list_ac_type').find(":selected").val());
+		var selectedValue_year_type = $("#selectedValue_year_type");
+		// alert(selectedValue_year_type.val())
+	});
+	$('#select_list_ac_type').on('change', function() {
+		$("#selectedValue_year_type").val($('#select_list_ac_year').find(":selected").val() + "_" + $('#select_list_ac_type').find(":selected").val());
+		var selectedValue_year_type = $("#selectedValue_year_type");
+		// alert(selectedValue_year_type.val())
+	});
+	var selectedValue_year_type = $("#selectedValue_year_type");
+	// alert(selectedValue_year_type.val())
+
 // window.onload=function(){
 // 	<c:forEach items="${list_zz_analysis}"  var="zz_analysis"  >
 // 		$("#zhangzu_ac").val("${zz_analysis.ac}");
