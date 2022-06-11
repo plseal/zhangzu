@@ -31,8 +31,6 @@ public class AnalysisController {
 		logger.info("["+this.getClass()+"][analysis_song][start]");
 
 		ZhangzuAnalysis zz_analysis;
-		String str_ac = "";
-		long ac_min ;
 		String str_ac_type = "";
 
 		// ****************
@@ -274,7 +272,7 @@ public class AnalysisController {
 		List<ZhangzuAnalysis> list_result = new ArrayList<ZhangzuAnalysis>();
 		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL2);
         logger.info("list.size():"+list_tmp.size());
-		if (list_tmp.size() == 0) {
+		if (list_tmp.size() > 0) {
         	logger.info("list.get(0):"+list_tmp.get(0));
 
 			for(int i = 0 ; i < list_tmp.size() ; i++) {
@@ -285,6 +283,7 @@ public class AnalysisController {
 				zz_analysis.setAc(str_ac);
 				zz_analysis.setAc_type(str_ac_type);
 				zz_analysis.setAc_min(ac_min);
+				zz_analysis.setYear_type(str_ac + "_" + str_ac_type);
 				list_result.add(zz_analysis);
 			}
 		} 
