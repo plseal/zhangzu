@@ -35,61 +35,49 @@ public class AnalysisController {
 			zhangzu_ac = "2022/01";
 		}
 
-		// 年月	支出	收入	余额	买货
-		// 2022/01	9608	0	9608	0
+		// 年(2022だけ)	  支出 分类
+		// 2022 100  餐饮饮食
+		// 2022 100  诚诚
 		ZhangzuAnalysis zz_analysis;
 		
 		String str_ac = "";
 		long ac_min ;
-		long ac_plus ;
-		long ac_result;
-		long ac_maihuo;
 		String str_ac_type = "";
-		// List<ZhangzuAnalysis> list_zz_analysis = new ArrayList<ZhangzuAnalysis>();
+
+		String strSQL1 =
+		"SELECT " +
+		"left(z_date,4) ac,z_type ac_type,sum(z_amount) ac_min "+
+		"FROM t_zhangzu " +
+		"where "+ 
+		"left(z_date,4) = '2022' " + 
+		"and z_io_div = '支出'  " + 
+		"GROUP BY  left(z_date,4),z_type   " + 
+		"order by ac, ac_min";
+		logger.info("["+this.getClass()+"][analysis_song][SQL1]"+strSQL1);
+		List<ZhangzuAnalysis> list_z_type_analysis_by_year = new ArrayList<ZhangzuAnalysis>();
+		List<Map<String, Object>> list1_z_type_analysis_by_year = jdbcTemplate.queryForList(strSQL1);
+        logger.info("list.size():"+list1_z_type_analysis_by_year.size());
+        logger.info("list.get(0):"+list1_z_type_analysis_by_year.get(0));
+
+		for(int i = 0 ; i < list1_z_type_analysis_by_year.size() ; i++) {
+			zz_analysis = new ZhangzuAnalysis();
+			str_ac  = list1_z_type_analysis_by_year.get(i).get("ac").toString();
+			ac_min = Integer.valueOf(list1_z_type_analysis_by_year.get(i).get("ac_min").toString());
+			str_ac_type = list1_z_type_analysis_by_year.get(i).get("ac_type").toString();
+			zz_analysis.setAc(str_ac);
+			zz_analysis.setAc_type(str_ac_type);
+            zz_analysis.setAc_min(ac_min);
+			list_z_type_analysis_by_year.add(zz_analysis);
+		}
+
+		request.setAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
+		request.setAttribute("analysis_title_ac_year", "2022");
 		
-		// zz_analysis = new ZhangzuAnalysis();
-		// List<Map<String, Object>> list1_zz_analysis;
-		// String strSQL1 =
-		// "SELECT 1," +
-		// "ZHI.AC ac,"+
-		// "'XXXX' ac_type,"+
-		// "IFNULL(SHOU.AMOUNT,0) ac_plus,"+
-		// "IFNULL(ZHI.AMOUNT,0) ac_min,"+
-		// "IFNULL(SHOU.AMOUNT - ZHI.AMOUNT, 0) ac_result,"+
-		// "IFNULL(MAI.AMOUNT,0) ac_maihuo "+
-		// "FROM v_li_zhangzu_zhichu_2022 ZHI " +
-		// "left join v_li_zhangzu_shouru_2022 SHOU on  ZHI.AC = SHOU.AC " + 
-		// "left join v_li_zhangzu_maihuo_2022 MAI on  ZHI.AC = MAI.AC " + 
-		// "order by ac";
-		// logger.info("["+this.getClass()+"][analysis_song][SQL1]"+strSQL1);
-        // list1_zz_analysis = jdbcTemplate.queryForList(strSQL1);
-        // // Map<String, String> resultJson = Collections.singletonMap("result", "OK");
-        // logger.info("list.size():"+list1_zz_analysis.size());
-        // logger.info("list.get(0):"+list1_zz_analysis.get(0));
 
-		// logger.info("["+this.getClass()+"][to_zhangzu_analysis_song][list1_zz_analysis.size()]"+list1_zz_analysis.size());
-		// for(int i = 0 ; i < list1_zz_analysis.size() ; i++) {
-		// 	zz_analysis = new ZhangzuAnalysis();
-		// 	str_ac  = list1_zz_analysis.get(i).get("ac").toString();
-		// 	ac_min = Integer.valueOf(list1_zz_analysis.get(i).get("ac_min").toString());
-		// 	ac_plus = Integer.valueOf(list1_zz_analysis.get(i).get("ac_plus").toString());
-		// 	ac_result = Integer.valueOf(list1_zz_analysis.get(i).get("ac_result").toString());
-		// 	ac_maihuo = Integer.valueOf(list1_zz_analysis.get(i).get("ac_maihuo").toString());
-		// 	str_ac_type = list1_zz_analysis.get(i).get("ac_type").toString();
-		// 	zz_analysis.setAc(str_ac);
-		// 	zz_analysis.setAc_min(ac_min);
-		// 	zz_analysis.setAc_plus(ac_plus);
-		// 	zz_analysis.setAc_result(ac_result);
-		// 	zz_analysis.setAc_maihuo(ac_maihuo);
-		// 	zz_analysis.setAc_type(str_ac_type);
-		// 	list_zz_analysis.add(zz_analysis);
-		// }
-
-		// request.setAttribute("list_zz_analysis", list_zz_analysis);
-
-		// 年	  支出 分类
-		// 2022 100  餐饮饮食
-		// 2022 100  诚诚
+		// 年(全年度)		  支出 分类
+		// 2022              100  餐饮饮食
+		// 2022              100  诚诚
+		// 2021              100  诚诚
  		String strSQL2 =
 		"SELECT " +
 		"left(z_date,4) ac,z_type ac_type,sum(z_amount)*-1 ac_min "+
