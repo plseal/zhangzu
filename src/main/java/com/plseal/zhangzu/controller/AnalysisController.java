@@ -57,21 +57,7 @@ public class AnalysisController {
 		// for pulldown list
 		// ********************
 		// 年一覧
-		List<ZhangzuAnalysis> list_ac_year = new ArrayList<ZhangzuAnalysis>();
-		String strSQL3 = "select distinct left(z_date,4) as ac_year from t_zhangzu";
-		logger.info("["+this.getClass()+"][analysis_song][SQL3]"+strSQL3);
-		List<Map<String, Object>> list1_ac_year = jdbcTemplate.queryForList(strSQL3);
-        logger.info("list.size():"+list1_ac_year.size());
-        logger.info("list.get(0):"+list1_ac_year.get(0));
-		String str_ac_year = "";
-		for(int i = 0 ; i < list1_ac_year.size() ; i++) {
-			zz_analysis = new ZhangzuAnalysis();
-			str_ac_year  = list1_ac_year.get(i).get("ac_year").toString();
-			zz_analysis.setAc_year(str_ac_year);
-			list_ac_year.add(zz_analysis);
-		}
-		// プルダウンの初期値
-        request.setAttribute("selectedValue_ac_year", "2022");
+		List<ZhangzuAnalysis> list_ac_year = get_distinct_ac_year();
 		request.setAttribute("list_ac_year", list_ac_year);
 
 		// ********************
@@ -79,24 +65,13 @@ public class AnalysisController {
 		// ********************
 		// z_type一覧
 		List<ZhangzuAnalysis> list_ac_type = new ArrayList<ZhangzuAnalysis>();
-		String strSQL4 = "select distinct z_type as ac_type from t_zhangzu";
-		logger.info("["+this.getClass()+"][analysis_song][SQL4]"+strSQL4);
-		List<Map<String, Object>> list1_ac_type = jdbcTemplate.queryForList(strSQL4);
-        logger.info("list.size():"+list1_ac_type.size());
-        logger.info("list.get(0):"+list1_ac_type.get(0));
-		for(int i = 0 ; i < list1_ac_type.size() ; i++) {
-			zz_analysis = new ZhangzuAnalysis();
-			str_ac_type  = list1_ac_type.get(i).get("ac_type").toString();
-			zz_analysis.setAc_type(str_ac_type);
-			list_ac_type.add(zz_analysis);
-		}
-		// プルダウンの初期値
-        // request.setAttribute("selectedValue_ac_type", "餐饮饮食");
 		request.setAttribute("list_ac_type", list_ac_type);
-
 		
 		logger.info("["+this.getClass()+"][analysis_song][end] to analysis_song.jsp");
 
+		// ********************
+		// for search button
+		// ********************
 		String selectedValue_year_type = "2022_餐饮饮食";
 		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
 		
@@ -130,8 +105,6 @@ public class AnalysisController {
         logger.info("["+this.getClass()+"][to_analysis_song][selectedValue_year_type]" + selectedValue_year_type + " ");
 		String[] array_selectedValue_year_type = selectedValue_year_type.split("_");
 
-		ZhangzuAnalysis zz_analysis;
-		String str_ac_type = "";
 		String ac_year = array_selectedValue_year_type[0];
 		String ac_type = array_selectedValue_year_type[1];
 
@@ -162,53 +135,28 @@ public class AnalysisController {
 		// for pulldown list
 		// ********************
 		// 年一覧
-		List<ZhangzuAnalysis> list_ac_year = new ArrayList<ZhangzuAnalysis>();
-		String strSQL3 = "select distinct left(z_date,4) as ac_year from t_zhangzu";
-		logger.info("["+this.getClass()+"][to_analysis_song][SQL3]"+strSQL3);
-		List<Map<String, Object>> list1_ac_year = jdbcTemplate.queryForList(strSQL3);
-        logger.info("list.size():"+list1_ac_year.size());
-        logger.info("list.get(0):"+list1_ac_year.get(0));
-		String str_ac_year = "";
-		for(int i = 0 ; i < list1_ac_year.size() ; i++) {
-			zz_analysis = new ZhangzuAnalysis();
-			str_ac_year  = list1_ac_year.get(i).get("ac_year").toString();
-			zz_analysis.setAc_year(str_ac_year);
-			list_ac_year.add(zz_analysis);
-		}
+		List<ZhangzuAnalysis> list_ac_year = get_distinct_ac_year();
+
 		// プルダウンの初期値
-        request.setAttribute("selectedValue_ac_year", array_selectedValue_year_type[0]);
+        request.setAttribute("selectedValue_ac_year", ac_year);
 		request.setAttribute("list_ac_year", list_ac_year);
+
 		// ********************
 		// for pulldown list
 		// ********************
 		// z_type一覧
-		List<ZhangzuAnalysis> list_ac_type = new ArrayList<ZhangzuAnalysis>();
-		String strSQL4 = "select distinct z_type as ac_type from t_zhangzu";
-		logger.info("["+this.getClass()+"][to_analysis_song][SQL4]"+strSQL4);
-		List<Map<String, Object>> list1_ac_type = jdbcTemplate.queryForList(strSQL4);
-        logger.info("list.size():"+list1_ac_type.size());
-		if (list1_ac_type.size() == 0) {
-			request.setAttribute("alert_count_0", "没查到数据");
-		} else {
-			logger.info("list.get(0):"+list1_ac_type.get(0));
-			for(int i = 0 ; i < list1_ac_type.size() ; i++) {
-				zz_analysis = new ZhangzuAnalysis();
-				str_ac_type  = list1_ac_type.get(i).get("ac_type").toString();
-				zz_analysis.setAc_type(str_ac_type);
-				list_ac_type.add(zz_analysis);
-			}
-			request.setAttribute("list_ac_type", list_ac_type);
-		}
+		List<ZhangzuAnalysis> list_ac_type = get_distinct_ac_type_by_year(ac_year);
 
 		// プルダウンの初期値
-        request.setAttribute("selectedValue_ac_type", array_selectedValue_year_type[1]);
+        request.setAttribute("selectedValue_ac_type", ac_type);
+		request.setAttribute("list_ac_type", list_ac_type);
+
+		// ********************
+		// for search button
+		// ********************
 		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
 		
-		
 		logger.info("["+this.getClass()+"][to_analysis_song][end] to analysis_song.jsp");
-
-		
-		
 		
 		return "analysis_song";
 	}
@@ -287,6 +235,49 @@ public class AnalysisController {
 				list_result.add(zz_analysis);
 			}
 		} 
+		return list_result;
+	}
+
+	// 年	
+	// 2022 
+	// 2021 
+	// 2020 
+	public List<ZhangzuAnalysis> get_distinct_ac_year() throws Exception {
+		ZhangzuAnalysis zz_analysis;
+		List<ZhangzuAnalysis> list_result = new ArrayList<ZhangzuAnalysis>();
+		String strSQL3 = "select distinct left(z_date,4) as ac_year from t_zhangzu order by ac_year desc";
+		logger.info("["+this.getClass()+"][get_distinct_ac_year][SQL3]"+strSQL3);
+		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL3);
+        logger.info("list.size():"+list_tmp.size());
+        logger.info("list.get(0):"+list_tmp.get(0));
+		String str_ac_year = "";
+		for(int i = 0 ; i < list_tmp.size() ; i++) {
+			zz_analysis = new ZhangzuAnalysis();
+			str_ac_year  = list_tmp.get(i).get("ac_year").toString();
+			zz_analysis.setAc_year(str_ac_year);
+			list_result.add(zz_analysis);
+		}
+		return list_result;
+	}
+
+	// type	
+	// 餐饮饮食 
+	// 诚诚
+	public List<ZhangzuAnalysis> get_distinct_ac_type_by_year(String ac_year) throws Exception {
+		ZhangzuAnalysis zz_analysis;
+		String str_ac_type;
+		List<ZhangzuAnalysis> list_result = new ArrayList<ZhangzuAnalysis>();
+		String strSQL4 = "select distinct z_type as ac_type from t_zhangzu where left(z_date,4) = '" + ac_year + "'";
+		logger.info("["+this.getClass()+"][get_distinct_ac_type_by_year][SQL4]"+strSQL4);
+		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL4);
+        logger.info("list.size():"+list_tmp.size());
+        logger.info("list.get(0):"+list_tmp.get(0));
+		for(int i = 0 ; i < list_tmp.size() ; i++) {
+			zz_analysis = new ZhangzuAnalysis();
+			str_ac_type  = list_tmp.get(i).get("ac_type").toString();
+			zz_analysis.setAc_type(str_ac_type);
+			list_result.add(zz_analysis);
+		}
 		return list_result;
 	}
 }
