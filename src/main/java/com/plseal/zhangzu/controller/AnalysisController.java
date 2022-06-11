@@ -172,6 +172,40 @@ public class AnalysisController {
         logger.info("["+this.getClass()+"][to_analysis_song][start] ");
         logger.info("["+this.getClass()+"][to_analysis_song][selectedValue_year_type]" + selectedValue_year_type + " ");
 		String[] array_selectedValue_year_type = selectedValue_year_type.split("_");
+
+		ZhangzuAnalysis zz_analysis;
+		String str_ac_type = "";
+		String str_ac = "";
+		long ac_min ;
+
+		String strSQL1 =
+		"SELECT " +
+		"left(z_date,4) ac,z_type ac_type,sum(z_amount) ac_min "+
+		"FROM t_zhangzu " +
+		"where "+ 
+		"left(z_date,4) = '" + array_selectedValue_year_type[0] + "' " + 
+		"and z_io_div = '支出' " + 
+		"GROUP BY left(z_date,4), z_type " + 
+		"order by ac, ac_min";
+		logger.info("["+this.getClass()+"][analysis_song][SQL1]"+strSQL1);
+		List<ZhangzuAnalysis> list_z_type_analysis_by_year = new ArrayList<ZhangzuAnalysis>();
+		List<Map<String, Object>> list1_z_type_analysis_by_year = jdbcTemplate.queryForList(strSQL1);
+        logger.info("list.size():"+list1_z_type_analysis_by_year.size());
+        logger.info("list.get(0):"+list1_z_type_analysis_by_year.get(0));
+
+		for(int i = 0 ; i < list1_z_type_analysis_by_year.size() ; i++) {
+			zz_analysis = new ZhangzuAnalysis();
+			str_ac  = list1_z_type_analysis_by_year.get(i).get("ac").toString();
+			ac_min = Integer.valueOf(list1_z_type_analysis_by_year.get(i).get("ac_min").toString());
+			str_ac_type = list1_z_type_analysis_by_year.get(i).get("ac_type").toString();
+			zz_analysis.setAc(str_ac);
+			zz_analysis.setAc_type(str_ac_type);
+            zz_analysis.setAc_min(ac_min);
+			list_z_type_analysis_by_year.add(zz_analysis);
+		}
+
+		request.setAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
+		request.setAttribute("analysis_title_ac_year", array_selectedValue_year_type[0]);
 		
 		// 年	  支出 分类
 		// 2022 100  餐饮饮食
@@ -185,18 +219,18 @@ public class AnalysisController {
 		"and z_type = '" + array_selectedValue_year_type[1] + "' " + 
 		"GROUP BY  left(z_date,4),z_type   " + 
 		"order by ac, ac_min";
-		ZhangzuAnalysis zz_analysis;
+		
 		logger.info("["+this.getClass()+"][to_analysis_song][SQL2]"+strSQL2);
 		List<ZhangzuAnalysis> list_zz_type_analysis = new ArrayList<ZhangzuAnalysis>();
 		List<Map<String, Object>> list1_zz_type_analysis = jdbcTemplate.queryForList(strSQL2);
         logger.info("list.size():"+list1_zz_type_analysis.size());
-		String str_ac_type = "";
+		
 		if (list1_zz_type_analysis.size() == 0) {
 			request.setAttribute("alert_count_0", "没查到数据");
 		} else {
         	logger.info("list.get(0):"+list1_zz_type_analysis.get(0));
-			String str_ac = "";
-			long ac_min ;
+
+
 			
 			for(int i = 0 ; i < list1_zz_type_analysis.size() ; i++) {
 				zz_analysis = new ZhangzuAnalysis();
