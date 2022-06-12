@@ -17,6 +17,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import com.plseal.zhangzu.entity.Zhangzu;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping("/analysis")
@@ -69,7 +71,8 @@ public class AnalysisController {
 		// ********************
 		String selectedValue_year_type = "2022_餐饮饮食";
 		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
-		
+		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = get_ac_type_ac_min_by_10days("button1");
+		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
 		logger.info("["+this.getClass()+"][analysis_song][end] to analysis_song.jsp");
 
 		return "analysis_song";
@@ -276,4 +279,99 @@ public class AnalysisController {
 		}
 		return list_result;
 	}
+
+	// 年	支出 分类
+	// 2022 100  餐饮饮食
+	// 2022 100  诚诚
+	// 2022 100  诚诚
+	public List<ZhangzuAnalysis> get_ac_type_ac_min_by_10days(String button) throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		int lastDayOfThisMonth = calendar.getActualMaximum(Calendar.DATE);
+		int firstDayOfThisMonth = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		
+		//每月1号开始
+		calendar.set(Calendar.DAY_OF_MONTH, firstDayOfThisMonth);
+
+		StringBuffer days1to10  = new StringBuffer();
+		StringBuffer days11to20  = new StringBuffer();
+		StringBuffer days21to30  = new StringBuffer();
+		for (int i = 1; i <= 10; i++){
+			if (i == 10){
+				days1to10.append("'" + sdf.format(calendar.getTime()) + "'");
+			} else {
+				days1to10.append("'" + sdf.format(calendar.getTime()) + "',");
+			}
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		for (int i = 1; i <= 10; i++){
+			if (i == 10){
+				days11to20.append("'" + sdf.format(calendar.getTime()) + "'");
+			} else {
+				days11to20.append("'" + sdf.format(calendar.getTime()) + "',");
+			}
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		for (int i = 1; i <= 11; i++){
+
+			if (i == 10){
+				days21to30.append("'" + sdf.format(calendar.getTime()) + "'");
+			} else {
+				days21to30.append("'" + sdf.format(calendar.getTime()) + "',");
+			}
+			// 月末ならstop
+			if (calendar.getTime().getDate() == lastDayOfThisMonth){
+				break;
+			}
+
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days1to10]"+days1to10.toString());
+		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days11to20]"+days11to20.toString());
+		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days21to30]"+days21to30.toString());
+		
+		ZhangzuAnalysis zz_analysis = new ZhangzuAnalysis();
+		List<ZhangzuAnalysis> list_result = new ArrayList<ZhangzuAnalysis>();
+		zz_analysis.setAc(String.valueOf(get_z_amount_total_min_by_10days(days1to10.toString())));
+		zz_analysis.setAc_min(get_z_amount_total_min_by_10days(days11to20.toString()));
+		zz_analysis.setAc_type(String.valueOf(get_z_amount_total_min_by_10days(days21to30.toString())));
+		list_result.add(zz_analysis);
+		return list_result;
+	}
+
+	//把10天间的花费算出来
+	//备考栏 是数字的话，加进去
+	public long get_z_amount_total_min_by_10days(String str_query) throws Exception {
+		String z_amount, z_remark;
+		long z_amount_total;
+		String strSQL5 =
+		"SELECT " +
+		"z_date,z_name,z_amount,z_remark "+
+		"FROM t_zhangzu " +
+		"where "+ 
+		"z_date in (" + str_query + ") " + 
+		"and z_io_div = '支出' " + 
+		"order by z_date";
+		logger.info("["+this.getClass()+"][get_z_amount_total_min_by_10days][SQL5]"+strSQL5);
+		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL5);
+        logger.info("list.size():"+list_tmp.size());
+		boolean isNumeric = false;
+		z_amount_total = 0;
+		for(int i = 0 ; i < list_tmp.size() ; i++) {
+			logger.info("list.get(i):"+list_tmp.get(i));
+			z_amount  = list_tmp.get(i).get("z_amount").toString();
+			z_remark  = list_tmp.get(i).get("z_remark").toString();
+			if (z_remark.length() > 0){
+				isNumeric = z_remark.chars().allMatch( Character::isDigit );
+			}
+			z_amount_total = z_amount_total + Integer.valueOf(z_amount);
+			//备考栏 是数字的话，加进去
+			if (isNumeric) {
+				z_amount_total = z_amount_total + Integer.valueOf(z_remark);
+			}
+		}
+		return z_amount_total;
+	}
+
+	
 }

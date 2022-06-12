@@ -105,6 +105,32 @@
 				</div>
 				<!--
 
+				期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
+				5000	5000	5000
+				-->
+				<div class="form-group">
+					<table id="group-by-type-table" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr >
+							<!--
+							<th width="5%">ID</th>
+							-->
+							<th width="30%">期間（１日～１０日）</th>
+							<th width="30%">期間（１１日～２０日）</th>
+							<th width="30%">期間（２１日～月末）</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="zz_analysis : ${list_ac_type_ac_min_by_10days}">
+							<td th:text="${zz_analysis.ac}"></td><!--期間（１日～１０日）-->
+							<td th:text="${zz_analysis.ac_min}"></td><!--期間（１１日～２０日）-->
+							<td th:text="${zz_analysis.ac_type}"></td><!--期間（２１日～月末）-->
+						</tr>
+					</tbody>
+					</table>
+				</div>
+				<!--
+
 				年	支出	分类
 				2022	-5000	餐饮饮食
 				2022	-3608	李服饰
@@ -136,8 +162,8 @@
 						</tr>
 						
 					</tbody>
-				</table>
-			</div>
+					</table>
+				</div>
 							<!--PAGE CONTENT ENDS-->
 
 	</div><!--/.main-container-->

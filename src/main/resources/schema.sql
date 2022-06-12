@@ -62,3 +62,4 @@ CREATE VIEW v_li_zhangzu_maihuo_2022 AS
         ((z_date LIKE '2022%')
             AND (z_io_div = '买货'))
     GROUP BY SUBSTR(z_date, 1, 7);
+
