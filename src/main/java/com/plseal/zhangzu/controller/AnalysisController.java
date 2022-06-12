@@ -361,14 +361,15 @@ public class AnalysisController {
 			logger.info("list.get(i):"+list_tmp.get(i));
 			z_amount  = list_tmp.get(i).get("z_amount").toString();
 			z_remark  = list_tmp.get(i).get("z_remark").toString();
+			z_amount_total = z_amount_total + Integer.valueOf(z_amount);
 			if (z_remark.length() > 0){
 				isNumeric = z_remark.chars().allMatch( Character::isDigit );
+				//备考栏 是数字的话，加进去
+				if (isNumeric) {
+					z_amount_total = z_amount_total + Integer.valueOf(z_remark);
+				}
 			}
-			z_amount_total = z_amount_total + Integer.valueOf(z_amount);
-			//备考栏 是数字的话，加进去
-			if (isNumeric) {
-				z_amount_total = z_amount_total + Integer.valueOf(z_remark);
-			}
+
 		}
 		return z_amount_total;
 	}
