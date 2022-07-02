@@ -314,16 +314,14 @@ public class AnalysisController {
 		}
 		for (int i = 1; i <= 11; i++){
 
-			if (i == 10){
+			// 月末ならstop
+			if (calendar.getTime().getDate() == lastDayOfThisMonth){
 				days21to30.append("'" + sdf.format(calendar.getTime()) + "'");
+				break;
 			} else {
 				days21to30.append("'" + sdf.format(calendar.getTime()) + "',");
 			}
-			// 月末ならstop
-			if (calendar.getTime().getDate() == lastDayOfThisMonth){
-				break;
-			}
-
+			
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days1to10]"+days1to10.toString());
