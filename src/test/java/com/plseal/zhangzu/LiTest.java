@@ -19,8 +19,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ZhangzuApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MainTest extends BaseSeleniumTests {
-    private static final Logger logger = LoggerFactory.getLogger(MainTest.class);
+public class LiTest extends BaseSeleniumTests {
+    private static final Logger logger = LoggerFactory.getLogger(LiTest.class);
     Integer waitTime = 2;
     TestCommon testCommon = new TestCommon();
     ValidateAdminUser validateAdminUser = new ValidateAdminUser();
@@ -28,7 +28,7 @@ public class MainTest extends BaseSeleniumTests {
     @Test
     public void 正常系01_index() {
         //指定したURLに遷移する
-        driver.get("http://127.0.0.1:8080/zhangzu/index");
+        driver.get("http://127.0.0.1:8080/li/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
@@ -40,7 +40,7 @@ public class MainTest extends BaseSeleniumTests {
     @Test
     public void 正常系02_insert() throws Exception {
         //指定したURLに遷移する
-        driver.get("http://127.0.0.1:8080/zhangzu/insert");
+        driver.get("http://127.0.0.1:8080/li/insert");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
@@ -86,7 +86,7 @@ public class MainTest extends BaseSeleniumTests {
     @Test
     public void 正常系03_update() throws Exception {
         //指定したURLに遷移する
-        driver.get("http://127.0.0.1:8080/zhangzu/index");
+        driver.get("http://127.0.0.1:8080/li/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
@@ -138,7 +138,7 @@ public class MainTest extends BaseSeleniumTests {
     @Test
     public void 正常系04_delete() throws Exception {
         //指定したURLに遷移する
-        driver.get("http://127.0.0.1:8080/zhangzu/index");
+        driver.get("http://127.0.0.1:8080/li/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
@@ -163,7 +163,7 @@ public class MainTest extends BaseSeleniumTests {
     @Test
     public void 正常系05_analysis_2022() throws Exception {
         //指定したURLに遷移する
-        driver.get("http://127.0.0.1:8080/zhangzu/index");
+        driver.get("http://127.0.0.1:8080/li/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);

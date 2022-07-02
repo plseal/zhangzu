@@ -26,8 +26,8 @@ import java.text.SimpleDateFormat;
  */
 @Controller
 @RequestMapping("/analysis")
-public class AnalysisSongController {
-    private static final Logger logger = LoggerFactory.getLogger(AnalysisSongController.class);
+public class SongAnalysisController {
+    private static final Logger logger = LoggerFactory.getLogger(SongAnalysisController.class);
 
     @Autowired
     JdbcTemplate jdbcTemplate;
