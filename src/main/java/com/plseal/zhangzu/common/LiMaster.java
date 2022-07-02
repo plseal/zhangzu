@@ -3,7 +3,7 @@ package com.plseal.zhangzu.common;
 import java.util.List;
 import java.util.ArrayList;
 
-public class master {
+public class LiMaster {
     public static List<String> make_ztype_list() {
 		List<String> z_type_list = new ArrayList<>();
 		z_type_list.add("美甲收入");

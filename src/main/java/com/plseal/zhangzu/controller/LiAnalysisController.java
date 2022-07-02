@@ -29,9 +29,9 @@ public class LiAnalysisController {
     JdbcTemplate jdbcTemplate;
 
 	@RequestMapping("/2022")
-	public String analysis_2022(String zhangzu_ac, HttpServletRequest request) throws Exception {
-		logger.info("["+this.getClass()+"][analysis_2022][start]");
-		logger.info("["+this.getClass()+"][analysis_2022][zhangzu_ac]"+zhangzu_ac);
+	public String li_analysis_2022(String zhangzu_ac, HttpServletRequest request) throws Exception {
+		logger.info("["+this.getClass()+"][li_analysis_2022][start]");
+		logger.info("["+this.getClass()+"][li_analysis_2022][zhangzu_ac]"+zhangzu_ac);
 		
 		if ("".equals(zhangzu_ac) || zhangzu_ac == null) {
 			zhangzu_ac = "2022/06";
@@ -63,13 +63,13 @@ public class LiAnalysisController {
 		"left join v_li_zhangzu_shouru_2022 SHOU on  ZHI.AC = SHOU.AC " + 
 		"left join v_li_zhangzu_maihuo_2022 MAI on  ZHI.AC = MAI.AC " + 
 		"order by ac";
-		logger.info("["+this.getClass()+"][analysis_2022][SQL1]"+strSQL1);
+		logger.info("["+this.getClass()+"][li_analysis_2022][SQL1]"+strSQL1);
         list1_zz_analysis = jdbcTemplate.queryForList(strSQL1);
         // Map<String, String> resultJson = Collections.singletonMap("result", "OK");
         logger.info("list.size():"+list1_zz_analysis.size());
         logger.info("list.get(0):"+list1_zz_analysis.get(0));
 
-		logger.info("["+this.getClass()+"][to_zhangzu_analysis_2022][list1_zz_analysis.size()]"+list1_zz_analysis.size());
+		logger.info("["+this.getClass()+"][li_analysis_2022][list1_zz_analysis.size()]"+list1_zz_analysis.size());
 		for(int i = 0 ; i < list1_zz_analysis.size() ; i++) {
 			zz_analysis = new ZhangzuAnalysis();
 			str_ac  = list1_zz_analysis.get(i).get("ac").toString();
@@ -101,7 +101,7 @@ public class LiAnalysisController {
 		"GROUP BY  left(z_date,7),z_type   " + 
 		"order by ac_min";
 
-		logger.info("["+this.getClass()+"][analysis_2022][SQL2]"+strSQL2);
+		logger.info("["+this.getClass()+"][li_analysis_2022][SQL2]"+strSQL2);
 		List<ZhangzuAnalysis> list_zz_type_analysis = new ArrayList<ZhangzuAnalysis>();
 		List<Map<String, Object>> list1_zz_type_analysis = jdbcTemplate.queryForList(strSQL2);
         logger.info("list.size():"+list1_zz_type_analysis.size());
@@ -121,7 +121,7 @@ public class LiAnalysisController {
 		request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
 
 		
-		logger.info("["+this.getClass()+"][analysis_2022][end] to li_analysis_2022.html");
+		logger.info("["+this.getClass()+"][li_analysis_2022][end] to li_analysis_2022.html");
 
 		return "li_analysis_2022";
 	}
