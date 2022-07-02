@@ -26,3 +26,52 @@ CREATE TABLE `li_zhangzu` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15414 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT
 ```
+## v_song_zhangzu_zhichu_2022
+```
+CREATE 
+VIEW `lingzhu`.`v_song_zhangzu_zhichu_2022` AS
+    SELECT 
+        SUBSTR(`lingzhu`.`t_zhangzu`.`z_date`,
+            1,
+            7) AS `ac`,
+        SUM(`lingzhu`.`t_zhangzu`.`z_amount`) AS `amount`
+    FROM
+        `lingzhu`.`t_zhangzu`
+    WHERE
+        ((`lingzhu`.`t_zhangzu`.`z_date` LIKE '2022%')
+            AND (`lingzhu`.`t_zhangzu`.`z_io_div` = '支出'))
+    GROUP BY SUBSTR(lingzhu.t_zhangzu.z_date, 1, 7)
+```
+## v_song_zhangzu_shouru_2022
+```
+CREATE 
+VIEW `lingzhu`.`v_song_zhangzu_shouru_2022` AS
+    SELECT 
+        SUBSTR(`lingzhu`.`t_zhangzu`.`z_date`,
+            1,
+            7) AS `ac`,
+        SUM(`lingzhu`.`t_zhangzu`.`z_amount`) AS `amount`
+    FROM
+        `lingzhu`.`t_zhangzu`
+    WHERE
+        ((`lingzhu`.`t_zhangzu`.`z_date` LIKE '2022%')
+            AND (`lingzhu`.`t_zhangzu`.`z_io_div` = '收入'))
+    GROUP BY SUBSTR(lingzhu.t_zhangzu.z_date, 1, 7)
+```
+
+## v_song_zhangzu_maihuo_2022
+```
+CREATE 
+VIEW `lingzhu`.`v_song_zhangzu_maihuo_2022` AS
+    SELECT 
+        SUBSTR(`lingzhu`.`t_zhangzu`.`z_date`,
+            1,
+            7) AS `ac`,
+        SUM(`lingzhu`.`t_zhangzu`.`z_amount`) AS `amount`
+    FROM
+        `lingzhu`.`t_zhangzu`
+    WHERE
+        ((`lingzhu`.`t_zhangzu`.`z_date` LIKE '2022%')
+            AND (`lingzhu`.`t_zhangzu`.`z_io_div` = '买货'))
+    GROUP BY SUBSTR(lingzhu.t_zhangzu.z_date, 1, 7)
+```

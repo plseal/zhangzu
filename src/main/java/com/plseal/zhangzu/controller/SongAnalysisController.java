@@ -52,6 +52,7 @@ public class SongAnalysisController {
 		long ac_maihuo;
 		String str_ac_type = "";
 		List<ZhangzuAnalysis> list_zz_analysis = new ArrayList<ZhangzuAnalysis>();
+		List<ZhangzuAnalysis> list_zz_analysis_one_month = new ArrayList<ZhangzuAnalysis>();
 		
 		zz_analysis = new ZhangzuAnalysis();
 		List<Map<String, Object>> list1_zz_analysis;
@@ -89,9 +90,15 @@ public class SongAnalysisController {
 			zz_analysis.setAc_maihuo(ac_maihuo);
 			zz_analysis.setAc_type(str_ac_type);
 			list_zz_analysis.add(zz_analysis);
+			if (str_ac.equals(zhangzu_ac)) {
+				list_zz_analysis_one_month.add(zz_analysis);
+			}
+			
 		}
 
 		request.setAttribute("list_zz_analysis_for_bar_chart", list_zz_analysis);
+		request.setAttribute("list_zz_analysis_one_month", list_zz_analysis_one_month);
+		
 
 		// 年月	  支出 分类
 		// 2022/1 100  餐饮饮食
@@ -110,7 +117,6 @@ public class SongAnalysisController {
 		List<Map<String, Object>> list1_zz_type_analysis = jdbcTemplate.queryForList(strSQL2);
         logger.info("list.size():"+list1_zz_type_analysis.size());
         logger.info("list.get(0):"+list1_zz_type_analysis.get(0));
-		
 		for(int i = 0 ; i < list1_zz_type_analysis.size() ; i++) {
 			zz_analysis = new ZhangzuAnalysis();
 			str_ac  = list1_zz_type_analysis.get(i).get("ac").toString();
@@ -123,7 +129,6 @@ public class SongAnalysisController {
 		}
 
 		request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
-
 		
 		logger.info("["+this.getClass()+"][song_analysis_2022][end] to song_analysis_2022.html");
 
