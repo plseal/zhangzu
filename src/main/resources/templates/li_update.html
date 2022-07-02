@@ -23,12 +23,12 @@
 		
 		<div class="container">
             <div class="col-sm-12">
-                <a onclick="location.href='/zhangzu/index'" >
+                <a onclick="location.href='/li/index'" >
                     <h2 class="text-center">李帐本2022</h2>
                 </a>
             </div>
             <br/>
-			<form  id="myform"  class="form-horizontal"  role="form" action="/zhangzu/update_delete_post" method="post">
+			<form  id="myform"  class="form-horizontal"  role="form" action="/li/update_delete_post" method="post">
 			<div class="page-content">
 				<div class="col-sm-12 ">
 					<h1>
@@ -119,14 +119,14 @@
 
 function do_post() {  
 	var form = document.forms[0];  
-	form.action = "${pageContext.request.contextPath}/zhangzu/to_index_zhangzu.do?FLG=UPDATE";  
+	form.action = "${pageContext.request.contextPath}/li/to_index_zhangzu.do?FLG=UPDATE";  
 
 	form.method = "post";  
 	form.submit();  
 }
 function do_delete() {  
 	var form = document.forms[0];  
-	form.action = "${pageContext.request.contextPath}/zhangzu/to_index_zhangzu.do?FLG=DELETE";  
+	form.action = "${pageContext.request.contextPath}/li/to_index_zhangzu.do?FLG=DELETE";  
 
 	form.method = "post";  
 	form.submit();  

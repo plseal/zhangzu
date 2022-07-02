@@ -31,7 +31,7 @@
 			<div class="page-content">
 				<div class="col-sm-12">
 
-					<a onclick="location.href='/zhangzu/index'" >
+					<a onclick="location.href='/li/index'" >
 						<h2 class="text-center">李帐本</h2>
 
 					</a>
@@ -47,20 +47,20 @@
 				</div>
 				<br/>
 		        <div class="col-sm-12">
-		          <button type="button" class="btn btn-lg btn-block btn-danger" onclick="location.href = '/zhangzu/insert';">添加新单据</button>
+		          <button type="button" class="btn btn-lg btn-block btn-danger" onclick="location.href = '/li/insert';">添加新单据</button>
 		        </div>
 				<br/>
 		        <div class="col-sm-12">
-					<button type="button" class="btn btn-lg btn-block btn-warning" id="analysis_2022" onclick="location.href = '/zhangzu/analysis_2022';">统计分析(2022年)</button>
+					<button type="button" class="btn btn-lg btn-block btn-warning" id="analysis_2022" onclick="location.href = '/li/analysis/2022';">统计分析(2022年)</button>
 				</div>
 				<br/>
 		        <div class="col-sm-12">
-					<button type="button" class="btn btn-lg btn-block btn-warning" id="analysis_song" onclick="location.href = '/analysis/analysis_song';">统计分析(宋)</button>
+					<button type="button" class="btn btn-lg btn-block btn-warning" id="analysis_song" onclick="location.href = '/li/analysis_song';">统计分析(宋)</button>
 				</div>
 				<br/>
 				<!--
 		        <div class="col-sm-12">
-		          <button type="button" class="btn btn-lg btn-block btn-warning" onclick="location.href = '/zhangzu/index2020';">2020年</button>
+		          <button type="button" class="btn btn-lg btn-block btn-warning" onclick="location.href = '/li/index2020';">2020年</button>
 		        </div>
 				-->
 
@@ -93,7 +93,7 @@
 							<td th:text="${zhangzu.z_remark}"></td><!--备注-->
 							<td th:text="${zhangzu.z_m_amount}"></td><!--售价-->
 							<td>
-								<form action="/zhangzu/update" method="post">
+								<form action="/li/update" method="post">
 									<button class="btn btn-info btn-small" type="submit" name="id" th:value="${zhangzu.id}">编辑</button>
 								</form>
 							</td>

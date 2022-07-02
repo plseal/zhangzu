@@ -27,12 +27,12 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 /**
- * @Description 
- * @author songml
+ * 
+ * 李帳本增删改查用
  *
  */
 @Controller
-@RequestMapping("/zhangzu")
+@RequestMapping("/li")
 public class LiZhangzuController {
 	private static final Logger logger = LoggerFactory.getLogger(LiZhangzuController.class);
     
@@ -48,7 +48,7 @@ public class LiZhangzuController {
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);
 
 		model.addAttribute("list_zhangzu", list_zhangzu);
-		return "index";
+		return "li_index";
 	}
 
 	@RequestMapping(path = "/insert", method = RequestMethod.GET)
@@ -63,7 +63,7 @@ public class LiZhangzuController {
 		
 		model.addAttribute("z_type_list", z_type_list);
 		
-		return "insert";
+		return "li_insert";
 	}
 
 	@PostMapping(path = "/insert_post")
@@ -79,17 +79,8 @@ public class LiZhangzuController {
 		logger.info("insert_post() z_date:" + z_date);
 		String sql = "INSERT INTO li_zhangzu VALUES(null,?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount);
-
-		String z_date_month = z_date.substring(0,7);
-		logger.info("z_date_month:" + z_date_month);
-
-		String sql_index = "SELECT * FROM li_zhangzu WHERE z_date like '" + z_date_month + "%' order by z_date desc ";
-        
-		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
-        List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql_index, rowMapper);
-
-		model.addAttribute("list_zhangzu", list_zhangzu);
-		return "index";
+		
+		return "li_crud_OK";
 	}
 
 	@PostMapping(path = "/update_delete_post")
@@ -113,16 +104,7 @@ public class LiZhangzuController {
 			String sql_delete = "delete from li_zhangzu where id = ?";
 			jdbcTemplate.update(sql_delete,id);
 		}
-		String z_date_month = z_date.substring(0,7);
-		logger.info("z_date_month:" + z_date_month);
-		String sql_index = "SELECT * FROM li_zhangzu WHERE z_date like '"+z_date_month+"%' order by z_date desc ";
-        
-		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
-        List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql_index, rowMapper);
-
-		model.addAttribute("list_zhangzu", list_zhangzu);
-
-		return "index";
+		return "li_crud_OK";
 	}
 
 	@PostMapping(path = "/update")
@@ -147,7 +129,7 @@ public class LiZhangzuController {
 		
 		model.addAttribute("z_type_list", z_type_list);
 
-		return "update";
+		return "li_update";
 	}
 
 	@RequestMapping("/analysis_2022")

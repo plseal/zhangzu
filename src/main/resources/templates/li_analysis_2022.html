@@ -32,7 +32,7 @@
 			<div class="page-content">
 				<div class="col-sm-12">
 
-					<a onclick="location.href='/zhangzu/index'" >
+					<a onclick="location.href='/li/index'" >
 						<h2 class="text-center">李帐本</h2>
 
 					</a>
@@ -42,7 +42,7 @@
 					<h1>
 						<small>
 							<i class="icon-list-alt"></i>
-							统计分析
+							统计分析2022
 						</small>
 					</h1>
 				</div>
@@ -120,89 +120,70 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
 <script th:inline="javascript">
-		
-// window.onload=function(){
-// 	<c:forEach items="${list_zz_analysis}"  var="zz_analysis"  >
-// 		$("#zhangzu_ac").val("${zz_analysis.ac}");
-// 	</c:forEach>
-// }
+	google.charts.load('current', {'packages':['bar']});
+	google.charts.setOnLoadCallback(drawChart);
+	let array_header = ['Month', '支出', '收入', '余额', '买货'];
+	let list_for_chart = [array_header];
+	var row_cnt = 0;
+	var list_zz_analysis =/*[[${list_zz_analysis}]]*/
+	
+	list_zz_analysis.forEach(function(zz_analysis){
+		list_for_chart.push([zz_analysis.ac, zz_analysis.ac_min, zz_analysis.ac_plus, zz_analysis.ac_result, zz_analysis.ac_maihuo]);
+	});
 
-// $(document).ready(function(){ 
-// 	$('#zhangzu_ac').change(function(){ 
-// 		//alert($(this).children('option:selected').val()); 
-// 		var p1=$(this).children('option:selected').val();
-		 
-		
-// 		window.location.href = "<%=request.getContextPath() %>/zhangzu/to_zhangzu_analysis_2022.do?zhangzu_ac="+p1;
-// 	}) 
-// }) 
-			
-</script>
-    <script th:inline="javascript">
-		google.charts.load('current', {'packages':['bar']});
-		google.charts.setOnLoadCallback(drawChart);
-		let array_header = ['Month', '支出', '收入', '余额', '买货'];
-		let list_for_chart = [array_header];
-		var row_cnt = 0;
-		var list_zz_analysis =/*[[${list_zz_analysis}]]*/
-		
-		list_zz_analysis.forEach(function(zz_analysis){
-			list_for_chart.push([zz_analysis.ac, zz_analysis.ac_min, zz_analysis.ac_plus, zz_analysis.ac_result, zz_analysis.ac_maihuo]);
-		});
+	function drawChart() {
+	var data = google.visualization.arrayToDataTable(list_for_chart);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable(list_for_chart);
-
-        var options = {
-          chart: {
-            title: '2022',
-            //subtitle: '201701-201712',
-          }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-		
-		
-		// Add our selection handler.
-		google.visualization.events.addListener(chart, 'select', selectHandler);
-
-		// The selection handler.
-		// Loop through all items in the selection and concatenate
-		// a single message from all of them.
-		function selectHandler() {
-		  var selection = chart.getSelection();
-		  var message = '';
-		  for (var i = 0; i < selection.length; i++) {
-			var item = selection[i];
-			if (item.row != null && item.column != null) {
-			  //var str_ac = data.getFormattedValue(item.row, item.column);
-			  var str_ac = data.getFormattedValue(item.row, 0);
-			  message += '{row1:' + item.row + ',column:' + item.column + '} = ' + str_ac + '\n';
-			  
-			  //ZHICHU
-			  if (item.column == 1) {
-				window.location.href = "/Blog/zhangzu/to_zhangzu_analysis_2022.do?zhangzu_ac="+str_ac;
-			  }
-			} else if (item.row != null) {
-			  var str_ac = data.getFormattedValue(item.row, 0);
-			  message += '{row2:' + item.row + ', column:none}; value (col 0) = ' + str_ac + '\n';
-			} else if (item.column != null) {
-			  var str_ac = data.getFormattedValue(0, item.column);
-			  message += '{row3:none, column:' + item.column + '}; value (row 0) = ' + str_ac + '\n';
-			}
-		  }
-		  if (message == '') {
-			message = 'nothing';
-		  }
-		  //alert('You selected ' + message);
-		  
+	var options = {
+		chart: {
+		title: '2022',
+		//subtitle: '201701-201712',
 		}
+	};
+
+	var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+	chart.draw(data, google.charts.Bar.convertOptions(options));
+	
+	
+	// Add our selection handler.
+	google.visualization.events.addListener(chart, 'select', selectHandler);
+
+	// The selection handler.
+	// Loop through all items in the selection and concatenate
+	// a single message from all of them.
+	function selectHandler() {
+		var selection = chart.getSelection();
+		var message = '';
+		for (var i = 0; i < selection.length; i++) {
+		var item = selection[i];
+		if (item.row != null && item.column != null) {
+			//var str_ac = data.getFormattedValue(item.row, item.column);
+			var str_ac = data.getFormattedValue(item.row, 0);
+			message += '{row1:' + item.row + ',column:' + item.column + '} = ' + str_ac + '\n';
+			
+			//ZHICHU
+			if (item.column == 1) {
+			window.location.href = "/li/analysis/2022?zhangzu_ac="+str_ac;
+			}
+		} else if (item.row != null) {
+			var str_ac = data.getFormattedValue(item.row, 0);
+			message += '{row2:' + item.row + ', column:none}; value (col 0) = ' + str_ac + '\n';
+		} else if (item.column != null) {
+			var str_ac = data.getFormattedValue(0, item.column);
+			message += '{row3:none, column:' + item.column + '}; value (row 0) = ' + str_ac + '\n';
+		}
+		}
+		if (message == '') {
+		message = 'nothing';
+		}
+		//alert('You selected ' + message);
 		
-		
-      }
-    </script>
+	}
+	
+	
+	}
+</script>
 </div>
 </body>
 </html>
