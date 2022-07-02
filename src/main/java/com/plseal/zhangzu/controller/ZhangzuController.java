@@ -156,7 +156,7 @@ public class ZhangzuController {
 		logger.info("["+this.getClass()+"][analysis_2022][zhangzu_ac]"+zhangzu_ac);
 		
 		if ("".equals(zhangzu_ac) || zhangzu_ac == null) {
-			zhangzu_ac = "2022/01";
+			zhangzu_ac = "2022/06";
 		}
 
 		// 年月	支出	收入	余额	买货
