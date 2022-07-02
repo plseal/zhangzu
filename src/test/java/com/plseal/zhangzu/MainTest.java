@@ -185,9 +185,7 @@ public class MainTest extends BaseSeleniumTests {
         WebElement actual_data = driver.findElement(By.xpath("//*[@id=\"group-by-type-table\"]/tbody/tr[1]/td[2]"));
         
         assertThat(actual_data.getText(), is("-5000"));
-
-        //*[@id="sample-table-1"]/tbody/tr[1]/td[2]
-        // //
+        
         
     }
     

@@ -33,8 +33,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
  */
 @Controller
 @RequestMapping("/zhangzu")
-public class ZhangzuController {
-	private static final Logger logger = LoggerFactory.getLogger(ZhangzuController.class);
+public class LiZhangzuController {
+	private static final Logger logger = LoggerFactory.getLogger(LiZhangzuController.class);
     
 	@Autowired
     JdbcTemplate jdbcTemplate;

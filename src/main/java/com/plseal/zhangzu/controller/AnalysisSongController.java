@@ -19,7 +19,6 @@ import com.plseal.zhangzu.entity.Zhangzu;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-
 /*
  * 
  * 宋帳本分析用
@@ -27,8 +26,8 @@ import java.text.SimpleDateFormat;
  */
 @Controller
 @RequestMapping("/analysis")
-public class AnalysisController {
-    private static final Logger logger = LoggerFactory.getLogger(AnalysisController.class);
+public class AnalysisSongController {
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisSongController.class);
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -76,8 +75,13 @@ public class AnalysisController {
 		// ********************
 		String selectedValue_year_type = "2022_餐饮饮食";
 		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
-		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = get_ac_type_ac_min_by_10days("button1");
+
+		// **************************************************************************
+		// for 期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
+		// **************************************************************************
+		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = get_ac_type_ac_min_by_10days();
 		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
+
 		logger.info("["+this.getClass()+"][analysis_song][end] to analysis_song.jsp");
 
 		return "analysis_song";
@@ -119,8 +123,8 @@ public class AnalysisController {
 		// 2022 100  餐饮饮食
 		// 2022 100  诚诚
 		List<ZhangzuAnalysis> list_z_type_analysis_by_year = get_ac_type_ac_min_by_year(ac_year);
-		request.setAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
-		request.setAttribute("analysis_title_ac_year", ac_year);
+		model.addAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
+		model.addAttribute("analysis_title_ac_year", ac_year);
 		
 		// ****************
 		// for table
@@ -131,9 +135,9 @@ public class AnalysisController {
 		// 2021    100  诚诚
 		List<ZhangzuAnalysis> list_zz_type_analysis = get_ac_type_ac_min_by_year_and_type(ac_year, ac_type);
 		if (list_zz_type_analysis.size() == 0) {
-			request.setAttribute("alert_count_0", "没查到数据");
+			model.addAttribute("alert_count_0", "没查到数据");
 		} else {
-			request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
+			model.addAttribute("list_zz_type_analysis", list_zz_type_analysis);
 		}
 		// ********************
 		// for pulldown list
@@ -142,8 +146,8 @@ public class AnalysisController {
 		List<ZhangzuAnalysis> list_ac_year = get_distinct_ac_year();
 
 		// プルダウンの初期値
-        request.setAttribute("selectedValue_ac_year", ac_year);
-		request.setAttribute("list_ac_year", list_ac_year);
+        model.addAttribute("selectedValue_ac_year", ac_year);
+		model.addAttribute("list_ac_year", list_ac_year);
 
 		// ********************
 		// for pulldown list
@@ -152,15 +156,21 @@ public class AnalysisController {
 		List<ZhangzuAnalysis> list_ac_type = get_distinct_ac_type_by_year(ac_year);
 
 		// プルダウンの初期値
-        request.setAttribute("selectedValue_ac_type", ac_type);
-		request.setAttribute("list_ac_type", list_ac_type);
+        model.addAttribute("selectedValue_ac_type", ac_type);
+		model.addAttribute("list_ac_type", list_ac_type);
 
 		// ********************
 		// for search button
 		// ********************
-		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
+		model.addAttribute("selectedValue_year_type", selectedValue_year_type);
+
+		// **************************************************************************
+		// for 期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
+		// **************************************************************************
+		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = get_ac_type_ac_min_by_10days();
+		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
 		
-		logger.info("["+this.getClass()+"][to_analysis_song][end] to analysis_song.jsp");
+		logger.info("["+this.getClass()+"][to_analysis_song][end] to analysis_song.html");
 		
 		return "analysis_song";
 	}
@@ -187,7 +197,7 @@ public class AnalysisController {
 		List<ZhangzuAnalysis> list_result = new ArrayList<ZhangzuAnalysis>();
 		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL1);
         logger.info("list.size():"+list_tmp.size());
-        logger.info("list.get(0):"+list_tmp.get(0));
+        // logger.info("list.get(0):"+list_tmp.get(0));
 
 		for(int i = 0 ; i < list_tmp.size() ; i++) {
 			zz_analysis = new ZhangzuAnalysis();
@@ -225,13 +235,16 @@ public class AnalysisController {
 		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL2);
         logger.info("list.size():"+list_tmp.size());
 		if (list_tmp.size() > 0) {
-        	logger.info("list.get(0):"+list_tmp.get(0));
+        	// logger.info("list.get(0):"+list_tmp.get(0));
 
 			for(int i = 0 ; i < list_tmp.size() ; i++) {
 				zz_analysis = new ZhangzuAnalysis();
 				str_ac  = list_tmp.get(i).get("ac").toString();
+				// logger.info("str_ac:"+str_ac);
 				ac_min = Integer.valueOf(list_tmp.get(i).get("ac_min").toString());
+				// logger.info("ac_min:"+ac_min);
 				str_ac_type = list_tmp.get(i).get("ac_type").toString();
+				// logger.info("str_ac_type:"+str_ac_type);
 				zz_analysis.setAc(str_ac);
 				zz_analysis.setAc_type(str_ac_type);
 				zz_analysis.setAc_min(ac_min);
@@ -253,7 +266,7 @@ public class AnalysisController {
 		logger.info("["+this.getClass()+"][get_distinct_ac_year][SQL3]"+strSQL3);
 		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL3);
         logger.info("list.size():"+list_tmp.size());
-        logger.info("list.get(0):"+list_tmp.get(0));
+        // logger.info("list.get(0):"+list_tmp.get(0));
 		String str_ac_year = "";
 		for(int i = 0 ; i < list_tmp.size() ; i++) {
 			zz_analysis = new ZhangzuAnalysis();
@@ -275,7 +288,7 @@ public class AnalysisController {
 		logger.info("["+this.getClass()+"][get_distinct_ac_type_by_year][SQL4]"+strSQL4);
 		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL4);
         logger.info("list.size():"+list_tmp.size());
-        logger.info("list.get(0):"+list_tmp.get(0));
+        // logger.info("list.get(0):"+list_tmp.get(0));
 		for(int i = 0 ; i < list_tmp.size() ; i++) {
 			zz_analysis = new ZhangzuAnalysis();
 			str_ac_type  = list_tmp.get(i).get("ac_type").toString();
@@ -289,7 +302,7 @@ public class AnalysisController {
 	// 2022 100  餐饮饮食
 	// 2022 100  诚诚
 	// 2022 100  诚诚
-	public List<ZhangzuAnalysis> get_ac_type_ac_min_by_10days(String button) throws Exception {
+	public List<ZhangzuAnalysis> get_ac_type_ac_min_by_10days() throws Exception {
 		Calendar calendar = Calendar.getInstance();
 		int lastDayOfThisMonth = calendar.getActualMaximum(Calendar.DATE);
 		int firstDayOfThisMonth = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
@@ -329,9 +342,9 @@ public class AnalysisController {
 			
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
-		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days1to10]"+days1to10.toString());
-		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days11to20]"+days11to20.toString());
-		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days21to30]"+days21to30.toString());
+		// logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days1to10]"+days1to10.toString());
+		// logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days11to20]"+days11to20.toString());
+		// logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_10days][days21to30]"+days21to30.toString());
 		
 		ZhangzuAnalysis zz_analysis = new ZhangzuAnalysis();
 		List<ZhangzuAnalysis> list_result = new ArrayList<ZhangzuAnalysis>();
@@ -361,7 +374,7 @@ public class AnalysisController {
 		boolean isNumeric = false;
 		z_amount_total = 0;
 		for(int i = 0 ; i < list_tmp.size() ; i++) {
-			logger.info("list.get(i):"+list_tmp.get(i));
+			// logger.info("list.get(i):"+list_tmp.get(i));
 			z_amount  = list_tmp.get(i).get("z_amount").toString();
 			z_remark  = list_tmp.get(i).get("z_remark").toString();
 			z_amount_total = z_amount_total + Integer.valueOf(z_amount);
