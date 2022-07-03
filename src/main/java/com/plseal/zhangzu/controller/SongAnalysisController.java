@@ -135,7 +135,7 @@ public class SongAnalysisController {
 		return "song_analysis_2022";
 	}
 
-	@RequestMapping("/analysis_song")
+	@RequestMapping("/pie")
 	public String analysis_song(HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][analysis_song][start]");
 
@@ -148,7 +148,22 @@ public class SongAnalysisController {
 		List<ZhangzuAnalysis> list_z_type_analysis_by_year = get_ac_type_ac_min_by_year("2022");
 		request.setAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
 		request.setAttribute("analysis_title_ac_year", "2022");
-		
+
+		// **************************************************************************
+		// yyyy/mm每十天合计
+		// **************************************************************************
+		//现在系统时间的 年/月
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
+		String calendar_YM =sdf.format(calendar.getTime());
+		request.setAttribute("calendar_YM", calendar_YM+"每十天合计");
+
+		// **************************************************************************
+		// for 期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
+		// **************************************************************************
+		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = get_ac_type_ac_min_by_10days();
+		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
+
 		// ****************
 		// for table
 		// ****************
@@ -179,15 +194,11 @@ public class SongAnalysisController {
 		String selectedValue_year_type = "2022_餐饮饮食";
 		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
 
-		// **************************************************************************
-		// for 期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
-		// **************************************************************************
-		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = get_ac_type_ac_min_by_10days();
-		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
+
 
 		logger.info("["+this.getClass()+"][analysis_song][end] to analysis_song.jsp");
 
-		return "analysis_song";
+		return "song_analysis_pie";
 	}
 
 	@RequestMapping(path = "/to_detail", method = RequestMethod.POST)
@@ -207,13 +218,13 @@ public class SongAnalysisController {
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);
 
 		model.addAttribute("list_zhangzu", list_zhangzu);
-		return "detail_song";
+		return "song_analysis_detail";
 	}
 
-	@RequestMapping(path = "/to_analysis_song", method = RequestMethod.POST)
+	@RequestMapping(path = "/pie_post", method = RequestMethod.POST)
 	public String to_analysis_song(Model model, @RequestParam("selectedValue_year_type") String selectedValue_year_type, HttpServletRequest request) throws Exception {
-        logger.info("["+this.getClass()+"][to_analysis_song][start] ");
-        logger.info("["+this.getClass()+"][to_analysis_song][selectedValue_year_type]" + selectedValue_year_type + " ");
+        logger.info("["+this.getClass()+"][pie_post][start] ");
+        logger.info("["+this.getClass()+"][pie_post][selectedValue_year_type]" + selectedValue_year_type + " ");
 		String[] array_selectedValue_year_type = selectedValue_year_type.split("_");
 
 		String ac_year = array_selectedValue_year_type[0];
@@ -228,6 +239,15 @@ public class SongAnalysisController {
 		List<ZhangzuAnalysis> list_z_type_analysis_by_year = get_ac_type_ac_min_by_year(ac_year);
 		model.addAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
 		model.addAttribute("analysis_title_ac_year", ac_year);
+
+		// **************************************************************************
+		// yyyy/mm每十天合计
+		// **************************************************************************
+		//现在系统时间的 年/月
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
+		String calendar_YM =sdf.format(calendar.getTime());
+		request.setAttribute("calendar_YM", calendar_YM+"每十天合计");
 		
 		// ****************
 		// for table
@@ -273,9 +293,9 @@ public class SongAnalysisController {
 		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = get_ac_type_ac_min_by_10days();
 		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
 		
-		logger.info("["+this.getClass()+"][to_analysis_song][end] to analysis_song.html");
+		logger.info("["+this.getClass()+"][pie_post][end] to song_analysis_pie.html");
 		
-		return "analysis_song";
+		return "song_analysis_pie";
 	}
 
 	// 年	支出 分类
