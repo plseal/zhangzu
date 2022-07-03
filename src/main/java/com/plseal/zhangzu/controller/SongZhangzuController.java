@@ -38,7 +38,7 @@ public class SongZhangzuController {
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public String index(Model model) throws Exception {
 
-		String sql = "SELECT z_date,z_name,z_amount,z_type,z_io_div,z_remark,IFNULL(z_m_amount,0) as z_m_amount FROM t_zhangzu WHERE z_date like '2022%' order by z_date desc ";
+		String sql = "SELECT id,z_date,z_name,z_amount,z_type,z_io_div,z_remark,IFNULL(z_m_amount,0) as z_m_amount FROM t_zhangzu WHERE z_date like '2022%' order by z_date desc ";
 
 		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
         List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);

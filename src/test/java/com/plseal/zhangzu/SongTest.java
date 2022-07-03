@@ -184,7 +184,7 @@ public class SongTest extends BaseSeleniumTests {
         title = driver.getTitle();
         WebElement actual_data = driver.findElement(By.xpath("//*[@id=\"group-by-type-table\"]/tbody/tr[1]/td[2]"));
         
-        assertThat(actual_data.getText(), is("-5000"));
+        assertThat(actual_data.getText(), is("-202000"));
         
         
     }
