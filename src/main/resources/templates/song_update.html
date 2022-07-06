@@ -78,9 +78,7 @@
 					<label class="col-sm-2 control-label">收支：</label>
 					<div class="col-sm-10">
 						<select class="form-control" id="z_io_div" name="z_io_div" >
-							<option value="支出">支出</option>
-							<option value="收入">收入</option>
-							<option value="买货">买货</option>
+							<option th:each="z_io_div : ${z_io_div_list}" th:value="${z_io_div}" th:selected="${zhangzu.z_io_div} == ${z_io_div}" th:inline="text">[[${z_io_div}]]</option>
 						</select>
 					</div>
 				</div>
