@@ -7,6 +7,7 @@ public class SongMaster {
     public static List<String> make_ztype_list() {
 		List<String> z_type_list = new ArrayList<>();
 		z_type_list.add("餐饮饮食");
+		z_type_list.add("外食");
 		z_type_list.add("旅游娱乐");
 		z_type_list.add("交通费");
 		z_type_list.add("嘉怡");
@@ -27,5 +28,12 @@ public class SongMaster {
 		z_type_list.add("网站建设");
 		z_type_list.add("房产房贷");
         return z_type_list;
+    }
+    public static List<String> make_z_io_div_list() {
+		List<String> z_io_div_list = new ArrayList<>();
+		z_io_div_list.add("支出");
+		z_io_div_list.add("收入");
+		z_io_div_list.add("买货");
+        return z_io_div_list;
     }
 }

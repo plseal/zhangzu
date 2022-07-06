@@ -9,9 +9,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.plseal.zhangzu.common.LiMaster;
 import com.plseal.zhangzu.entity.Zhangzu;
+import com.plseal.zhangzu.service.ModifyService;
 
 /**
  * 
@@ -35,14 +34,14 @@ public class LiZhangzuController {
 	@Autowired
     JdbcTemplate jdbcTemplate;
 
+	@Autowired 
+	ModifyService modifyService;
+
+	String target_table = "li_zhangzu";
+
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public String index(Model model) throws Exception {
-
-		String sql = "SELECT * FROM li_zhangzu WHERE z_date like '2022%' order by z_date desc ";
-
-		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
-        List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);
-
+        List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table);
 		model.addAttribute("list_zhangzu", list_zhangzu);
 		return "li_index";
 	}
@@ -53,11 +52,16 @@ public class LiZhangzuController {
 		Zhangzu zhangzu = new Zhangzu();
 		Date today = new Date();
 		zhangzu.setZ_date(new SimpleDateFormat("yyyy/MM/dd").format(today));
-		model.addAttribute("zhangzu", zhangzu);
 
 		List<String> z_type_list = LiMaster.make_ztype_list();
+		List<String> z_io_div_list = LiMaster.make_z_io_div_list();
 		
+		zhangzu.setZ_type(z_type_list.get(0));
+		zhangzu.setZ_io_div(z_io_div_list.get(0));
+		// logger.info("zhangzu:" + zhangzu.toString());
+		model.addAttribute("zhangzu", zhangzu);
 		model.addAttribute("z_type_list", z_type_list);
+		model.addAttribute("z_io_div_list", z_io_div_list);
 		
 		return "li_insert";
 	}
@@ -73,7 +77,7 @@ public class LiZhangzuController {
 		@RequestParam("z_m_amount") BigInteger z_m_amount
 		) throws Exception {
 		logger.info("insert_post() z_date:" + z_date);
-		String sql = "INSERT INTO li_zhangzu VALUES(null,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO "+ target_table +" VALUES(null,?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount);
 		
 		return "li_crud_OK";
@@ -94,10 +98,10 @@ public class LiZhangzuController {
 		logger.info("update_delete_post() update_delete_button:" + update_delete_button);
 
 		if("UPDATE".equals(update_delete_button)) {
-			String sql_update = "update li_zhangzu set z_date = ?,z_name = ?,z_amount = ?,z_type = ?,z_io_div = ?,z_remark = ?,z_m_amount = ? where id = ?";
+			String sql_update = "update " + target_table +" set z_date = ?,z_name = ?,z_amount = ?,z_type = ?,z_io_div = ?,z_remark = ?,z_m_amount = ? where id = ?";
 			jdbcTemplate.update(sql_update,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount,id);
 		} else {
-			String sql_delete = "delete from li_zhangzu where id = ?";
+			String sql_delete = "delete from "+ target_table +" where id = ?";
 			jdbcTemplate.update(sql_delete,id);
 		}
 		return "li_crud_OK";
@@ -107,7 +111,7 @@ public class LiZhangzuController {
 	public String update(Model model, @RequestParam("id")Integer id) throws Exception {
 
 		List<Map<String, Object>> list;
-        list = jdbcTemplate.queryForList("SELECT * FROM li_zhangzu WHERE id = ? order by z_date desc ", id);
+        list = jdbcTemplate.queryForList("SELECT * FROM " + target_table +" WHERE id = ? order by z_date desc ", id);
         logger.info("list.size():"+list.size());
         logger.info("list.get(0):"+list.get(0));
 		Zhangzu zhangzu = new Zhangzu();
@@ -122,8 +126,10 @@ public class LiZhangzuController {
 		model.addAttribute("zhangzu", zhangzu);
 		
 		List<String> z_type_list = LiMaster.make_ztype_list();
-		
+		List<String> z_io_div_list = LiMaster.make_z_io_div_list();
+
 		model.addAttribute("z_type_list", z_type_list);
+		model.addAttribute("z_io_div_list", z_io_div_list);
 
 		return "li_update";
 	}
