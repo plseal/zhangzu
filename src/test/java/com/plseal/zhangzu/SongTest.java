@@ -60,7 +60,7 @@ public class SongTest extends BaseSeleniumTests {
         WebElement z_type = this.driver.findElement(By.id("z_type"));
         Select dropdown = new Select(z_type);
         assertNotNull(z_type);
-        dropdown.selectByValue("餐饮饮食");
+        dropdown.selectByValue("日常用品");
 
         WebElement z_io_div = this.driver.findElement(By.id("z_io_div"));
         assertNotNull(z_io_div);
@@ -161,7 +161,7 @@ public class SongTest extends BaseSeleniumTests {
     }
 
     @Test
-    public void 正常系05_analysis_2022() throws Exception {
+    public void 正常系05_analysis_bar() throws Exception {
         //指定したURLに遷移する
         driver.get("http://127.0.0.1:8080/song/index");
 
@@ -169,14 +169,14 @@ public class SongTest extends BaseSeleniumTests {
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
         logger.info("＃＃＃「統計分析」ボタン　押下");
-        WebElement ANALYSIS_BUTTON = driver.findElement(By.id("analysis_2022"));
+        WebElement ANALYSIS_BUTTON = driver.findElement(By.id("song_analysis_bar"));
         assertNotNull(ANALYSIS_BUTTON);
         ANALYSIS_BUTTON.click();
         testCommon.waitSomeSeconds(driver);
 
         // 検証
         title = driver.getTitle();
-        assertThat(title, is("统计分析2022年度"));
+        assertThat(title, is("统计分析(柱状图)"));
         
         // 元データ
         //'2022/01/02','超市',2000,'餐饮饮食','支出'
@@ -185,6 +185,33 @@ public class SongTest extends BaseSeleniumTests {
         WebElement actual_data = driver.findElement(By.xpath("//*[@id=\"group-by-type-table\"]/tbody/tr[1]/td[2]"));
         
         assertThat(actual_data.getText(), is("-202000"));
+        
+        
+    }
+
+    @Test
+    public void 正常系06_analysis_pie() throws Exception {
+        //指定したURLに遷移する
+        driver.get("http://127.0.0.1:8080/song/index");
+
+        // 最大5秒間、ページが完全に読み込まれるまで待つ
+        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+
+        logger.info("＃＃＃「統計分析」ボタン　押下");
+        WebElement ANALYSIS_BUTTON = driver.findElement(By.id("song_analysis_pie"));
+        assertNotNull(ANALYSIS_BUTTON);
+        ANALYSIS_BUTTON.click();
+        testCommon.waitSomeSeconds(driver);
+
+        // 検証
+        title = driver.getTitle();
+        assertThat(title, is("统计分析(饼图)"));
+        
+
+        title = driver.getTitle();
+        WebElement actual_data = driver.findElement(By.xpath("/html/body/div/div/table/tbody/tr/td[2]"));
+        
+        assertThat(actual_data.getText(), is("-404000"));
         
         
     }
