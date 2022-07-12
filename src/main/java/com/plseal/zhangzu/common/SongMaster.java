@@ -9,6 +9,7 @@ public class SongMaster {
 		z_type_list.add("餐饮饮食");
 		z_type_list.add("外食");
 		z_type_list.add("旅游娱乐");
+		z_type_list.add("日常用品");
 		z_type_list.add("交通费");
 		z_type_list.add("嘉怡");
 		z_type_list.add("诚诚");

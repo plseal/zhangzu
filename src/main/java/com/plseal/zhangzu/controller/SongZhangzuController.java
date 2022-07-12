@@ -112,20 +112,10 @@ public class SongZhangzuController {
 	@PostMapping(path = "/update")
 	public String update(Model model, @RequestParam("id")Integer id) throws Exception {
 
-		List<Map<String, Object>> list;
-        list = jdbcTemplate.queryForList("SELECT * FROM "+target_table+" WHERE id = ? order by z_date desc ", id);
-        logger.info("list.size():"+list.size());
-        logger.info("list.get(0):"+list.get(0));
-		Zhangzu zhangzu = new Zhangzu();
-		zhangzu.setId(Integer.valueOf(list.get(0).get("id").toString()));
-		zhangzu.setZ_date(list.get(0).get("z_date").toString());
-		zhangzu.setZ_name(list.get(0).get("z_name").toString());
-		zhangzu.setZ_amount(Integer.valueOf(list.get(0).get("z_amount").toString()));
-		zhangzu.setZ_type(list.get(0).get("z_type").toString());
-		zhangzu.setZ_io_div(list.get(0).get("z_io_div").toString());
-		zhangzu.setZ_remark(list.get(0).get("z_remark").toString());
-		zhangzu.setZ_m_amount(Integer.valueOf(list.get(0).get("z_m_amount").toString()));
-		model.addAttribute("zhangzu", zhangzu);
+		List<Zhangzu> list_zhangzu = modifyService.query_db_for_update_html(target_table,id);
+        logger.info("list.size():"+list_zhangzu.size());
+        logger.info("list.get(0):"+list_zhangzu.get(0));
+		model.addAttribute("zhangzu", list_zhangzu.get(0));
 		
 		List<String> z_type_list = SongMaster.make_ztype_list();
 		List<String> z_io_div_list = SongMaster.make_z_io_div_list();
