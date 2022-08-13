@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.plseal.zhangzu.entity.SongAnalysisPieForm;
 import com.plseal.zhangzu.entity.ZhangzuAnalysis;
 
 @Service  // サービスクラスに付与。
@@ -62,19 +63,26 @@ public class SongAnalysisService {
 	// 2022 100  餐饮饮食
 	// 2022 100  诚诚
 	// 2022 100  诚诚
-	public List<ZhangzuAnalysis> get_ac_type_ac_min_by_year_and_type(String ac_year, String ac_type) throws Exception {
+	public List<ZhangzuAnalysis> get_ac_type_ac_min_by_year_and_type(String ac_year, String ac_type, SongAnalysisPieForm songAnalysisPieForm) throws Exception {
 		ZhangzuAnalysis zz_analysis;
 		String str_ac;
 		long ac_min;
 		String str_ac_type;
+		String radio_type = songAnalysisPieForm.getRadio_type();
+		Integer intflg;
+		if("收入".equals(radio_type)) {
+			intflg = 1;
+		} else {
+			intflg = -1;
+		}
 		String strSQL2 =
 		"SELECT " +
-		"left(z_date,4) ac,z_type ac_type,sum(z_amount)*-1 ac_min "+
+		"left(z_date,4) ac,z_type ac_type,sum(z_amount)*" + intflg + " ac_min "+
 		"FROM t_zhangzu " +
 		"where "+ 
 		"left(z_date,4) = '" + ac_year + "' " +
 		"and z_type = '" + ac_type + "' " + 
-		"and z_io_div = '支出' " + 
+		"and z_io_div = '"+ radio_type +"' " + 
 		"GROUP BY left(z_date,4), z_type " + 
 		"order by ac, ac_min";
 		logger.info("["+this.getClass()+"][get_ac_type_ac_min_by_year_and_type][SQL2]"+strSQL2);

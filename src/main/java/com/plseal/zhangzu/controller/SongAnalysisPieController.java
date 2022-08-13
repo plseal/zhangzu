@@ -1,6 +1,7 @@
 package com.plseal.zhangzu.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.ui.Model;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+
+import com.plseal.zhangzu.entity.SongAnalysisPieForm;
 import com.plseal.zhangzu.entity.Zhangzu;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Calendar;
@@ -38,6 +41,7 @@ public class SongAnalysisPieController {
 	@RequestMapping("/song/analysis/pie")
 	public String song_analysis_pie(HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][song_analysis_pie][start]");
+		SongAnalysisPieForm songAnalysisPieForm = new SongAnalysisPieForm();
 
 		// ****************
 		// for pie chart
@@ -71,7 +75,7 @@ public class SongAnalysisPieController {
 		// 2022    100  餐饮饮食
 		// 2022    100  诚诚
 		// 2021    100  诚诚
-		List<ZhangzuAnalysis> list_zz_type_analysis = songAnalysisService.get_ac_type_ac_min_by_year_and_type("2022", "餐饮饮食");
+		List<ZhangzuAnalysis> list_zz_type_analysis = songAnalysisService.get_ac_type_ac_min_by_year_and_type("2022", "餐饮饮食", songAnalysisPieForm);
 		request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
 		
 		// ********************
@@ -103,7 +107,8 @@ public class SongAnalysisPieController {
 
 	//[统计分析 饼图].html[查询]ボタン押下後
 	@RequestMapping(path = "/song/analysis/pie_post", method = RequestMethod.POST)
-	public String song_analysis_pie_post(Model model, @RequestParam("selectedValue_year_type") String selectedValue_year_type, HttpServletRequest request) throws Exception {
+	public String song_analysis_pie_post(@ModelAttribute SongAnalysisPieForm songAnalysisPieForm, 
+		Model model, @RequestParam("selectedValue_year_type") String selectedValue_year_type, HttpServletRequest request) throws Exception {
         logger.info("["+this.getClass()+"][song_analysis_pie_post][start] ");
         logger.info("["+this.getClass()+"][song_analysis_pie_post][selectedValue_year_type]" + selectedValue_year_type + " ");
 		String[] array_selectedValue_year_type = selectedValue_year_type.split("_");
@@ -137,7 +142,7 @@ public class SongAnalysisPieController {
 		// 2022    100  餐饮饮食
 		// 2022    100  诚诚
 		// 2021    100  诚诚
-		List<ZhangzuAnalysis> list_zz_type_analysis = songAnalysisService.get_ac_type_ac_min_by_year_and_type(ac_year, ac_type);
+		List<ZhangzuAnalysis> list_zz_type_analysis = songAnalysisService.get_ac_type_ac_min_by_year_and_type(ac_year, ac_type, songAnalysisPieForm);
 		if (list_zz_type_analysis.size() == 0) {
 			model.addAttribute("alert_count_0", "没查到数据");
 		} else {

@@ -81,9 +81,22 @@
 						</option>
 					</select>
 				</div>
+
 				<hr>
-				
-				<form action="/song/analysis/pie_post" method="post" class="d-grid gap-2">
+
+				<form action="/song/analysis/pie_post" method="post" class="d-grid gap-2" id='song_analysis_pie_form'>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="radio_type" id="shouru" value="收入">
+						<label class="form-check-label" for="shouru">
+							收入
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="radio_type" id="zhichu" checked value="支出">
+						<label class="form-check-label" for="zhichu">
+							支出
+						</label>
+					</div>
 					<button class="btn btn-primary" type="submit" id="selectedValue_year_type" name="selectedValue_year_type" th:value="${selectedValue_year_type}">查询</button>
 				</form>
 				
