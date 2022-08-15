@@ -27,9 +27,10 @@ public class SongAnalysisBarController {
 	SongAnalysisService songAnalysisService;
 
 	@RequestMapping("/song/analysis/bar")
-	public String song_analysis_bar(String zhangzu_ac, HttpServletRequest request) throws Exception {
+	public String song_analysis_bar(String zhangzu_ac, String io_div, HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][song_analysis_bar][start]");
 		logger.info("["+this.getClass()+"][song_analysis_bar][zhangzu_ac]"+zhangzu_ac);
+		logger.info("["+this.getClass()+"][song_analysis_bar][io_div]"+io_div);
 		
 		if ("".equals(zhangzu_ac) || zhangzu_ac == null) {
 			zhangzu_ac = "2022/06";
@@ -130,6 +131,36 @@ public class SongAnalysisBarController {
 
 		request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
 		
+		// 年月	收入	分类
+		// 2022/06	+400000	宋工资
+		// 2022/06	+6000	美甲收入
+		String strSQL3 =
+		"SELECT " +
+		"left(z_date,7) ac,z_type ac_type,sum(z_amount) ac_plus "+
+		"FROM t_zhangzu " +
+		"where left(z_date,7) = '" + zhangzu_ac + "' "+ 
+		"and z_io_div = '收入'  " + 
+		"GROUP BY  left(z_date,7),z_type   " + 
+		"order by ac_plus";
+
+		logger.info("["+this.getClass()+"][song_analysis_bar][SQL3]"+strSQL3);
+		List<ZhangzuAnalysis> list_zz_type_shouru_analysis = new ArrayList<ZhangzuAnalysis>();
+		List<Map<String, Object>> list1_zz_type_shouru_analysis = jdbcTemplate.queryForList(strSQL3);
+        logger.info("list.size():"+list1_zz_type_shouru_analysis.size());
+        logger.info("list.get(0):"+list1_zz_type_shouru_analysis.get(0));
+		for(int i = 0 ; i < list1_zz_type_shouru_analysis.size() ; i++) {
+			zz_analysis = new ZhangzuAnalysis();
+			str_ac  = list1_zz_type_shouru_analysis.get(i).get("ac").toString();
+			ac_plus = Integer.valueOf(list1_zz_type_shouru_analysis.get(i).get("ac_plus").toString());
+			str_ac_type = list1_zz_type_shouru_analysis.get(i).get("ac_type").toString();
+			zz_analysis.setAc(str_ac);
+			zz_analysis.setAc_plus(ac_plus);
+			zz_analysis.setAc_type(str_ac_type);
+			list_zz_type_shouru_analysis.add(zz_analysis);
+		}
+
+		request.setAttribute("list_zz_type_shouru_analysis", list_zz_type_shouru_analysis);
+
 		logger.info("["+this.getClass()+"][song_analysis_bar][end] to song_analysis_bar.html");
 
 		return "song_analysis_bar";
