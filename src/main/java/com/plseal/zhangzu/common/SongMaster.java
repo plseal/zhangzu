@@ -28,6 +28,7 @@ public class SongMaster {
 		z_type_list.add("手机话费");
 		z_type_list.add("网站建设");
 		z_type_list.add("房产房贷");
+		z_type_list.add("信用卡年费");
         return z_type_list;
     }
     public static List<String> make_z_io_div_list() {
