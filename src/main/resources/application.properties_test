@@ -1,0 +1,19 @@
+# datasource
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.username=sa
+spring.datasource.password=
+
+# connection pool use tomcat
+spring.datasource.tomcat.maxActive=10
+spring.datasource.tomcat.maxIdle=10
+spring.datasource.tomcat.minIdle=10
+spring.datasource.tomcat.initialSize=10
+spring.datasource.tomcat.defaultAutoCommit=false
+
+# コンソールを有効化
+spring.h2.console.enabled=true
+
+# SQLファイルに日本語を使う場合
+spring.datasource.sql-script-encoding=UTF-8
+
