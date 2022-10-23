@@ -2,7 +2,7 @@ SET dbhost=localhost
 SET dbuser=root
 SET dbpasswd=123456
 SET dbName=lingzhu
-SET sqlpath=C:\GitHub\zhangzu\
+SET sqlpath=C:\GitHub\zhangzu\tools\
 set sqlfile=t_zhangzu_toCSV.sql
 
 
