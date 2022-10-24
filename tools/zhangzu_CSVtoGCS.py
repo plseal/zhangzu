@@ -19,8 +19,9 @@ with connection:
         # データ読み込み
         sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
         cursor.execute(sql)
-        result = cursor.fetchone()
-        print(result)
+        for row in cursor:
+            result = cursor.fetchone()
+            print(result)
 # ------------------------------
 # change tsv file to csv file
 # ------------------------------
