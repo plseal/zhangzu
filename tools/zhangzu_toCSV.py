@@ -12,7 +12,7 @@ connection = pymysql.connect(host='localhost',
                              cursorclass=pymysql.cursors.DictCursor,charset="utf8")
 
 # データ読み込み
-sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
+sql = "SELECT * FROM t_zhangzu where z_date like '2022%' or z_date like '2021%' order by z_date"
 
 df = pd.read_sql(sql, connection)
 
