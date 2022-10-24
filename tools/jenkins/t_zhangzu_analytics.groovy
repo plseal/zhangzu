@@ -15,9 +15,8 @@ node('windows_agent'){
         """
     }
     stage("step3. upload csv to gcs"){
-        powershell '''
-            cd c:\\Github\\zhangzu\\tools
-            python zhangzu_CSVtoGCS.py
-        '''
+        def task = "python c:\\Github\\zhangzu\\tools\\zhangzu_CSVtoGCS.py".execute()
+        task.waitFor()
+        println task.text
     }
 }
