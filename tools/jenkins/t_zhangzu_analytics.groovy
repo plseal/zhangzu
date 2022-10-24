@@ -1,17 +1,23 @@
 node('windows_agent'){
     stage("step1. git checkout branch"){
         bat """
-            cd c:\\Github\\zhangzu
-            dir
-            git fetch
-            git checkout feature/#60_csvtogcs
-            git pull
+            rem cd c:\\Github\\zhangzu
+            rem dir
+            rem git fetch
+            rem git checkout feature/#60_csvtogcs
+            rem git pull
         """
     }
     stage("step2. make csv from mysql"){
         bat """
+            rem cd c:\\Github\\zhangzu\\tools
+            rem zhangzu_toCSV.bat
+        """
+    }
+    stage("step3. upload csv to gcs"){
+        bat """
             cd c:\\Github\\zhangzu\\tools
-            zhangzu_toCSV.bat
+            zhangzu_CSVtoGCS.bat
         """
     }
 }
