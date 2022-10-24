@@ -2,6 +2,7 @@ import os
 from io import BytesIO
 from google.cloud import storage
 import pandas as pd
+import json
 
 # ------------------------------
 # download data from mysql
@@ -21,7 +22,7 @@ with connection:
         cursor.execute(sql)
         for row in cursor:
             result = cursor.fetchone()
-            print(result.encode('cp932', "ignore"))
+            print(json.dumps(result))
 # ------------------------------
 # change tsv file to csv file
 # ------------------------------
