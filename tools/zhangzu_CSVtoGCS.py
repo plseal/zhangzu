@@ -22,8 +22,9 @@ with connection:
         cursor.execute(sql)
         for row in cursor:
             result = cursor.fetchone()
-            if isinstance(result, dict):
-                print(json.dumps(result))
+            
+            
+            print(result)
 # ------------------------------
 # change tsv file to csv file
 # ------------------------------

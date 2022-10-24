@@ -17,7 +17,6 @@ node('windows_agent'){
     stage("step3. upload csv to gcs"){
         powershell '''
             cd c:\\Github\\zhangzu\\tools
-            chcp 65001
             python zhangzu_CSVtoGCS.py
         '''
     }
