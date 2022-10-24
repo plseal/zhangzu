@@ -13,7 +13,7 @@ from_file_with_path = 'C:\\db_backup\\t_zhangzu.csv'
 to_file_name = 't_zhangzu.csv'
 
 bucket = storage_client.get_bucket(bucket_name)
-blob = bucket.blob(from_file_with_path)
-blob.upload_from_filename(to_file_name)
+blob = bucket.blob(to_file_name)
+blob.upload_from_filename(from_file_with_path)
 
 print("uploaded to 【project:family】 【GCS:uploadtogcs】 success!")
