@@ -4,19 +4,12 @@ rem *******************************Code Start*****************************
 
 set TableID=t_zhangzu
 
-title Echo date if format 'yyyy-MM-dd HH:mm:ss'
-for /f "tokens=1 delims=/ " %%j in ("%date%") do set d1=%%j
-for /f "tokens=2 delims=/ " %%j in ("%date%") do set d2=%%j
-for /f "tokens=3 delims=/ " %%j in ("%date%") do set d3=%%j
-for /f "tokens=4 delims=/ " %%j in ("%date%") do set d4=%%j
-for /f "tokens=1 delims=: " %%j in ("%time%") do set t1=%%j
-for /f "tokens=2 delims=: " %%j in ("%time%") do set t2=%%j
-for /f "tokens=3 delims=:. " %%j in ("%time%") do set t3=%%j
-echo Date Time2: %d1%-%d2%-%d3% %t1%:%t2%:%t3%
+SET BKDATE=%date:~-10,4%-%date:~-5,2%-%date:~-2,2%
 
-set Ymd=%d1%%d2%%d3%
-set TableDataYYYYMMDD=%TableID%_%Ymd%.sql
-set TableCountYYYYMMDD=%TableID%_cnt_%Ymd%.txt
+echo %BKDATE%
+
+set TableDataYYYYMMDD=%TableID%_%BKDATE%.sql
+set TableCountYYYYMMDD=%TableID%_cnt_%BKDATE%.txt
 set TableCountBASE=%TableID%_cnt_BASE.txt
 
 echo TableDataYYYYMMDD :%TableDataYYYYMMDD%
