@@ -1,3 +1,5 @@
+SHOW VARIABLES LIKE "secure_file_priv";
+
 SELECT *
 FROM t_zhangzu 
 WHERE z_date LIKE '2022%'
