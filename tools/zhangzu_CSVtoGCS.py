@@ -21,7 +21,7 @@ with connection:
         cursor.execute(sql)
         for row in cursor:
             result = cursor.fetchone()
-            print(result)
+            print(result.encode('cp932', "ignore"))
 # ------------------------------
 # change tsv file to csv file
 # ------------------------------
