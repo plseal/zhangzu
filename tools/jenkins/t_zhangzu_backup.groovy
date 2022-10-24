@@ -4,7 +4,7 @@ node('windows_agent'){
             cd c:\\Github\\zhangzu
             dir
             git fetch
-            git checkout feature/#58_add_backup.bat
+            git checkout master
             git pull
         """
     }
