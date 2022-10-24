@@ -9,10 +9,11 @@ print("storage_client init OK!")
 
 
 bucket_name = 'zhangzu2022'
-file_name = 't_zhangzu.csv' #送るものの名前
+from_file_with_path = 'C:\\db_backup\\t_zhangzu.csv'
+to_file_name = 't_zhangzu.csv'
 
 bucket = storage_client.get_bucket(bucket_name)
-blob = bucket.blob(file_name)
-blob.upload_from_filename(file_name)
+blob = bucket.blob(from_file_with_path)
+blob.upload_from_filename(to_file_name)
 
 print("uploaded to 【project:family】 【GCS:uploadtogcs】 success!")
