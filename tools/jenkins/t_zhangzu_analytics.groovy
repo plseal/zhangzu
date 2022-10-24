@@ -11,7 +11,7 @@ node('windows_agent'){
     stage("step2. make csv from mysql"){
         bat """
             cd c:\\Github\\zhangzu\\tools
-            zhangzu_toCSV.bat
+            python zhangzu_toCSV.py
         """
     }
     stage("step3. upload csv to gcs"){

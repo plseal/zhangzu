@@ -1,37 +1,6 @@
 import os
 from io import BytesIO
 from google.cloud import storage
-import pandas as pd
-import json
-
-# ------------------------------
-# download data from mysql
-# ------------------------------
-import pymysql.cursors
-
-# データベースに接続
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='123456',
-                             database='lingzhu',
-                             cursorclass=pymysql.cursors.DictCursor,charset="utf8")
-
-# データ読み込み
-sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
-
-df = pd.read_sql(sql, connection)
-
-df.to_csv(path_or_buf='C:\\db_backup\\t_zhangzu.csv',encoding='utf-8',index=False)
-   
-   
-   
-
-# ------------------------------
-# change tsv file to csv file
-# ------------------------------
-# df_tsv_sep = pd.read_csv('C:\\db_backup\\t_zhangzu.tsv', sep='\t')
-# print(df_tsv_sep.head())
-# df_tsv_sep.to_csv('C:\\db_backup\\t_zhangzu.csv', index=False)
 
 # ------------------------------
 # upload to GCP
