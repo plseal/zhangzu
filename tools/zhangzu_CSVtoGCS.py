@@ -6,8 +6,9 @@ import pandas as pd
 # ------------------------------
 # change tsv file to csv file
 # ------------------------------
-df_tsv_sep = pd.read_csv('C:\\db_backup\\t_zhangzu.tsv', index_col=0, sep='\t')
+df_tsv_sep = pd.read_csv('C:\\db_backup\\t_zhangzu.tsv', sep='\t')
 print(df_tsv_sep.head())
+df_tsv_sep.to_csv('C:\\db_backup\\t_zhangzu.csv')
 
 # ------------------------------
 # upload to GCP
