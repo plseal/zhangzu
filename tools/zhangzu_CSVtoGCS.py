@@ -15,16 +15,17 @@ connection = pymysql.connect(host='localhost',
                              password='123456',
                              database='lingzhu',
                              cursorclass=pymysql.cursors.DictCursor,charset="utf8")
-with connection:
-    with connection.cursor() as cursor:
-        # データ読み込み
-        sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
-        cursor.execute(sql)
-        for row in cursor:
-            result = cursor.fetchone()
-            
-            
-            print(result)
+
+# データ読み込み
+sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
+
+df = pd.read_sql(sql, connection)
+
+df.to_csv(path_or_buf='C:\\db_backup\\t_zhangzu2.csv',encoding='utf-8',index=False)
+   
+   
+   
+
 # ------------------------------
 # change tsv file to csv file
 # ------------------------------
