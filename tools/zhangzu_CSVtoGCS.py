@@ -21,7 +21,7 @@ sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
 
 df = pd.read_sql(sql, connection)
 
-df.to_csv(path_or_buf='C:\\db_backup\\t_zhangzu2.csv',encoding='utf-8',index=False)
+df.to_csv(path_or_buf='C:\\db_backup\\t_zhangzu.csv',encoding='utf-8',index=False)
    
    
    
