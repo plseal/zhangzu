@@ -17,12 +17,10 @@ connection = pymysql.connect(host='localhost',
 with connection:
     with connection.cursor() as cursor:
         # データ読み込み
-        # sql = "SELECT * FROM t_zhangzu where z_date like '2022%' or z_date like '2021%' order by z_date"
         sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
         cursor.execute(sql)
-        result = cursor.fetchall()
+        result = cursor.fetchone()
         print(result)
-
 # ------------------------------
 # change tsv file to csv file
 # ------------------------------
