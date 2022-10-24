@@ -15,7 +15,9 @@ node('windows_agent'){
         """
     }
     stage("step3. upload csv to gcs"){
-
-        println "python c:\\Github\\zhangzu\\tools\\zhangzu_CSVtoGCS.py".execute().waitFor().text
+        sh """
+            cd c:\\Github\\zhangzu\\tools
+            python zhangzu_CSVtoGCS.py
+        """
     }
 }
