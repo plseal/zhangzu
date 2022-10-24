@@ -1,5 +1,3 @@
-chcp 65001
-
 SET dbhost=localhost
 SET dbuser=root
 SET dbpasswd=123456
