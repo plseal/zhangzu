@@ -16,6 +16,7 @@ node('windows_agent'){
     }
     stage("step3. upload csv to gcs"){
         bat """
+            chcp 65001
             cd c:\\Github\\zhangzu\\tools
             python zhangzu_CSVtoGCS.py
         """
