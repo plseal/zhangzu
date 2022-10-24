@@ -14,7 +14,7 @@ connection = pymysql.connect(host='localhost',
                              user='root',
                              password='123456',
                              database='lingzhu',
-                             cursorclass=pymysql.cursors.DictCursor)
+                             cursorclass=pymysql.cursors.DictCursor,charset="utf8")
 with connection:
     with connection.cursor() as cursor:
         # データ読み込み
