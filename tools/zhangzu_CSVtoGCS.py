@@ -4,6 +4,26 @@ from google.cloud import storage
 import pandas as pd
 
 # ------------------------------
+# download data from mysql
+# ------------------------------
+import pymysql.cursors
+
+# データベースに接続
+connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='123456',
+                             database='lingzhu',
+                             cursorclass=pymysql.cursors.DictCursor)
+with connection:
+    with connection.cursor() as cursor:
+        # データ読み込み
+        # sql = "SELECT * FROM t_zhangzu where z_date like '2022%' or z_date like '2021%' order by z_date"
+        sql = "SELECT * FROM t_zhangzu where z_date like '2022%' order by z_date"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        print(result)
+
+# ------------------------------
 # change tsv file to csv file
 # ------------------------------
 df_tsv_sep = pd.read_csv('C:\\db_backup\\t_zhangzu.tsv', sep='\t')

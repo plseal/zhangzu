@@ -7,6 +7,6 @@ set sqlfile=zhangzu_toCSV.sql
 
 rem *******************************Get CSV from Target Table*****************************
 rem C:\mysql\bin\mysql -h%dbhost% -u%dbuser% -p%dbpasswd% %dbName% < %sqlpath%%sqlfile% > C:\db_backup\t_zhangzu.tsv
-C:\mysql\bin\mysqldump -h%dbhost% -u%dbuser% -p%dbpasswd% --tab=C:\db_backup --fields-terminated-by=, %dbName%  t_zhangzu
+rem C:\mysql\bin\mysqldump -h%dbhost% -u%dbuser% -p%dbpasswd% --tab=C:\db_backup --fields-terminated-by=, %dbName%  t_zhangzu
 
-dir c:\db_backup\t_zhangzu.csv
+rem dir c:\db_backup\t_zhangzu.csv
