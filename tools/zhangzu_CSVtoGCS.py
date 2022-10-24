@@ -8,7 +8,7 @@ import pandas as pd
 # ------------------------------
 df_tsv_sep = pd.read_csv('C:\\db_backup\\t_zhangzu.tsv', sep='\t')
 print(df_tsv_sep.head())
-df_tsv_sep.to_csv('C:\\db_backup\\t_zhangzu.csv')
+df_tsv_sep.to_csv('C:\\db_backup\\t_zhangzu.csv', index=False)
 
 # ------------------------------
 # upload to GCP
