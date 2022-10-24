@@ -17,6 +17,8 @@ node('windows_agent'){
     stage("step3. upload csv to gcs"){
         powershell '''
             cd c:\\Github\\zhangzu\\tools
+            $OutputEncoding = [System.Console]::OutputEncoding = [System.Console]::InputEncoding = [System.Text.Encoding]::UTF8
+            $PSDefaultParameterValues['*:Encoding'] = 'utf8'
             python zhangzu_CSVtoGCS.py
         '''
     }
