@@ -1,4 +1,4 @@
-node('master'){
+node('windows_agent'){
     stage("step1. git checkout branch"){
         bat """
             cd c:\\Github\\zhangzu
