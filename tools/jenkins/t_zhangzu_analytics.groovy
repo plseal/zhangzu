@@ -4,7 +4,7 @@ node{
             cd c:\\Github\\zhangzu
             dir
             git fetch
-            git checkout feature/#60_csvtogcs
+            git checkout master
             git pull
         """
     }
