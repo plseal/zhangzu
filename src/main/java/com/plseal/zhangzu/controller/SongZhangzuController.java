@@ -2,9 +2,9 @@ package com.plseal.zhangzu.controller;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,12 +41,41 @@ public class SongZhangzuController {
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public String index(Model model) throws Exception {
-
-		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table);
+		//现在系统时间的年
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		String calendar_Y =sdf.format(calendar.getTime());
+		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, calendar_Y);
 
 		model.addAttribute("list_zhangzu", list_zhangzu);
 		return "song_index";
 	}
+
+	@RequestMapping(path = "/index_2021", method = RequestMethod.GET)
+	public String index_2021(Model model) throws Exception {
+
+		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, "2021");
+
+		model.addAttribute("list_zhangzu", list_zhangzu);
+		return "song_index";
+	}
+	@RequestMapping(path = "/index_2020", method = RequestMethod.GET)
+	public String index_2020(Model model) throws Exception {
+
+		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, "2020");
+
+		model.addAttribute("list_zhangzu", list_zhangzu);
+		return "song_index";
+	}
+	@RequestMapping(path = "/index_2019", method = RequestMethod.GET)
+	public String index_2019(Model model) throws Exception {
+
+		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, "2019");
+
+		model.addAttribute("list_zhangzu", list_zhangzu);
+		return "song_index";
+	}
+
 
 	@RequestMapping(path = "/insert", method = RequestMethod.GET)
 	public String insert(Model model) throws Exception {

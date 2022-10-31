@@ -2,6 +2,7 @@ package com.plseal.zhangzu.controller;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,11 @@ public class LiZhangzuController {
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public String index(Model model) throws Exception {
-        List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table);
+		//现在系统时间的年
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		String calendar_Y =sdf.format(calendar.getTime());
+        List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, calendar_Y);
 		model.addAttribute("list_zhangzu", list_zhangzu);
 		return "li_index";
 	}
