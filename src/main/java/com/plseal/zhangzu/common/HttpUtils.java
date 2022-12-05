@@ -2,8 +2,11 @@ package com.plseal.zhangzu.common;
 
 import javax.servlet.http.HttpServletRequest;
 
-public final class HttpUtils {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public final class HttpUtils {
+    private static final Logger logger = LoggerFactory.getLogger(HttpUtils.class);
     private static final String[] IP_HEADERS = {
         "X-Forwarded-For",
         "Proxy-Client-IP",
@@ -34,5 +37,12 @@ public final class HttpUtils {
             return parts[0];
         }
         return request.getRemoteAddr();
+    }
+
+    public static boolean isAdmin(HttpServletRequest request){
+        String client_ip = getRequestIP(request);
+        logger.info("[HttpUtils][isAdmin][client_ip]"+client_ip);
+        boolean result = client_ip.equals("122.133.196.154") || client_ip.equals("127.0.0.1");
+        return result;
     }
 }
