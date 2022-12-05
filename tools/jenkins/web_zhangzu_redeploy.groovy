@@ -23,17 +23,11 @@ node{
 
         """
     }
+
     stage("step4. mvn clean package"){
-        bat """
-            cd C:\\GitHub\\zhangzu
-            mvn clean package
-        """
+        dir("C:\\GitHub\\zhangzu"){
+          bat "start cmd.exe /c run_prod.bat"
+        }
     }
-//     stage("step5. mvn run"){
-//         bat """
-//             cd C:\\GitHub\\zhangzu
-//             mvn clean package
-//         """
-//     }
 
 }
