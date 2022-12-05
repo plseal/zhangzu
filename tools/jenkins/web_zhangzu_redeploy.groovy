@@ -15,13 +15,25 @@ node{
             taskkill /pid %VALUE_FROM_FILE% /f
         """
     }
-    stage("step3. start SpringBoot Prod"){
+    stage("step3. prepare Prod properties"){
         bat """
             cd C:\\GitHub\\zhangzu\\src\\main\\resources
             del application.properties
             copy application.properties_prod application.properties
-            cd C:\\GitHub\\zhangzu
-            mvn spring-boot:run
+
         """
     }
+    stage("step4. mvn clean package"){
+        bat """
+            cd C:\\GitHub\\zhangzu
+            mvn clean package
+        """
+    }
+//     stage("step5. mvn run"){
+//         bat """
+//             cd C:\\GitHub\\zhangzu
+//             mvn clean package
+//         """
+//     }
+
 }
