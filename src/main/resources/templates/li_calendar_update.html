@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset="utf-8" />
+		<title>预约更新</title>
+		<meta http-equiv="pragma" content="no-cache"/>   
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/>   
+		<meta http-equiv="expires" content="0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+		<link th:href="@{/bootstrap3.0.0/css/bootstrap.min.css}" rel="stylesheet"></link>
+		<link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet"></link>
+		<style> 
+            .css_red{color:#F00} 
+        </style> 
+        <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/logo_32X32.ico}" media="screen" />
+        <script type="text/javascript" th:src="@{/js/jquery-easyui-1.3.3/jquery.min.js}"></script>
+        <script type="text/javascript" th:src="@{/bootstrap3.0.0/js/bootstrap.min.js}" ></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.js}" charset="UTF-8"></script>
+        <script type="text/javascript" th:src="@{/js/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+		
+	</head>
+	
+	<body>
+		
+		<div class="container">
+            <div class="col-sm-12">
+                <a onclick="location.href='/li/calendar'" >
+                    <h2 class="text-center">美甲预约</h2>
+                </a>
+            </div>
+            <br/>
+			<form  id="myform"  class="form-horizontal"  role="form" action="/li/calendar_update_delete_post" method="post">
+			<div class="page-content">
+				<div class="col-sm-12 ">
+					<h1>
+						<small>
+							<i class="icon-list-alt"></i>
+							预约更新
+						</small>
+					</h1>
+				</div>
+				<br/>
+				<!--PAGE CONTENT BEGINS-->
+				<input type="hidden" class="form-control" id="id" name="id" th:value="${calendar.c_id}" placeholder="">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">日期：</label>
+						<div class="col-sm-10 ">
+						<div class="input-group date form_date " data-date="" data-date-format="yyyy/mm/dd" data-link-field="dtp_input2" data-link-format="yyyy/mm/dd">
+							<input  id="child_birth" class="form-control" size="16" type="text" th:value="${calendar.c_date}" readonly >
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="text" id="c_date" name="c_date" style="display:none" th:value="${calendar.c_date}" check-type="required" required-message="请输入日期"><br/>
+						</div>
+					
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">姓名：</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="c_name" name="c_name" th:value="${calendar.c_name}" placeholder=""    >							
+					</div>
+				</div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">时间段：</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="c_reserve" name="c_reserve">
+                            <option th:each="c_reserve : ${list_am_pm}" th:value="${c_reserve}" th:selected="${calendar.c_reserve} == ${c_reserve}" th:inline="text">[[${c_reserve}]]</option>
+                        </select>
+                    </div>
+                </div>
+
+				<div class="form-group">
+					<div class="col-sm-12 ">
+						<button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_update_delete_button" value="INSERT">添加预约</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 ">
+						<button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_update_delete_button" value="UPDATE">更新</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 ">
+						<button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_update_delete_button" value="DELETE">删除</button>
+					</div>
+				</div>
+					<!--PAGE CONTENT ENDS-->
+
+	</div><!--/.main-container-->
+
+	
+
+	
+<script type="text/javascript" th:inline="javascript">
+
+function do_post() {  
+	var form = document.forms[0];  
+	form.action = "${pageContext.request.contextPath}/li/calendar_update_delete_post.do?FLG=UPDATE";  
+
+	form.method = "post";  
+	form.submit();  
+}
+function do_delete() {  
+	var form = document.forms[0];  
+	form.action = "${pageContext.request.contextPath}/li/calendar_update_delete_post.do?FLG=DELETE";  
+
+	form.method = "post";  
+	form.submit();  
+} 
+	
+
+
+// var year = new Date().getFullYear();
+// var month = new Date().getMonth() + 1;
+// var day = new Date().getDate();
+// var today = year + "/" + month + "/" +day;
+// alert(today);
+// var incrementDay = moment(new Date());
+// incrementDay.add(30, 'days').format('YYYY/MM/DD');
+// console.log("incrementDay2:"+incrementDay);
+$('.form_date').datetimepicker({
+	language:  'zh-CN',
+	weekStart: 1,
+	todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	// endDate: incrementDay,
+	forceParse: 0
+});	
+
+$('.form_date').on('changeDate', function(ev){
+
+	var nowdate = new Date();
+	var c_date = ev.date;
+
+	var c_year = c_date.getFullYear();
+	var c_month = ("00" + (c_date.getMonth()+1)).slice(-2);
+	var c_day = ("00" + c_date.getDate()).slice(-2);
+	
+	var c_YYYYMMDDday = c_year + "/" + c_month + "/" +c_day;
+	
+	document.getElementById("c_date").value = c_YYYYMMDDday;
+	
+});	
+
+</script>
+</form>
+</div>
+</body>
+</html>

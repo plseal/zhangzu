@@ -23,4 +23,5 @@ INSERT INTO t_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount
 INSERT INTO t_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2022/07/05','餐饮',200000,'餐饮饮食','支出','',0);
 INSERT INTO t_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2022/07/06','超市',10000,'日常用品','支出','',0);
 
-INSERT INTO li_calendar(c_date,c_time_from,c_time_to,c_name,c_div,c_reserve,c_remark) VALUES('2022/12/05','','','丫丫','管理者','Y','');
+INSERT INTO li_calendar(c_date,c_time_from,c_time_to,c_name,c_div,c_reserve,c_remark) VALUES('2022/12/05','','','丫丫','管理者','全天','已预约');
+INSERT INTO li_calendar(c_date,c_time_from,c_time_to,c_name,c_div,c_reserve,c_remark) VALUES('2022/12/06','','','丫丫','管理者','','');
