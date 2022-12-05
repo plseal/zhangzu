@@ -19,8 +19,6 @@
 	
 <div class="container">
   <!-- 共通部品を呼び出す -->
-  <div th:replace="common_bootstrap_3 :: nav3"></div>
-
   <div class="page-header">
 		<BR>
 		<div class="pull-right form-inline">
@@ -39,8 +37,15 @@
 		<div class="col-md-12">
 			<div id="calendar" name="calendar"></div>
 		</div>
-
+		<div class="col-md-12">
+			<span class="pull-left event event-important"></span>：全日予約不可
+		</div>
+		<div class="col-md-12">
+			　：空白の日は予約可能
+		</div>
 	</div>
+
+  
 	
 </div>
   
@@ -164,6 +169,10 @@
         //e.preventDefault();
         //e.stopPropagation();
       });
+      $('*[data-cal-date]').click(function() {
+        console.log($(this).data('cal-date'));
+        window.location.href = "./calendar_update?id=0&c_date="+$(this).data('cal-date');
+		  });
     }(jQuery));
 	</script>
  

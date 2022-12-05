@@ -54,9 +54,10 @@ public class LiCalendarAPIController {
 				result1.id = String.valueOf(i);
 				String c_id = (String)list1_li_calendar.get(i).get("id").toString();
 				String eventDate = (String)list1_li_calendar.get(i).get("C_DATE");
+				// String c_name = (String)list1_li_calendar.get(i).get("C_NAME");
 				String c_reserve = (String)list1_li_calendar.get(i).get("C_RESERVE");
 
-				result1.url = "./calendar_update?id=" + c_id;
+				result1.url = "./calendar_update?id=" + c_id + "&c_date='9999/99/99'";
 
 				
 				

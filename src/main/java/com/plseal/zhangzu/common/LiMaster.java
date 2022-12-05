@@ -52,8 +52,9 @@ public class LiMaster {
     }
     public static List<String> make_c_calendar_am_pm() {
 		List<String> c_calendar_am_pm_list = new ArrayList<>();
-		c_calendar_am_pm_list.add("上午");
-		c_calendar_am_pm_list.add("下午");
+		c_calendar_am_pm_list.add("全天");
+		// c_calendar_am_pm_list.add("上午");
+		// c_calendar_am_pm_list.add("下午");
         return c_calendar_am_pm_list;
     }
 }

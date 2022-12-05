@@ -30,7 +30,7 @@
                 </a>
             </div>
             <br/>
-			<form  id="myform"  class="form-horizontal"  role="form" action="/li/update_delete_post" method="post">
+			<form  id="myform"  class="form-horizontal"  role="form" action="/li/calendar_update_delete_post" method="post">
 			<div class="page-content">
 				<div class="col-sm-12 ">
 					<h1>
@@ -51,14 +51,14 @@
 							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 						</div>
-						<input type="text" id="z_date" name="z_date" style="display:none" th:value="${calendar.c_date}" check-type="required" required-message="请输入日期"><br/>
+						<input type="text" id="c_date" name="c_date" style="display:none" th:value="${calendar.c_date}" check-type="required" required-message="请输入日期"><br/>
 						</div>
 					
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">姓名：</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="z_name" name="z_name" th:value="${calendar.c_name}" placeholder=""    >							
+						<input type="text" class="form-control" id="c_name" name="c_name" th:value="${calendar.c_name}" placeholder=""    >							
 					</div>
 				</div>
                 <div class="form-group">
@@ -70,16 +70,20 @@
                     </div>
                 </div>
 
-
 				<div class="form-group">
-				<div class="col-sm-12 ">
-					<button class="btn btn-lg btn-block btn-primary" type="submit" name="update_delete_button" value="UPDATE">更新</button>
-				</div>
+					<div class="col-sm-12 ">
+						<button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_update_delete_button" value="INSERT">添加预约</button>
+					</div>
 				</div>
 				<div class="form-group">
-				<div class="col-sm-12 ">
-					<button class="btn btn-lg btn-block btn-primary" type="submit" name="update_delete_button" value="DELETE">删除</button>
+					<div class="col-sm-12 ">
+						<button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_update_delete_button" value="UPDATE">更新</button>
+					</div>
 				</div>
+				<div class="form-group">
+					<div class="col-sm-12 ">
+						<button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_update_delete_button" value="DELETE">删除</button>
+					</div>
 				</div>
 					<!--PAGE CONTENT ENDS-->
 
@@ -92,14 +96,14 @@
 
 function do_post() {  
 	var form = document.forms[0];  
-	form.action = "${pageContext.request.contextPath}/li/to_index_zhangzu.do?FLG=UPDATE";  
+	form.action = "${pageContext.request.contextPath}/li/calendar_update_delete_post.do?FLG=UPDATE";  
 
 	form.method = "post";  
 	form.submit();  
 }
 function do_delete() {  
 	var form = document.forms[0];  
-	form.action = "${pageContext.request.contextPath}/li/to_index_zhangzu.do?FLG=DELETE";  
+	form.action = "${pageContext.request.contextPath}/li/calendar_update_delete_post.do?FLG=DELETE";  
 
 	form.method = "post";  
 	form.submit();  
@@ -130,15 +134,15 @@ $('.form_date').datetimepicker({
 $('.form_date').on('changeDate', function(ev){
 
 	var nowdate = new Date();
-	var z_date = ev.date;
+	var c_date = ev.date;
 
-	var z_year = z_date.getFullYear();
-	var z_month = ("00" + (z_date.getMonth()+1)).slice(-2);
-	var z_day = ("00" + z_date.getDate()).slice(-2);
+	var c_year = c_date.getFullYear();
+	var c_month = ("00" + (c_date.getMonth()+1)).slice(-2);
+	var c_day = ("00" + c_date.getDate()).slice(-2);
 	
-	var z_YYYYMMDDday = z_year + "/" + z_month + "/" +z_day;
+	var c_YYYYMMDDday = c_year + "/" + c_month + "/" +c_day;
 	
-	document.getElementById("z_date").value = z_YYYYMMDDday;
+	document.getElementById("c_date").value = c_YYYYMMDDday;
 	
 });	
 
