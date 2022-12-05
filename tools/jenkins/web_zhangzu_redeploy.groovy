@@ -20,14 +20,14 @@ node{
             cd C:\\GitHub\\zhangzu\\src\\main\\resources
             del application.properties
             copy application.properties_prod application.properties
-
         """
     }
 
-    stage("step4. run_prod.bat"){
-        dir("C:\\GitHub\\zhangzu"){
-          bat "start cmd.exe /c run_prod.bat"
-        }
+    stage("step4. SpringBoot run"){
+        bat """
+            cd C:\\GitHub\\zhangzu
+            mvn spring-boot:run
+        """
     }
 
 }
