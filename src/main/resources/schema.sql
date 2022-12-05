@@ -24,6 +24,19 @@ CREATE TABLE li_zhangzu (
     z_m_amount BIGINT
 );
 
+DROP TABLE IF EXISTS li_calendar;
+
+CREATE TABLE li_calendar (
+    id IDENTITY NOT NULL PRIMARY KEY,
+    c_date VARCHAR(255),
+    c_time_from VARCHAR(255),
+    c_time_to VARCHAR(255),
+    c_name VARCHAR(255),
+    c_div VARCHAR(255),
+    c_reserve VARCHAR(255),
+    c_remark VARCHAR(255)
+);
+
 CREATE VIEW v_li_zhangzu_zhichu_2022 AS
     SELECT 
         SUBSTR(z_date,
