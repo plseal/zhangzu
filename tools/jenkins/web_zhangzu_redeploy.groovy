@@ -17,10 +17,10 @@ node{
     }
     stage("step3. start SpringBoot Prod"){
         bat """
-            cd C:\GitHub\zhangzu\src\main\resources\
+            cd C:\\GitHub\\zhangzu\\src\\main\\resources
             del application.properties
             copy application.properties_prod application.properties
-            cd C:\GitHub\zhangzu
+            cd C:\\GitHub\\zhangzu
             start mvn spring-boot:run
         """
     }
