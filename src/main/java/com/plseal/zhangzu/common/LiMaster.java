@@ -50,4 +50,10 @@ public class LiMaster {
 		z_io_div_list.add("买货");
         return z_io_div_list;
     }
+    public static List<String> make_c_calendar_am_pm() {
+		List<String> c_calendar_am_pm_list = new ArrayList<>();
+		c_calendar_am_pm_list.add("上午");
+		c_calendar_am_pm_list.add("下午");
+        return c_calendar_am_pm_list;
+    }
 }

@@ -74,56 +74,12 @@
       return fmt;
     }
 
-    function dep_change() {
-      
-      //選択したvalue値を変数に格納
-      var department_id_val = $('#department_id').val();
-      var api_calendar_uri = '../li_api_calendar?EMPLOYEE_ID=CALENDAR_ALL&DEPARTMENT_ID='+department_id_val;
-      console.log(api_calendar_uri);
-      var options = {
-        events_source: api_calendar_uri,
-        view: 'month',
-        tmpl_path: '../tmpls/',
-        tmpl_cache: false,
-        language: 'ja-JP',
-        day: dateFormat("YYYY-mm-dd", today),
-        onAfterEventsLoad: function(events) {
-          if(!events) {
-            return;
-          }
-          var list = $('#eventlist');
-          list.html('');
 
-          $.each(events, function(key, val) {
-            $(document.createElement('li'))
-              .html('<a href="' + val.url + '">' + val.title + '</a>')
-              .appendTo(list);
-          });
-        },
-        onAfterViewLoad: function(view) {
-          $('.page-header h3').text(this.getTitle());
-          $('.btn-group button').removeClass('active');
-          $('button[data-calendar-view="' + view + '"]').addClass('active');
-        },
-        classes: {
-          months: {
-            general: 'label'
-          }
-        }
-      };
-
-      var calendar = $('#calendar').calendar(options);
-      
-    }
-      
-
-
-    
     (function($) {
       "use strict";
       console.log("calendar init start");
       var options = {
-        events_source: '../li_api_calendar?EMPLOYEE_ID=CALENDAR_ALL&DEPARTMENT_ID=0',
+        events_source: '../li_api_calendar',
         view: 'month',
         tmpl_path: '../',
         tmpl_cache: false,
