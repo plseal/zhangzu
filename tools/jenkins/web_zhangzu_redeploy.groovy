@@ -24,7 +24,7 @@ node{
         """
     }
 
-    stage("step4. mvn clean package"){
+    stage("step4. run_prod.bat"){
         dir("C:\\GitHub\\zhangzu"){
           bat "start cmd.exe /c run_prod.bat"
         }
