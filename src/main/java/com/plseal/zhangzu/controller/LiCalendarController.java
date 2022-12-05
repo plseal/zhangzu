@@ -99,12 +99,16 @@ public class LiCalendarController {
 	public String li_calendar(String zhangzu_ac, HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][li_calendar][start]");
 
-        String client_ip = HttpUtils.getRequestIP(request);
-        logger.info("["+this.getClass()+"][li_calendar][client_ip]"+client_ip);
+		String result;
+		if (HttpUtils.isAdmin(request)) {
+			result = "li_calendar_admin.html";
+		} else {
+			result = "li_calendar_user.html";
+		}
+		logger.info("["+this.getClass()+"][li_calendar][end] to " + result);	
 		
-		logger.info("["+this.getClass()+"][li_calendar][end] to li_calendar.html");
 
-		return "li_calendar";
+		return result;
 	}
 	@RequestMapping("/month.html")
 	public String li_month(String zhangzu_ac, HttpServletRequest request) throws Exception {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plseal.zhangzu.common.DateUtils;
+import com.plseal.zhangzu.common.HttpUtils;
 import com.plseal.zhangzu.entity.CalendarModel;
 import com.plseal.zhangzu.entity.CalendarResult;
 
@@ -31,7 +34,7 @@ public class LiCalendarAPIController {
     JdbcTemplate jdbcTemplate;
 	
 	@RequestMapping("/li_api_calendar")
-	public String li_api_calendar(String div) {
+	public String li_api_calendar(String div, HttpServletRequest request) {
 		
 		List<Map<String, Object>> list1_li_calendar;
 		String strSQL1 =
@@ -56,9 +59,14 @@ public class LiCalendarAPIController {
 				String eventDate = (String)list1_li_calendar.get(i).get("C_DATE");
 				// String c_name = (String)list1_li_calendar.get(i).get("C_NAME");
 				String c_reserve = (String)list1_li_calendar.get(i).get("C_RESERVE");
-
-				result1.url = "./calendar_update?id=" + c_id + "&c_date='9999/99/99'";
-
+				
+				if (HttpUtils.isAdmin(request)) {
+					// adminは変更可能
+					result1.url = "./calendar_update?id=" + c_id + "&c_date='9999/99/99'";
+				} else {
+					// 普通userは変更不可
+					result1.url = "./calendar";
+				}
 				
 				
 				if (c_reserve.equals("预约可")) {
