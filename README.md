@@ -1,6 +1,7 @@
 # zhangzu
 ## spring run
-run_prod.bat(本番環境) or run_test.bat（開発環境）
+- run_prod.bat(本番環境) 
+- run_test.bat（開発環境）
 
 ## vscode のラボでtest
 
