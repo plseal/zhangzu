@@ -8,13 +8,18 @@ node{
             git pull
         """
     }
-    stage("step2. stop SpringBoot"){
-        bat """
-            cd c:\\Github\\zhangzu
-            SET /P VALUE_FROM_FILE= < app.pid
-            taskkill /pid %VALUE_FROM_FILE% /f
-        """
-    }
+     try {
+        stage("step2. stop SpringBoot"){
+            bat """
+                cd c:\\Github\\zhangzu
+                SET /P VALUE_FROM_FILE= < app.pid
+                taskkill /pid %VALUE_FROM_FILE% /f
+            """
+        }
+     } catch (Exception e) {
+        echo "Stage failed, but we continue"  
+     }
+
     stage("step3. prepare Prod properties"){
         bat """
             cd C:\\GitHub\\zhangzu\\src\\main\\resources
