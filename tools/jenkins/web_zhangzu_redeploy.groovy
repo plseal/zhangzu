@@ -21,7 +21,7 @@ node{
             del application.properties
             copy application.properties_prod application.properties
             cd C:\\GitHub\\zhangzu
-            start mvn spring-boot:run
+            mvn spring-boot:run
         """
     }
 }
