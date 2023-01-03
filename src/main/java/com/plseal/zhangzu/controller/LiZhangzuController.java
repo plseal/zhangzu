@@ -50,7 +50,14 @@ public class LiZhangzuController {
 		model.addAttribute("list_zhangzu", list_zhangzu);
 		return "li_index";
 	}
+	@RequestMapping(path = "/index_2022", method = RequestMethod.GET)
+	public String index_2022(Model model) throws Exception {
 
+		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, "2022");
+
+		model.addAttribute("list_zhangzu", list_zhangzu);
+		return "li_index";
+	}
 	@RequestMapping(path = "/insert", method = RequestMethod.GET)
 	public String insert(Model model) throws Exception {
 
