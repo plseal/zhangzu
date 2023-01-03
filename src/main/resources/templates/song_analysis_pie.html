@@ -58,82 +58,11 @@
 					</tbody>
 					</table>
 				</div>
-				<hr>
-				<h4><span class="badge bg-secondary" >按类别查询</span></h4>
-				<div class="form-group">
-					<select id="select_list_ac_year" class="form-select" aria-label="Default select example">
-						<option
-							th:each="zz_analysis : ${list_ac_year}"
-							th:value="${zz_analysis.ac_year}"
-							th:text="${zz_analysis.ac_year}"
-							th:selected="${zz_analysis.ac_year == selectedValue_ac_year}">
-						</option>
-					</select>
-				</div>
-				<hr>
-				<div class="form-group">
-					<select id="select_list_ac_type" class="form-select" aria-label="Default select example">
-						<option
-							th:each="zz_analysis : ${list_ac_type}"
-							th:value="${zz_analysis.ac_type}"
-							th:text="${zz_analysis.ac_type}"
-							th:selected="${zz_analysis.ac_type == selectedValue_ac_type}">
-						</option>
-					</select>
-				</div>
 
 				<hr>
 
-				<form action="/song/analysis/pie_post" method="post" class="d-grid gap-2" id='song_analysis_pie_form'>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="radio_type" id="shouru" value="收入">
-						<label class="form-check-label" for="shouru">
-							收入
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="radio_type" id="zhichu" checked value="支出">
-						<label class="form-check-label" for="zhichu">
-							支出
-						</label>
-					</div>
-					<button class="btn btn-primary" type="submit" id="selectedValue_year_type" name="selectedValue_year_type" th:value="${selectedValue_year_type}">查询</button>
-				</form>
-				
-				<hr>
-				<th:block th:if="${alert_count_0 == '没查到数据'}">
-					<div class="alert alert-danger" role="alert" th:text="${alert_count_0}"></div>
-				</th:block>
-				
-				<!--
-				年	支出	分类
-				2022	-5000	餐饮饮食
-				2022	-3608	李服饰
-				2022	-1000	日常用品
-				-->
-				<table class="table">
-				<thead>
-					<tr class="table-primary">
-						<th width="25%">年</th>
-						<th width="25%">支出</th>
-						<th width="25%">分类</th>
-						<th width="25%">操作</th>									
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="zz_analysis : ${list_zz_type_analysis}">
-						<td th:text="${zz_analysis.ac}"></td>
-						<td th:text="${zz_analysis.ac_min}"></td>
-						<td th:text="${zz_analysis.ac_type}"></td>
-						<td>
-							<form action="/song/analysis/to_detail" method="post">
-								<button class="btn btn-info btn-small" type="submit" name="year_type" th:value="${zz_analysis.year_type}">详细确认</button>
-							</form>
-						</td>
-					</tr>
 
-				</tbody>
-				</table>
+
 				
 			</div><!--PAGE CONTENT ENDS-->
 		</div><!--/.main-container-->
@@ -141,24 +70,6 @@
 	
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
-<script th:inline="javascript">
-	//jquery
-	// 下拉列表onchange 把新的值给button设定进去
-	$("#selectedValue_year_type").val($('#select_list_ac_year').find(":selected").val() + "_" + $('#select_list_ac_type').find(":selected").val());
-	$('#select_list_ac_year').on('change', function() {
-		$("#selectedValue_year_type").val($('#select_list_ac_year').find(":selected").val() + "_" + $('#select_list_ac_type').find(":selected").val());
-		var selectedValue_year_type = $("#selectedValue_year_type");
-		// alert(selectedValue_year_type.val())
-	});
-	$('#select_list_ac_type').on('change', function() {
-		$("#selectedValue_year_type").val($('#select_list_ac_year').find(":selected").val() + "_" + $('#select_list_ac_type').find(":selected").val());
-		var selectedValue_year_type = $("#selectedValue_year_type");
-		// alert(selectedValue_year_type.val())
-	});
-	var selectedValue_year_type = $("#selectedValue_year_type");
-	// alert(selectedValue_year_type.val())
-	
-</script>
 <script th:inline="javascript">
 
 	google.charts.load('current', {'packages':['corechart']});
