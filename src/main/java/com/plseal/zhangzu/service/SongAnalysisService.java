@@ -109,29 +109,6 @@ public class SongAnalysisService {
 		} 
 		return list_result;
 	}
-	/*
-	 * 年 list 取得
-	 * 2022 
-	 * 2021 
-	 * 2020 
-	 */
-	public List<ZhangzuAnalysis> get_distinct_ac_year() throws Exception {
-		ZhangzuAnalysis zz_analysis;
-		List<ZhangzuAnalysis> list_result = new ArrayList<ZhangzuAnalysis>();
-		String strSQL3 = "select distinct left(z_date,4) as ac_year from t_zhangzu where z_date is not null order by ac_year desc";
-		logger.info("["+this.getClass()+"][get_distinct_ac_year][SQL3]"+strSQL3);
-		List<Map<String, Object>> list_tmp = jdbcTemplate.queryForList(strSQL3);
-        logger.info("list.size():"+list_tmp.size());
-        // logger.info("list.get(0):"+list_tmp.get(0));
-		String str_ac_year = "";
-		for(int i = 0 ; i < list_tmp.size() ; i++) {
-			zz_analysis = new ZhangzuAnalysis();
-			str_ac_year  = list_tmp.get(i).get("ac_year").toString();
-			zz_analysis.setAc_year(str_ac_year);
-			list_result.add(zz_analysis);
-		}
-		return list_result;
-	}
 
 	// 年	支出 分类
 	// 2022 100  餐饮饮食

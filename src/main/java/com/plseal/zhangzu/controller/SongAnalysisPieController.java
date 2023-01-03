@@ -81,13 +81,6 @@ public class SongAnalysisPieController {
 		// ********************
 		// for pulldown list
 		// ********************
-		// 年一覧
-		List<ZhangzuAnalysis> list_ac_year = songAnalysisService.get_distinct_ac_year();
-		request.setAttribute("list_ac_year", list_ac_year);
-
-		// ********************
-		// for pulldown list
-		// ********************
 		// z_type一覧
 		List<ZhangzuAnalysis> list_ac_type = songAnalysisService.get_distinct_ac_type_by_year("2022");
 		request.setAttribute("list_ac_type", list_ac_type);
@@ -148,15 +141,10 @@ public class SongAnalysisPieController {
 		} else {
 			model.addAttribute("list_zz_type_analysis", list_zz_type_analysis);
 		}
-		// ********************
-		// for pulldown list
-		// ********************
-		// 年一覧
-		List<ZhangzuAnalysis> list_ac_year = songAnalysisService.get_distinct_ac_year();
+
 
 		// プルダウンの初期値
         model.addAttribute("selectedValue_ac_year", ac_year);
-		model.addAttribute("list_ac_year", list_ac_year);
 
 		// ********************
 		// for pulldown list
@@ -182,28 +170,6 @@ public class SongAnalysisPieController {
 		logger.info("["+this.getClass()+"][song_analysis_pie_post][end] to song_analysis_pie.html");
 		
 		return "song_analysis_pie";
-	}
-
-	//[统计分析 饼图].html[详细确认]ボタン押下後
-	@RequestMapping(path = "/song/analysis/to_detail", method = RequestMethod.POST)
-	public String song_analysis_to_detail(Model model, @RequestParam("year_type") String year_type) throws Exception {
-        logger.info("["+this.getClass()+"][song_analysis_to_detail][start] ");
-        logger.info("["+this.getClass()+"][song_analysis_to_detail][year_type]" + year_type + " ");
-        String[] array_year_type = year_type.split("_");
-
-		String sql = "SELECT z_date,z_name,z_amount,z_type,z_io_div,z_remark,0 as z_m_amount " +
-		"FROM t_zhangzu " + 
-		"WHERE z_date like '"+ array_year_type[0] + "%' " + 
-		"and z_io_div = '支出' " + 
-		"and z_type = '" + array_year_type[1] + "' " + 
-		"order by z_date desc ";
-
-		RowMapper<Zhangzu> rowMapper = new BeanPropertyRowMapper<Zhangzu>(Zhangzu.class);
-        List<Zhangzu> list_zhangzu = jdbcTemplate.query(sql, rowMapper);
-
-		model.addAttribute("list_zhangzu", list_zhangzu);
-		logger.info("["+this.getClass()+"][song_analysis_to_detail][end] to:song_analysis_detail.html");
-		return "song_analysis_detail";
 	}
 
 	
