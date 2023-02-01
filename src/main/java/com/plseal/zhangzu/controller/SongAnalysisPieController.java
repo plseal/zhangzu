@@ -94,15 +94,15 @@ public class SongAnalysisPieController {
 		// **************************************************************************
 		//现在系统时间的 年/月
 		Calendar calendar = Calendar.getInstance();
-		Calendar calendar_lastmonth = calendar.add(Calendar.MONTH, -1);
+		calendar.add(Calendar.MONTH, -1);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
-		String calendar_YM =sdf.format(calendar_lastmonth.getTime());
+		String calendar_YM =sdf.format(calendar.getTime());
 		request.setAttribute("calendar_YM", calendar_YM+"每十天合计");
 
 		// **************************************************************************
 		// for 期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
 		// **************************************************************************
-		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = songAnalysisService.get_ac_type_ac_min_by_10days(calendar_lastmonth);
+		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = songAnalysisService.get_ac_type_ac_min_by_10days(calendar);
 		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
 
 		logger.info("["+this.getClass()+"][song_analysis_pie_lastmonth][end] to song_analysis_pie.html");
