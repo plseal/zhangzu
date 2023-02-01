@@ -114,8 +114,8 @@ public class SongAnalysisService {
 	// 2022 100  餐饮饮食
 	// 2022 100  诚诚
 	// 2022 100  诚诚
-	public List<ZhangzuAnalysis> get_ac_type_ac_min_by_10days() throws Exception {
-		Calendar calendar = Calendar.getInstance();
+	public List<ZhangzuAnalysis> get_ac_type_ac_min_by_10days(Calendar calendar) throws Exception {
+		
 		int lastDayOfThisMonth = calendar.getActualMaximum(Calendar.DATE);
 		int firstDayOfThisMonth = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");

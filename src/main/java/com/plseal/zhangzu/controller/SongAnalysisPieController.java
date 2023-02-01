@@ -49,9 +49,9 @@ public class SongAnalysisPieController {
 		// 年  支出 分类
 		// 2022 100  餐饮饮食
 		// 2022 100  诚诚
-		List<ZhangzuAnalysis> list_z_type_analysis_by_year = songAnalysisService.get_ac_type_ac_min_by_year("2022");
+		List<ZhangzuAnalysis> list_z_type_analysis_by_year = songAnalysisService.get_ac_type_ac_min_by_year("2023");
 		request.setAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
-		request.setAttribute("analysis_title_ac_year", "2022");
+		request.setAttribute("analysis_title_ac_year", "2023");
 
 		// **************************************************************************
 		// yyyy/mm每十天合计
@@ -65,49 +65,19 @@ public class SongAnalysisPieController {
 		// **************************************************************************
 		// for 期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
 		// **************************************************************************
-		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = songAnalysisService.get_ac_type_ac_min_by_10days();
+		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = songAnalysisService.get_ac_type_ac_min_by_10days(calendar);
 		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
-
-		// ****************
-		// for table
-		// ****************
-		// 年	  支出 分类
-		// 2022    100  餐饮饮食
-		// 2022    100  诚诚
-		// 2021    100  诚诚
-		List<ZhangzuAnalysis> list_zz_type_analysis = songAnalysisService.get_ac_type_ac_min_by_year_and_type("2022", "餐饮饮食", songAnalysisPieForm);
-		request.setAttribute("list_zz_type_analysis", list_zz_type_analysis);
-		
-		// ********************
-		// for pulldown list
-		// ********************
-		// z_type一覧
-		List<ZhangzuAnalysis> list_ac_type = songAnalysisService.get_distinct_ac_type_by_year("2022");
-		request.setAttribute("list_ac_type", list_ac_type);
-		
-		// ********************
-		// for search button
-		// ********************
-		String selectedValue_year_type = "2022_餐饮饮食";
-		request.setAttribute("selectedValue_year_type", selectedValue_year_type);
-
-
 
 		logger.info("["+this.getClass()+"][song_analysis_pie][end] to song_analysis_pie.html");
 
 		return "song_analysis_pie";
 	}
 
-	//[统计分析 饼图].html[查询]ボタン押下後
-	@RequestMapping(path = "/song/analysis/pie_post", method = RequestMethod.POST)
-	public String song_analysis_pie_post(@ModelAttribute SongAnalysisPieForm songAnalysisPieForm, 
-		Model model, @RequestParam("selectedValue_year_type") String selectedValue_year_type, HttpServletRequest request) throws Exception {
-        logger.info("["+this.getClass()+"][song_analysis_pie_post][start] ");
-        logger.info("["+this.getClass()+"][song_analysis_pie_post][selectedValue_year_type]" + selectedValue_year_type + " ");
-		String[] array_selectedValue_year_type = selectedValue_year_type.split("_");
-
-		String ac_year = array_selectedValue_year_type[0];
-		String ac_type = array_selectedValue_year_type[1];
+	//[统计分析 饼图][先月]ボタン押下後
+	@RequestMapping("/song/analysis/pie_lastmonth")
+	public String song_analysis_pie_lastmonth(HttpServletRequest request) throws Exception {
+		logger.info("["+this.getClass()+"][song_analysis_pie_lastmonth][start]");
+		SongAnalysisPieForm songAnalysisPieForm = new SongAnalysisPieForm();
 
 		// ****************
 		// for pie chart
@@ -115,62 +85,31 @@ public class SongAnalysisPieController {
 		// 年  支出 分类
 		// 2022 100  餐饮饮食
 		// 2022 100  诚诚
-		List<ZhangzuAnalysis> list_z_type_analysis_by_year = songAnalysisService.get_ac_type_ac_min_by_year(ac_year);
-		model.addAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
-		model.addAttribute("analysis_title_ac_year", ac_year);
+		List<ZhangzuAnalysis> list_z_type_analysis_by_year = songAnalysisService.get_ac_type_ac_min_by_year("2023");
+		request.setAttribute("list_z_type_analysis_by_year", list_z_type_analysis_by_year);
+		request.setAttribute("analysis_title_ac_year", "2023");
 
 		// **************************************************************************
 		// yyyy/mm每十天合计
 		// **************************************************************************
 		//现在系统时间的 年/月
 		Calendar calendar = Calendar.getInstance();
+		calendar_lastmonth = calendar.add(Calendar.MONTH, -1);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
-		String calendar_YM =sdf.format(calendar.getTime());
+		String calendar_YM =sdf.format(calendar_lastmonth.getTime());
 		request.setAttribute("calendar_YM", calendar_YM+"每十天合计");
-		
-		// ****************
-		// for table
-		// ****************
-		// 年	  支出 分类
-		// 2022    100  餐饮饮食
-		// 2022    100  诚诚
-		// 2021    100  诚诚
-		List<ZhangzuAnalysis> list_zz_type_analysis = songAnalysisService.get_ac_type_ac_min_by_year_and_type(ac_year, ac_type, songAnalysisPieForm);
-		if (list_zz_type_analysis.size() == 0) {
-			model.addAttribute("alert_count_0", "没查到数据");
-		} else {
-			model.addAttribute("list_zz_type_analysis", list_zz_type_analysis);
-		}
-
-
-		// プルダウンの初期値
-        model.addAttribute("selectedValue_ac_year", ac_year);
-
-		// ********************
-		// for pulldown list
-		// ********************
-		// z_type一覧
-		List<ZhangzuAnalysis> list_ac_type = songAnalysisService.get_distinct_ac_type_by_year(ac_year);
-
-		// プルダウンの初期値
-        model.addAttribute("selectedValue_ac_type", ac_type);
-		model.addAttribute("list_ac_type", list_ac_type);
-
-		// ********************
-		// for search button
-		// ********************
-		model.addAttribute("selectedValue_year_type", selectedValue_year_type);
 
 		// **************************************************************************
 		// for 期間（１日～１０日）	期間（１１日～２０日）	期間（２１日～月末）
 		// **************************************************************************
-		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = songAnalysisService.get_ac_type_ac_min_by_10days();
+		List<ZhangzuAnalysis> list_ac_type_ac_min_by_10days = songAnalysisService.get_ac_type_ac_min_by_10days(calendar_lastmonth);
 		request.setAttribute("list_ac_type_ac_min_by_10days", list_ac_type_ac_min_by_10days);
-		
-		logger.info("["+this.getClass()+"][song_analysis_pie_post][end] to song_analysis_pie.html");
-		
+
+		logger.info("["+this.getClass()+"][song_analysis_pie_lastmonth][end] to song_analysis_pie.html");
+
 		return "song_analysis_pie";
 	}
+
 
 	
 }
