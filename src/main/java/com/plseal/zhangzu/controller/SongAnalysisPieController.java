@@ -94,7 +94,7 @@ public class SongAnalysisPieController {
 		// **************************************************************************
 		//现在系统时间的 年/月
 		Calendar calendar = Calendar.getInstance();
-		calendar_lastmonth = calendar.add(Calendar.MONTH, -1);
+		Calendar calendar_lastmonth = calendar.add(Calendar.MONTH, -1);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
 		String calendar_YM =sdf.format(calendar_lastmonth.getTime());
 		request.setAttribute("calendar_YM", calendar_YM+"每十天合计");
