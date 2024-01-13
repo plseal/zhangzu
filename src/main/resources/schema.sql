@@ -77,6 +77,84 @@ CREATE VIEW v_li_zhangzu_maihuo_2022 AS
     GROUP BY SUBSTR(z_date, 1, 7);
 
 
+CREATE VIEW v_li_zhangzu_zhichu_2023 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        li_zhangzu
+    WHERE
+        ((z_date LIKE '2023%')
+            AND (z_io_div = '支出'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+
+CREATE VIEW v_li_zhangzu_shouru_2023 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        li_zhangzu
+    WHERE
+        ((z_date LIKE '2023%')
+            AND (z_io_div = '收入'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+
+CREATE VIEW v_li_zhangzu_maihuo_2023 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        li_zhangzu
+    WHERE
+        ((z_date LIKE '2023%')
+            AND (z_io_div = '买货'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+    
+CREATE VIEW v_li_zhangzu_zhichu_2024 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        li_zhangzu
+    WHERE
+        ((z_date LIKE '2024%')
+            AND (z_io_div = '支出'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+
+CREATE VIEW v_li_zhangzu_shouru_2024 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        li_zhangzu
+    WHERE
+        ((z_date LIKE '2024%')
+            AND (z_io_div = '收入'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+
+CREATE VIEW v_li_zhangzu_maihuo_2024 AS
+    SELECT 
+        SUBSTR(z_date,
+            1,
+            7) AS `ac`,
+        SUM(z_amount) AS `amount`
+    FROM
+        li_zhangzu
+    WHERE
+        ((z_date LIKE '2024%')
+            AND (z_io_div = '买货'))
+    GROUP BY SUBSTR(z_date, 1, 7);
+
 CREATE VIEW v_song_zhangzu_zhichu_2022 AS
     SELECT 
         SUBSTR(z_date,
