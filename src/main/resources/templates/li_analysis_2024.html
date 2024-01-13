@@ -2,7 +2,7 @@
 <html >
 	<head>
 		<meta charset="utf-8" />
-		<title>统计分析2022年度</title>
+		<title>统计分析2024年度</title>
 		<!--index.html -->
 		<meta http-equiv="pragma" content="no-cache"/>   
 		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/>   
@@ -54,7 +54,7 @@
 					<h1>
 						<small>
 							<i class="icon-list-alt"></i>
-							统计分析2022
+							统计分析2024
 						</small>
 					</h1>
 				</div>
@@ -66,7 +66,7 @@
 			
 				<!--
 				年月	支出	收入	余额	买货
-				2022/01	9608	0	9608	0
+				2024/01	9608	0	9608	0
 				-->
 				<div class="form-group">
 					<table id="sample-table-1" class="table table-striped table-bordered table-hover">
@@ -98,9 +98,9 @@
 				<!--
 
 				年月	支出	分类
-				2022/01	-5000	餐饮饮食
-				2022/01	-3608	李服饰
-				2022/01	-1000	日常用品
+				2024/01	-5000	餐饮饮食
+				2024/01	-3608	李服饰
+				2024/01	-1000	日常用品
 				-->
 				<div class="form-group">
 					<table id="group-by-type-table" class="table table-striped table-bordered table-hover">
@@ -148,7 +148,7 @@
 
 	var options = {
 		chart: {
-		title: '2022',
+		title: '2024',
 		//subtitle: '201701-201712',
 		}
 	};
@@ -176,7 +176,7 @@
 			
 			//ZHICHU
 			if (item.column == 1) {
-			window.location.href = "/li/analysis/2022?zhangzu_ac="+str_ac;
+			window.location.href = "/li/analysis/2024?zhangzu_ac="+str_ac;
 			}
 		} else if (item.row != null) {
 			var str_ac = data.getFormattedValue(item.row, 0);

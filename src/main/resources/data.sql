@@ -9,6 +9,16 @@ INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amoun
 INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2022/07/02','甲油胶猫眼',4000,'甲油胶猫眼','支出','',0);
 
 
+INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2023/01/01','甲油胶透色',10000,'甲油胶透色','支出','',0);
+INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2023/01/02','甲油胶猫眼',20000,'甲油胶猫眼','支出','',0);
+INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2023/01/03','美甲收入',40000,'美甲收入','收入','',0);
+
+
+INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2024/01/01','甲油胶透色',1000,'甲油胶透色','支出','',0);
+INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2024/01/02','甲油胶猫眼',2000,'甲油胶猫眼','支出','',0);
+INSERT INTO li_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2024/01/03','美甲收入',20000,'美甲收入','收入','',0);
+
+
 INSERT INTO t_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2021/06/01','超市',100000,'日常用品','支出','',0);
 INSERT INTO t_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2022/06/01','超市',100000,'日常用品','支出','',0);
 INSERT INTO t_zhangzu(z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount) VALUES('2022/06/05','餐饮',200000,'餐饮饮食','支出','',0);
