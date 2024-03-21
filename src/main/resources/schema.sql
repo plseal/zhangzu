@@ -33,6 +33,7 @@ CREATE TABLE he_zhangzu (
     z_amount BIGINT,
     z_type VARCHAR(255),
     z_io_div VARCHAR(255),
+    z_photo_name VARCHAR(255),
     z_remark VARCHAR(255),
     z_m_amount BIGINT
 );
