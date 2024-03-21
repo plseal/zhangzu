@@ -95,7 +95,20 @@
 						<input type="text" class="form-control" id="z_m_amount" name="z_m_amount" th:value="${zhangzu.z_m_amount}" placeholder=""    >							
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">图片：</label>
+					<div class="col-sm-10">
+						<div id="imageContainer">
+							<img id="uploadedImage" src="" alt="图片" style="max-width: 500px;">
+						</div>						
+					</div>
 
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 ">
+						<button class="btn btn-lg btn-block btn-info" type="submit" name="update_delete_button" value="UPLOAD_FILE">写真添付</button>
+					</div>
+				</div>
 				<div class="form-group">
 				<div class="col-sm-12 ">
 					<button class="btn btn-lg btn-block btn-primary" type="submit" name="update_delete_button" value="UPDATE">更新</button>
@@ -112,57 +125,65 @@
 
 	
 
-	
 <script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+	window.onload = function() {
+		setTimeout(function() {
+			var imgElement = document.getElementById('uploadedImage');
+			var filename = /*[[${z_photo_name}]]*/ 'default.jpg';
+			imgElement.src = '/uploads/' + filename;
+		}, 2000); // 延迟 2000 毫秒加载图片
+	}
+	/*]]>*/
 
-function do_post() {  
-	var form = document.forms[0];  
-	form.action = "${pageContext.request.contextPath}/he/to_index_zhangzu.do?FLG=UPDATE";  
+	function do_post() {  
+		var form = document.forms[0];  
+		form.action = "${pageContext.request.contextPath}/he/to_index_zhangzu.do?FLG=UPDATE";  
 
-	form.method = "post";  
-	form.submit();  
-}
-function do_delete() {  
-	var form = document.forms[0];  
-	form.action = "${pageContext.request.contextPath}/he/to_index_zhangzu.do?FLG=DELETE";  
+		form.method = "post";  
+		form.submit();  
+	}
+	function do_delete() {  
+		var form = document.forms[0];  
+		form.action = "${pageContext.request.contextPath}/he/to_index_zhangzu.do?FLG=DELETE";  
 
-	form.method = "post";  
-	form.submit();  
-} 
-	
+		form.method = "post";  
+		form.submit();  
+	} 
+		
 
 
-var year = new Date().getFullYear();
-var month = new Date().getMonth() + 1;
-var day = new Date().getDate();
-var today = year + "/" + month + "/" +day;
-// alert(today);
-$('.form_date').datetimepicker({
-	language:  'zh-CN',
-	weekStart: 1,
-	todayBtn:  1,
-	autoclose: 1,
-	todayHighlight: 1,
-	startView: 2,
-	minView: 2,
-	endDate: today,
-	forceParse: 0
-});	
+	var year = new Date().getFullYear();
+	var month = new Date().getMonth() + 1;
+	var day = new Date().getDate();
+	var today = year + "/" + month + "/" +day;
+	// alert(today);
+	$('.form_date').datetimepicker({
+		language:  'zh-CN',
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		endDate: today,
+		forceParse: 0
+	});	
 
-$('.form_date').on('changeDate', function(ev){
+	$('.form_date').on('changeDate', function(ev){
 
-	var nowdate = new Date();
-	var z_date = ev.date;
+		var nowdate = new Date();
+		var z_date = ev.date;
 
-	var z_year = z_date.getFullYear();
-	var z_month = ("00" + (z_date.getMonth()+1)).slice(-2);
-	var z_day = ("00" + z_date.getDate()).slice(-2);
-	
-	var z_YYYYMMDDday = z_year + "/" + z_month + "/" +z_day;
-	
-	document.getElementById("z_date").value = z_YYYYMMDDday;
-	
-});	
+		var z_year = z_date.getFullYear();
+		var z_month = ("00" + (z_date.getMonth()+1)).slice(-2);
+		var z_day = ("00" + z_date.getDate()).slice(-2);
+		
+		var z_YYYYMMDDday = z_year + "/" + z_month + "/" +z_day;
+		
+		document.getElementById("z_date").value = z_YYYYMMDDday;
+		
+	});	
 
 </script>
 </form>

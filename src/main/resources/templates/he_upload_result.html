@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>文件显示</title>
+		<!--index.html -->
+		<meta http-equiv="pragma" content="no-cache"/>   
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/>   
+		<meta http-equiv="expires" content="0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+		<link th:href="@{/bootstrap3.0.0/css/bootstrap.min.css}" rel="stylesheet"></link>
+		<link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet"></link>
+		<style> 
+		.css_red{color:#F00} 
+		</style> 
+		<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/logo_32X32.ico}" media="screen" />
+		<script type="text/javascript" th:src="@{/js/jquery-easyui-1.3.3/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/bootstrap3.0.0/js/bootstrap.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.js}" charset="UTF-8"></script>
+		<script type="text/javascript" th:src="@{/js/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+	</head>
+	
+	<body>
+		
+		<div class="container">
+            <div class="col-sm-12">
+                <a onclick="location.href='/he/index'" >
+                    <h2 class="text-center">贺帐本2024</h2>
+                </a>
+            </div>
+            <br/>
+			<div class="page-content">
+                <!--
+                在<img>标签的src属性中直接使用th:value="${newfilename}"的写法是行不通的。Thymeleaf使用th:前缀的一系列属性来处理模板数据,但是<img>标签的src属性并不属于Thymeleaf支持的属性之一。
+
+                -->
+                <h1>已上传图片</h1>
+				<input type="hidden" class="form-control" id="id" name="id" th:value="${id}" placeholder="">
+                <input type="hidden" class="form-control" id="newfilename" name="newfilename" th:value="${newfilename}" placeholder="">
+				<hr>
+				<a onclick="location.href='/he/index'" class="btn btn-primary" role="button" data-bs-toggle="button">結果確認</a>
+                <hr>
+                <div id="imageContainer">
+                    <img id="uploadedImage" src="" alt="上传图片" style="max-width: 500px;">
+
+                </div>
+
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    window.onload = function() {
+                        setTimeout(function() {
+                            var imgElement = document.getElementById('uploadedImage');
+                            var filename = /*[[${newfilename}]]*/ 'default.jpg';
+                            imgElement.src = '/uploads/' + filename;
+                        }, 2000); // 延迟 2000 毫秒加载图片
+                    }
+                    /*]]>*/
+                </script>
+
+			</div><!--PAGE CONTENT ENDS-->
+		</div><!--/.main-container-->
+
+</div>
+</body>
+</html>

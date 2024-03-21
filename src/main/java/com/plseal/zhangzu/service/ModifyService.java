@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.RowMapper;
+
+import com.plseal.zhangzu.entity.HeZhangzu;
 import com.plseal.zhangzu.entity.Zhangzu;
 
 @Service  // サービスクラスに付与。
@@ -43,4 +45,16 @@ public class ModifyService {
 		return list_zhangzu;
 	}
     
+    /*
+     * 賀用update画面表示用データを取得
+     */
+	public List<HeZhangzu>  query_db_for_he_update_html(String table_id, Integer id) throws Exception {
+        logger.info("query_db_for_he_update_html [start]");
+		String sql = "SELECT id,z_date,z_name,IFNULL(z_amount,0) as z_amount ,z_type,z_io_div,z_remark,IFNULL(z_m_amount,0) as z_m_amount,z_photo_name FROM " + table_id +" WHERE id = " + id + " order by z_date desc ";
+        logger.info("query_db_for_he_update_html [sql]"+sql);
+        RowMapper<HeZhangzu> rowMapper = new BeanPropertyRowMapper<HeZhangzu>(HeZhangzu.class);
+        List<HeZhangzu> list_zhangzu  = jdbcTemplate.query(sql, rowMapper);
+        logger.info("query_db_for_he_update_html [end]");
+		return list_zhangzu;
+	}
 }
