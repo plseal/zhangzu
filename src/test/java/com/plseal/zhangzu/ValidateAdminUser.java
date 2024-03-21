@@ -157,7 +157,7 @@ public class ValidateAdminUser  {
             // throw NofindAlert;
         }
 
-        if (flag) {
+        if (flag && alert != null) {
             alert.accept();
         }
         testCommon.waitSomeSeconds(mydriver);

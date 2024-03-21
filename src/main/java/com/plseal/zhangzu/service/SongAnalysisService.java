@@ -1,6 +1,7 @@
 package com.plseal.zhangzu.service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -145,7 +146,7 @@ public class SongAnalysisService {
 		for (int i = 1; i <= 11; i++){
 
 			// 月末ならstop
-			if (calendar.getTime().getDate() == lastDayOfThisMonth){
+			if (LocalDate.now().getDayOfMonth() == lastDayOfThisMonth){
 				days21to30.append("'" + sdf.format(calendar.getTime()) + "'");
 				break;
 			} else {

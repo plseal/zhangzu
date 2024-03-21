@@ -38,7 +38,7 @@ public abstract class BaseSeleniumTests {
     @After
     public void tearDown() {
         if (driver != null) {
-            // driver.quit();
+            driver.quit();
         }
     }
 }

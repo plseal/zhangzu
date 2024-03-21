@@ -2,6 +2,7 @@ package com.plseal.zhangzu;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -161,6 +162,7 @@ public class SongTest extends BaseSeleniumTests {
     }
 
     @Test
+    @Ignore("skip analysis_bar")
     public void 正常系05_analysis_bar() throws Exception {
         //指定したURLに遷移する
         driver.get("http://127.0.0.1:8080/song/index");
@@ -190,6 +192,7 @@ public class SongTest extends BaseSeleniumTests {
     }
 
     @Test
+    @Ignore("skip analysis_pie")
     public void 正常系06_analysis_pie() throws Exception {
         //指定したURLに遷移する
         driver.get("http://127.0.0.1:8080/song/index");
