@@ -1,25 +1,19 @@
 package com.plseal.zhangzu.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.servlet.http.HttpServletRequest;
-import com.plseal.zhangzu.entity.ZhangzuAnalysis;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.ui.Model;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.plseal.zhangzu.entity.SongAnalysisPieForm;
-import com.plseal.zhangzu.entity.Zhangzu;
-import org.springframework.web.bind.annotation.RequestParam;
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
+import com.plseal.zhangzu.entity.ZhangzuAnalysis;
 import com.plseal.zhangzu.service.SongAnalysisService;
 
 /*
@@ -41,8 +35,6 @@ public class SongAnalysisPieController {
 	@RequestMapping("/song/analysis/pie")
 	public String song_analysis_pie(HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][song_analysis_pie][start]");
-		SongAnalysisPieForm songAnalysisPieForm = new SongAnalysisPieForm();
-
 		// ****************
 		// for pie chart
 		// ****************
@@ -77,8 +69,6 @@ public class SongAnalysisPieController {
 	@RequestMapping("/song/analysis/pie_lastmonth")
 	public String song_analysis_pie_lastmonth(HttpServletRequest request) throws Exception {
 		logger.info("["+this.getClass()+"][song_analysis_pie_lastmonth][start]");
-		SongAnalysisPieForm songAnalysisPieForm = new SongAnalysisPieForm();
-
 		// ****************
 		// for pie chart
 		// ****************

@@ -161,7 +161,7 @@ public class LiTest extends BaseSeleniumTests {
     }
 
     @Test
-    public void 正常系05_analysis_2022() throws Exception {
+    public void 正常系05_analysis_2023() throws Exception {
         //指定したURLに遷移する
         driver.get("http://127.0.0.1:8080/li/index");
 
@@ -169,22 +169,22 @@ public class LiTest extends BaseSeleniumTests {
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
         logger.info("＃＃＃「統計分析」ボタン　押下");
-        WebElement ANALYSIS_BUTTON = driver.findElement(By.id("analysis_2022"));
+        WebElement ANALYSIS_BUTTON = driver.findElement(By.id("analysis_2023"));
         assertNotNull(ANALYSIS_BUTTON);
         ANALYSIS_BUTTON.click();
         testCommon.waitSomeSeconds(driver);
 
         // 検証
         title = driver.getTitle();
-        assertThat(title, is("统计分析2022年度"));
+        assertThat(title, is("统计分析2023年度"));
         
         // 元データ
         //'2022/01/02','超市',2000,'餐饮饮食','支出'
         //'2022/01/03','超市',3000,'餐饮饮食','支出'
         title = driver.getTitle();
-        WebElement actual_data = driver.findElement(By.xpath("//*[@id=\"group-by-type-table\"]/tbody/tr[1]/td[2]"));
+        WebElement actual_data = driver.findElement(By.xpath("//*[@id=\"sample-table-1\"]/tbody/tr/td[4]"));
         
-        assertThat(actual_data.getText(), is("-5000"));
+        assertThat(actual_data.getText(), is("10000"));
         
         
     }
