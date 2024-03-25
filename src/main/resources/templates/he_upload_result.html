@@ -34,12 +34,15 @@
                 在<img>标签的src属性中直接使用th:value="${newfilename}"的写法是行不通的。Thymeleaf使用th:前缀的一系列属性来处理模板数据,但是<img>标签的src属性并不属于Thymeleaf支持的属性之一。
 
                 -->
-                <h1>已上传图片</h1>
-				<input type="hidden" class="form-control" id="id" name="id" th:value="${id}" placeholder="">
-                <input type="hidden" class="form-control" id="newfilename" name="newfilename" th:value="${newfilename}" placeholder="">
-				<hr>
-				<a onclick="location.href='/he/index'" class="btn btn-primary" role="button" data-bs-toggle="button">結果確認</a>
-                <hr>
+                <h1>文件上传处理成功页面</h1>
+                <form  id="myform"  class="form-horizontal"  role="form" action="/he/upload_result_post" method="post">
+                    <input type="hidden" class="form-control" id="id" name="id" th:value="${id}" placeholder="">
+                    <input type="hidden" class="form-control" id="newfilename" name="newfilename" th:value="${newfilename}" placeholder="">
+                    <input type="hidden" class="form-control" id="insert_update_div" name="insert_update_div" th:value="${insert_update_div}" placeholder="">
+                    <hr>
+                    <button type="submit" class="btn btn-primary">结果确认</button>
+                    <hr>
+                </form>
                 <div id="imageContainer">
                     <img id="uploadedImage" src="" alt="上传图片" style="max-width: 500px;">
 

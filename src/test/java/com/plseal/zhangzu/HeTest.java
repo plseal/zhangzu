@@ -41,7 +41,7 @@ public class HeTest extends BaseSeleniumTests {
     @Test
     public void 正常系02_insert() throws Exception {
         //指定したURLに遷移する
-        driver.get("http://127.0.0.1:8080/he/insert");
+        driver.get("http://127.0.0.1:8080/he/insert?newfilename=&insert_update_div=INIT");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);

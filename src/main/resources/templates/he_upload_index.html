@@ -31,10 +31,11 @@
             <br/>
 			<div class="page-content">
 
-                <h1>文件上传</h1>
+                <h1>文件上传首页面</h1>
 				<input type="hidden" class="form-control" id="id" name="id" th:value="${id}" placeholder="">
+				<input type="hidden" class="form-control" id="insert_update_div" name="insert_update_div" th:value="${insert_update_div}" placeholder="">
 				<!--action="/upload_file_post?id=${id}"-->
-                <form method="post" enctype="multipart/form-data" th:action="@{/he/upload_file_post(id=${id})}">
+                <form method="post" enctype="multipart/form-data" th:action="@{/he/upload_file_post(id=${id}, insert_update_div=${insert_update_div})}">
                     <p>选择要上传的文件:</p>
                     <input type="file" name="file" required>
                     <br><br>

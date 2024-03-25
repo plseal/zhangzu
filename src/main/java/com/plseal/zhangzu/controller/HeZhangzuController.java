@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.plseal.zhangzu.common.SongMaster;
 import com.plseal.zhangzu.entity.HeZhangzu;
-import com.plseal.zhangzu.entity.Zhangzu;
 import com.plseal.zhangzu.service.ModifyService;
 
 /**
@@ -53,16 +53,20 @@ public class HeZhangzuController {
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		String calendar_Y =sdf.format(calendar.getTime());
-		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, calendar_Y);
+		List<HeZhangzu> list_zhangzu = modifyService.query_db_he_index(target_table, calendar_Y);
 
 		model.addAttribute("list_zhangzu", list_zhangzu);
 		return "he_index";
 	}
 
 	@RequestMapping(path = "/insert", method = RequestMethod.GET)
-	public String insert(Model model) throws Exception {
-
-		Zhangzu zhangzu = new Zhangzu();
+	public String insert(Model model,
+						@RequestParam("newfilename") String newfilename,
+						@RequestParam("insert_update_div") String insert_update_div
+						) throws Exception {
+		logger.info("insert() newfilename:" + newfilename);
+		logger.info("insert() insert_update_div:" + insert_update_div);
+		HeZhangzu zhangzu = new HeZhangzu();
 		Date today = new Date();
 		zhangzu.setZ_date(new SimpleDateFormat("yyyy/MM/dd").format(today));
 
@@ -75,6 +79,7 @@ public class HeZhangzuController {
 		model.addAttribute("zhangzu", zhangzu);
 		model.addAttribute("z_type_list", z_type_list);
 		model.addAttribute("z_io_div_list", z_io_div_list);
+		model.addAttribute("z_photo_name", newfilename);
 		
 		return "he_insert";
 	}
@@ -86,14 +91,25 @@ public class HeZhangzuController {
 		@RequestParam("z_amount") BigInteger z_amount,
 		@RequestParam("z_type") String z_type,
 		@RequestParam("z_io_div") String z_io_div,
+		@RequestParam("z_photo_name") String z_photo_name,
 		@RequestParam("z_remark") String z_remark,
-		@RequestParam("z_m_amount") BigInteger z_m_amount
+		@RequestParam("z_m_amount") BigInteger z_m_amount,
+		@RequestParam("insert_button") String insert_button
 		) throws Exception {
 		logger.info("insert_post() z_date:" + z_date);
-		String sql = "INSERT INTO " + target_table + " VALUES(null,?,?,?,?,?,?,?)";
-		jdbcTemplate.update(sql,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount);
+		logger.info("insert_post() insert_button:" + insert_button);
+
+		String forward_html = "he_crud_OK";
+		if("UPLOAD_FILE".equals(insert_button)) {
+			model.addAttribute("insert_update_div", "INSERT");
+			forward_html = "he_upload_index";
+		}else{
+			String sql = "INSERT INTO " + target_table + " VALUES(null,?,?,?,?,?,?,?,?)";
+			jdbcTemplate.update(sql,z_date,z_name,z_amount,z_type,z_io_div,z_photo_name,z_remark,z_m_amount);
+		}
+
 		
-		return "he_crud_OK";
+		return forward_html;
 	}
 
 	@PostMapping(path = "/update_delete_post")
@@ -119,11 +135,33 @@ public class HeZhangzuController {
 			jdbcTemplate.update(sql_delete,id);
 		} else if("UPLOAD_FILE".equals(update_delete_button)) {
 			model.addAttribute("id", id);
+			model.addAttribute("insert_update_div", "UPDATE");
 			forward_html = "he_upload_index";
 		} else {
 			logger.error("ERROR!!! update_delete_button:" + update_delete_button);
 		}
 		return forward_html;
+	}
+
+	@PostMapping(path = "/upload_result_post")
+	public RedirectView upload_result_post(Model model,
+		@RequestParam("id") String id,
+		@RequestParam("newfilename") String newfilename,
+		@RequestParam("insert_update_div") String insert_update_div
+		) throws Exception {
+		logger.info("upload_result_post() id:" + id);
+		logger.info("upload_result_post() newfilename:" + newfilename);
+		logger.info("upload_result_post() insert_update_div:" + insert_update_div);
+		
+		if("INSERT".equals(insert_update_div)) {
+			return new RedirectView("/he/insert?newfilename="+newfilename+"&insert_update_div=INSERT");
+		} else if("UPDATE".equals(insert_update_div)) {
+			return new RedirectView("/he/insert");
+		} else {
+			logger.error("ERROR!!! update_delete_button:" + insert_update_div);
+			return new RedirectView("/he/insert");
+		}
+
 	}
     // @GetMapping("/he_upload_index")
     // public String uploadIndex(Model model) {
@@ -133,13 +171,17 @@ public class HeZhangzuController {
     // }
 
     @PostMapping("/upload_file_post")
-    public String uploadFilePost(Model model,@RequestParam("file") MultipartFile file,@RequestParam("id") String id) {
-        logger.info("uploadFilePost [start]");
-		logger.info("uploadFilePost id:"+id);
+    public String uploadFilePost(Model model,
+								@RequestParam("file") MultipartFile file,
+								@RequestParam("id") String id,
+								@RequestParam("insert_update_div") String insert_update_div) {
+        logger.info("uploadFilePost() [start]");
+		logger.info("uploadFilePost() id:"+id);
+		logger.info("uploadFilePost() insert_update_div:"+insert_update_div);
         try {
             // 获取文件名
             String fileName = file.getOriginalFilename();
-            logger.info("uploadFilePost fileName:" + fileName);
+            logger.info("uploadFilePost() fileName:" + fileName);
 			String extension = extractExtension(fileName);
 			// 获取当前日期时间
 			LocalDateTime now = LocalDateTime.now();
@@ -150,22 +192,32 @@ public class HeZhangzuController {
 			// 格式化日期时间
 			String formattedDateTime = now.format(formatter);
 			String NewFileName = formattedDateTime + "." + extension;
-			logger.info("uploadFilePost NewfileName:" + NewFileName);
+			logger.info("uploadFilePost() NewfileName:" + NewFileName);
 
             // 构建文件存储路径
             String filePath = UPLOAD_DIR + File.separator + NewFileName;
             // 将文件保存到指定路径
             file.transferTo(new File(filePath));
-			logger.info("uploadFilePost [ファイルをdiskに保存成功]");
-			// 文件名をDBに保存
-			String sql_update = "update "+target_table+" set z_photo_name = ? where id = ?";
-			jdbcTemplate.update(sql_update,NewFileName,id);
-			logger.info("uploadFilePost [ファイル名をDBに保存成功]");
-			model.addAttribute("id", id);
+			logger.info("uploadFilePost() [ファイルをdiskに保存成功]");
+			String forwardPage = "";
+			if ("UPDATE".equals(insert_update_div)) {
+				// 文件名をDBに保存
+				String sql_update = "update "+target_table+" set z_photo_name = ? where id = ?";
+				jdbcTemplate.update(sql_update,NewFileName,id);
+				logger.info("uploadFilePost() [ファイル名をDBに保存成功]");
+				model.addAttribute("id", id);
+
+			} else if ("INSERT".equals(insert_update_div)) {
+				// do nothing
+			} else {
+				// ありえないルート
+			}
 			model.addAttribute("newfilename", NewFileName);
-			logger.info("uploadFilePost [end]");
-			logger.info("upload_result.htmlに遷移");
-            return "he_upload_result";
+			model.addAttribute("insert_update_div", insert_update_div);
+			forwardPage = "he_upload_result";
+			logger.info("he_upload_result.htmlに遷移");
+			logger.info("uploadFilePost() [end]");
+            return forwardPage;
         } catch (IOException e) {
             e.printStackTrace();
             return "文件上传失败: " + e.getMessage();
