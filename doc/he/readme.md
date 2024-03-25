@@ -7,6 +7,6 @@ G-->|insert_button:INSERT| H[he_crud_OK]
 C -->|上传文件按钮<br>/he/upload_file_post?id=&insert_update_div=INSERT| I{controller_upload_file_post}
 I-->|处理文件上传<br>newfilename:yyyymmddhhmmss.jpeg<br>insert_update_div:INSERT| F[文件上传处理成功页面<br>he_upload_result]
 F-->|结果确认按钮<br>/he/upload_result_post<br>id:空白<br>newfilename:yyyymmddhhmmss.jpeg<br>insert_update_div:INSERT| J{controller_upload_result_post}
-J -->|newfilename:yyyymmddhhmmss.jpeg<br>insert_update_div:INSERT| B
+J -->|/he/insert?<br>newfilename=yyyymmddhhmmss.jpg&<br>insert_update_div=INSERT<br>| B
 B -->|查看已有数据列表| D[列表页面]
 ```
