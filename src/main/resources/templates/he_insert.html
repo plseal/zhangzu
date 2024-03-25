@@ -105,11 +105,25 @@
 
                     </div>
                 </div>
-                    <div class="form-group">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">图片：</label>
+					<div class="col-sm-10">
+						<div id="imageContainer">
+							<img id="uploadedImage" src="" alt="图片" style="max-width: 500px;">
+                            <input type="hidden" class="form-control" id="z_photo_name" name="z_photo_name" th:value="${z_photo_name}" placeholder="">
+						</div>						
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-6 ">
+						<button class="btn btn-lg btn-block btn-info" type="submit" name="insert_button" value="UPLOAD_FILE">写真添付</button>
+					</div>
+				</div>
+                <div class="form-group">
                     <div class="col-sm-12 ">
-                        <button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_button">提交</button>
+                        <button class="btn btn-lg btn-block btn-primary" type="submit" name="insert_button" value="INSERT">提交</button>
                     </div>
-                    </div>
+                </div>
                 <!--PAGE CONTENT ENDS-->
 
 	</div><!--/.main-container-->
@@ -117,9 +131,17 @@
 	
 
 	
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 
-	
+	/*<![CDATA[*/
+	window.onload = function() {
+		setTimeout(function() {
+			var imgElement = document.getElementById('uploadedImage');
+			var filename = /*[[${z_photo_name}]]*/ 'default.jpg';
+			imgElement.src = '/uploads/' + filename;
+		}, 2000); // 延迟 2000 毫秒加载图片
+	}
+	/*]]>*/
 	var year = new Date().getFullYear();
 	var month = new Date().getMonth() + 1;
 	var day = new Date().getDate();

@@ -26,6 +26,21 @@ CREATE TABLE `li_zhangzu` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15414 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT
 ```
+## he_zhangzu
+```SQL
+CREATE TABLE `lingzhu`.`he_zhangzu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `z_date` varchar(20) DEFAULT NULL,
+  `z_name` varchar(200) DEFAULT NULL,
+  `z_amount` decimal(50,0) DEFAULT NULL,
+  `z_type` varchar(200) DEFAULT NULL,
+  `z_io_div` varchar(50) DEFAULT NULL,
+  `z_photo_name` varchar(255) DEFAULT NULL,
+  `z_remark` varchar(100) DEFAULT NULL,
+  `z_m_amount` decimal(50,0) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT
+```
 ## v_song_zhangzu_zhichu_2022
 ```
 CREATE 
