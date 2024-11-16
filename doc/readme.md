@@ -15,3 +15,24 @@ Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 9
 Server version: 8.0.40
 ```
+#### 安装phpadmin
+问claude
+
+我启动了一个ubuntu的vm在oracle的cloud上，ip是168.138.33.150，系统是ubuntu，芯片是ampere（arm）我在它上面启动了一个mysql
+我想使用web页面
+```
+sudo apt install apache2 php php-mysql php-mbstring php-zip php-gd php-json php-curl
+sudo apt install phpmyadmin
+安装过程中:
+
+选择Apache2作为Web服务器
+选择Yes配置数据库
+设置phpMyAdmin管理员密码（558）
+配置Apache使其加载phpMyAdmin:
+sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+重启Apache服务:
+sudo systemctl restart apache2
+```
+访问phpMyAdmin:打开浏览器,访问:
+
+http://168.138.33.150/phpmyadmin
