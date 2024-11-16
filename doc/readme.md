@@ -1,3 +1,6 @@
+## 确认apache启动了
+sudo systemctl status apache2
+
 ## Oracle cloud环境构筑
 #### ●计划使用oracle cloud(ampere arm chip)
 #### ●绑定的是yodobashi card
