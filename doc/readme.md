@@ -9,3 +9,9 @@ https://speedysense.com/install-jupyter-notebook-on-ubuntu-20-04/#:~:text=How%20
 `ssh -L 8888:localhost:8888 ubuntu@168.138.33.150`
 #### ●mysql
 https://www.layerstack.com/resources/tutorials/How-to-install-MySQL-MariaDB-MongoDB-on-Ubuntu-ARM-server#:~:text=Connect%20to%20your%20server%20via%20SSH.%20Log%20in,version%20using%20the%20following%20command.%20%23%20mysql%20-v
+```
+sudo mysql -v
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.40
+```
