@@ -33,6 +33,10 @@ sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 重启Apache服务:
 sudo systemctl restart apache2
 ```
+
+
+#### ●设置SSH隧道(端口转发)使用git bash
+`ssh -L 80:localhost:80 ubuntu@168.138.33.150`
 访问phpMyAdmin:打开浏览器,访问:
 
-http://168.138.33.150/phpmyadmin
+http://127.0.0.1/phpmyadmin
