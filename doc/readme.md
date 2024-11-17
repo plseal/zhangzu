@@ -1,4 +1,4 @@
-## 确认apache启动了
+## 确认apache启动了（端口8081）
 sudo systemctl status apache2
 
 ## Oracle cloud环境构筑
@@ -20,9 +20,10 @@ Server version: 8.0.40
 ```
 #### 安装phpadmin
 问claude
-
+```
 我启动了一个ubuntu的vm在oracle的cloud上，ip是168.138.33.150，系统是ubuntu，芯片是ampere（arm）我在它上面启动了一个mysql
 我想使用web页面
+```
 ```
 sudo apt install apache2 php php-mysql php-mbstring php-zip php-gd php-json php-curl
 sudo apt install phpmyadmin
@@ -44,4 +45,12 @@ sudo systemctl restart apache2
 访问phpMyAdmin:打开浏览器,访问:(root/558)
 
 http://127.0.0.1/phpmyadmin
+
+#### ●设置tomcat 端口默认的8080
+问的chatgpt
+```prompt
+我想在ubuntu里安装tomcat。该怎么做
+从这个link
+https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.33/bin/apache-tomcat-10.1.33.tar.gz
+```
 
