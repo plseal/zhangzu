@@ -1,6 +1,9 @@
 ## 确认apache启动了（端口8081）
 sudo systemctl status apache2
 
+## 启动tomcat
+`$CATALINA_HOME/bin/startup.sh`
+
 ## Oracle cloud环境构筑
 #### ●计划使用oracle cloud(ampere arm chip)
 #### ●绑定的是yodobashi card
