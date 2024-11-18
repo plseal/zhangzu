@@ -57,3 +57,14 @@ http://127.0.0.1/phpmyadmin
 https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.33/bin/apache-tomcat-10.1.33.tar.gz
 ```
 
+#### ●关闭防火墙
+```
+ubuntu@instance-20241115-2125:~$ sudo iptables -P INPUT ACCEPT
+ubuntu@instance-20241115-2125:~$ sudo iptables -P FORWARD ACCEPT
+ubuntu@instance-20241115-2125:~$ sudo iptables -P OUTPUT ACCEPT
+ubuntu@instance-20241115-2125:~$ sudo iptables -F
+```
+
+#### ●申请固定IP V4
+
+【springboot项目，从开发环境部署到测试环境（oracle cloud云服务器+宝塔面板+javaweb项目）---VM实例创建配置环境】https://www.bilibili.com/video/BV15R4y1L7hj?vd_source=e024c89f590784eeb986f69f27bcfa20
