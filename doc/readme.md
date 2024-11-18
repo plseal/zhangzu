@@ -1,4 +1,4 @@
-## 确认apache启动了（端口8081）
+## 确认apache启动了（端口80）
 sudo systemctl status apache2
 
 ## 启动tomcat
