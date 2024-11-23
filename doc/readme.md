@@ -1,3 +1,6 @@
+## 公网IP
+http://141.147.145.18/
+
 ## 确认apache启动了（端口80）
 sudo systemctl status apache2
 
@@ -5,7 +8,7 @@ sudo systemctl status apache2
 `$CATALINA_HOME/bin/startup.sh`
 
 ## Oracle cloud环境构筑
-#### ●计划使用oracle cloud(ampere arm chip)
+#### ●使用oracle cloud(ampere arm chip)每月4CPU免费，25GB内存免费
 #### ●绑定的是yodobashi card
 #### ●系统是ubuntu 20,用户名ubuntu
 #### ●密钥c:\work\ssh-key-2024-11-15.key
