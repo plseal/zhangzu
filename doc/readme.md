@@ -1,5 +1,5 @@
 ## 公网IP
-http://141.147.145.18/
+http://138.2.48.236/
 
 ## 确认apache启动了（端口80）
 sudo systemctl status apache2
