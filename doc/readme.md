@@ -1,12 +1,6 @@
 ## 公网IP
 http://141.147.145.18/
 
-## 确认apache启动了（端口80）
-sudo systemctl status apache2
-
-## 启动tomcat
-`$CATALINA_HOME/bin/startup.sh`
-
 ## Oracle cloud环境构筑
 #### ●使用oracle cloud(ampere arm chip)每月4CPU免费，25GB内存免费
 #### ●绑定的是yodobashi card
