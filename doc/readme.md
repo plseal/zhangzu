@@ -45,6 +45,7 @@ sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 重启Apache服务:
 sudo systemctl restart apache2
 ```
+pas:558
 
 
 #### ●设置SSH隧道(端口转发)使用git bash
