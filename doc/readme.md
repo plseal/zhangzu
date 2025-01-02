@@ -49,7 +49,7 @@ pas:558
 
 
 #### ●设置SSH隧道(端口转发)使用git bash
-`ssh -L 80:localhost:80 ubuntu@168.138.33.150`
+`ssh -L 80:localhost:80 ubuntu@141.147.145.18`
 
 访问phpMyAdmin:打开浏览器,访问:(root/558)
 
