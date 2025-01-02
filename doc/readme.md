@@ -1,6 +1,9 @@
 ## 公网IP
 http://141.147.145.18/
 
+## SSH
+`ssh -L 8080:localhost:8080 ubuntu@141.147.145.18 -i C:\work\ssh-key-2025-01-01.key`
+
 ## Oracle cloud环境构筑
 #### ●使用oracle cloud(ampere arm chip)每月4CPU免费，25GB内存免费
 #### ●绑定的是yodobashi card
