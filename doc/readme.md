@@ -26,6 +26,13 @@ Server version: 8.0.40
 ```
 #### ●java tomcat
 https://ja.linux-console.net/?p=16823
+
+#### ●修改tomcat端口到80
+`sudo nano /etc/tomcat9/server.xml`
+
+--------------------------------------------------------------------
+
+
 #### 安装phpadmin
 问claude
 ```
