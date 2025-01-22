@@ -1,11 +1,11 @@
 ## 公网IP
 http://141.147.145.18/
 
-## SSH
+## SSH(apache2静态页面用)
 `ssh -L 80:localhost:80 ubuntu@141.147.145.18 -i C:\work\ssh-key-2025-01-01.key`
 
-### tomcat status
-ss -ltn
+## phpMyAdmin:打开浏览器,访问:(root/558)
+http://127.0.0.1/phpmyadmin
 
 ## Oracle cloud环境构筑
 #### ●使用oracle cloud(ampere arm chip)每月4CPU免费，25GB内存免费
@@ -25,10 +25,15 @@ Your MySQL connection id is 9
 Server version: 8.0.40
 ```
 #### ●java tomcat
+```
 https://ja.linux-console.net/?p=16823
 
-#### ●修改tomcat端口到80
+# tomcat status
+ss -ltn
+
+## ●修改tomcat端口到80
 `sudo nano /etc/tomcat9/server.xml`
+```
 
 --------------------------------------------------------------------
 
@@ -55,12 +60,7 @@ sudo systemctl restart apache2
 pas:558
 
 
-#### ●设置SSH隧道(端口转发)使用git bash
-`ssh -L 80:localhost:80 ubuntu@141.147.145.18`
 
-访问phpMyAdmin:打开浏览器,访问:(root/558)
-
-http://127.0.0.1/phpmyadmin
 
 #### ●设置tomcat 端口默认的8080
 问的chatgpt
