@@ -2,7 +2,7 @@
 http://141.147.145.18/
 
 ## SSH
-`ssh -L 8080:localhost:8080 ubuntu@141.147.145.18 -i C:\work\ssh-key-2025-01-01.key`
+`ssh -L 80:localhost:80 ubuntu@141.147.145.18 -i C:\work\ssh-key-2025-01-01.key`
 
 ### tomcat status
 ss -ltn
