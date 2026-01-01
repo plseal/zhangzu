@@ -1,19 +1,20 @@
 package com.plseal.zhangzu;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.time.Duration;
+
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.junit.Assert.assertNotNull;
-
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.junit.jupiter.api.Test;
-
 @SpringBootTest
 public class ValidateAdminUser  {
 
@@ -147,8 +148,8 @@ public class ValidateAdminUser  {
         try {
             DELETE_BUTTON9990000.click();
             
-            new WebDriverWait(mydriver, 10).until(ExpectedConditions
-                    .alertIsPresent());
+            new WebDriverWait(mydriver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.alertIsPresent());
             alert = mydriver.switchTo().alert();
             flag = true;
             // alert.accept();

@@ -102,9 +102,16 @@ public class DbController {
         logger.info("z_type:"+z_type);
         logger.info("z_io_div:"+z_io_div);
         logger.info("z_remark:"+z_remark);
+        // jdbcTemplate.update(
+        //         "INSERT INTO t_zhangzu VALUES(null,?,?,?,?,?,?,null) ",
+        //         z_date, z_name, z_amount, z_type, z_io_div, z_remark);
+
         jdbcTemplate.update(
-                "INSERT INTO t_zhangzu VALUES(null,?,?,?,?,?,?,null) ",
-                z_date, z_name, z_amount, z_type, z_io_div, z_remark);
+            "INSERT INTO t_zhangzu " +
+            "(z_date, z_name, z_amount, z_type, z_io_div, z_remark, z_m_amount) " +
+            "VALUES (DEFAULT,?,?,?,?,?,?,null)",
+            z_date, z_name, z_amount, z_type, z_io_div, z_remark
+        );
         //Integer id = jdbcTemplate.queryForObject("SELECT lastval()", Integer.class);
 
         return 200;

@@ -1,8 +1,6 @@
 package com.plseal.zhangzu;
 
-// import static org.junit.Assert.assertNotNull;
-
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 // import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -31,7 +29,7 @@ public class TestCommon {
         //logger.info(df.format(date));                                      
         logger.info("wait 1 seconds");         
         Thread.sleep(waitTime);                              
-        mydriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        mydriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
         //date = new Date();
         //logger.info(df.format(date));   
         logger.info("currentURL:"+mydriver.getCurrentUrl());
