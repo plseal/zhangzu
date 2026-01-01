@@ -109,7 +109,7 @@ public class DbController {
         jdbcTemplate.update(
             "INSERT INTO t_zhangzu " +
             "(z_date, z_name, z_amount, z_type, z_io_div, z_remark, z_m_amount) " +
-            "VALUES (DEFAULT,?,?,?,?,?,?,null)",
+            "VALUES (?,?,?,?,?,?,null)",
             z_date, z_name, z_amount, z_type, z_io_div, z_remark
         );
         //Integer id = jdbcTemplate.queryForObject("SELECT lastval()", Integer.class);
