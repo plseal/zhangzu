@@ -50,6 +50,16 @@ public class SongZhangzuController {
 		model.addAttribute("list_zhangzu", list_zhangzu);
 		return "song_index";
 	}
+
+	@RequestMapping(path = "/index_2025", method = RequestMethod.GET)
+	public String index_2025(Model model) throws Exception {
+
+		List<Zhangzu> list_zhangzu = modifyService.query_db_index(target_table, "2025");
+
+		model.addAttribute("list_zhangzu", list_zhangzu);
+		return "song_index";
+	}
+
 	@RequestMapping(path = "/index_2024", method = RequestMethod.GET)
 	public String index_2024(Model model) throws Exception {
 
@@ -58,6 +68,8 @@ public class SongZhangzuController {
 		model.addAttribute("list_zhangzu", list_zhangzu);
 		return "song_index";
 	}
+
+
 	@RequestMapping(path = "/index_2023", method = RequestMethod.GET)
 	public String index_2023(Model model) throws Exception {
 
@@ -131,7 +143,7 @@ public class SongZhangzuController {
 		@RequestParam("z_m_amount") BigInteger z_m_amount
 		) throws Exception {
 		logger.info("insert_post() z_date:" + z_date);
-		String sql = "INSERT INTO " + target_table + " VALUES(null,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO t_zhangzu (z_date, z_name, z_amount, z_type, z_io_div, z_remark, z_m_amount) VALUES(?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql,z_date,z_name,z_amount,z_type,z_io_div,z_remark,z_m_amount);
 		
 		return "song_crud_OK";

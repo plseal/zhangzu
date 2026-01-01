@@ -1,6 +1,12 @@
 package com.plseal.zhangzu;
 
+import static org.hamcrest.CoreMatchers.is;
+//assertThatメソッドはorg.junit.Assert.assertThatではなくorg.hamcrest.MatcherAssert.assertThatを使用する
+//JUnitのassertThatは非推奨
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
+
+import java.time.Duration;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -12,11 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import java.util.concurrent.TimeUnit;
-import static org.hamcrest.CoreMatchers.is;
-//assertThatメソッドはorg.junit.Assert.assertThatではなくorg.hamcrest.MatcherAssert.assertThatを使用する
-//JUnitのassertThatは非推奨
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ZhangzuApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,7 +33,8 @@ public class HeTest extends BaseSeleniumTests {
         driver.get("http://127.0.0.1:8080/he/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         // 検証
         title = driver.getTitle();
@@ -44,7 +46,7 @@ public class HeTest extends BaseSeleniumTests {
         driver.get("http://127.0.0.1:8080/he/insert?newfilename=&insert_update_div=INIT");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         // 検証
         title = driver.getTitle();
@@ -90,7 +92,7 @@ public class HeTest extends BaseSeleniumTests {
         driver.get("http://127.0.0.1:8080/he/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         logger.info("＃＃＃「编辑」ボタン　押下");
         WebElement MODIFY_BUTTON = driver.findElement(By.name("id"));
@@ -142,7 +144,7 @@ public class HeTest extends BaseSeleniumTests {
         driver.get("http://127.0.0.1:8080/he/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         logger.info("＃＃＃「编辑」ボタン　押下");
         WebElement MODIFY_BUTTON = driver.findElement(By.name("id"));
@@ -168,7 +170,7 @@ public class HeTest extends BaseSeleniumTests {
         driver.get("http://127.0.0.1:8080/he/index");
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         logger.info("＃＃＃「統計分析」ボタン　押下");
         WebElement ANALYSIS_BUTTON = driver.findElement(By.id("analysis_2023"));
